@@ -53,14 +53,15 @@ const Footer = () => {
   ];
 
   return (
-    <div className='flex justify-between items-center px-20 py-14'>
+    <div className='flex justify-between items-center px-20 py-14 bg-white w-full text-black'>
       <div className='space-y-4'>
-        <Link href={"/"}>
+        <Link href={"/"} aria-label='home'>
           <Image
             src={"/logos/light-logo.svg"}
             width={300}
             height={60}
             alt='footer-logo'
+            className='h-14 w-auto object-contain pointer-events-none'
           />
         </Link>
         <div className='flex space-x-6'>
@@ -72,7 +73,13 @@ const Footer = () => {
               aria-label={name}
               rel='noopener noreferrer'
             >
-              <Image src={icon} width={48} height={48} alt={name} />
+              <Image
+                src={icon}
+                width={48}
+                height={48}
+                alt={name}
+                className='h-12 w-auto object-contain pointer-events-none'
+              />
             </Link>
           ))}
         </div>
@@ -80,14 +87,19 @@ const Footer = () => {
           Copyright &copy; 2025 | Darsh Parikh
         </p>
       </div>
-      <div className='flex space-x-32'>
+      <div className='grid grid-cols-3 gap-32'>
         {footerNav.map((section, index) => (
           <div key={index}>
             <h3 className='text-black font-semibold mb-4'>{section.title}</h3>
             <ul className='space-y-4'>
               {section.links.map((link, index) => (
-                <li key={index} className='text-[#808080] hover:text-[#454545]'>
-                  <Link href={link.href}>{link.label}</Link>
+                <li
+                  key={index}
+                  className='text-[#808080] hover:text-[#454545] w-fit'
+                >
+                  <Link href={link.href} aria-label={link.label}>
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
