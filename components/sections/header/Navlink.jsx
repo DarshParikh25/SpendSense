@@ -13,7 +13,7 @@ const Navlink = () => {
   ];
 
   return (
-    <nav className='flex gap-12 font-bold justify-self-center'>
+    <nav className='hidden lg:flex gap-8 xl:gap-12 font-bold justify-self-center'>
       {navlinks.map((navlink, index) => (
         <Link
           key={index}

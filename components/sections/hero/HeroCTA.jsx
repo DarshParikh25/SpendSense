@@ -5,7 +5,7 @@ const HeroCTA = () => {
   const loggedIn = false;
 
   return (
-    <div className='flex-1 inline-flex justify-center items-center gap-12 mt-2'>
+    <div className='flex-1 inline-flex flex-wrap justify-center items-center gap-4 sm:gap-12 mt-2'>
       <Link
         href={loggedIn ? "/dashboard" : "/login"}
         aria-label={loggedIn ? "Dashboard" : "Login"}

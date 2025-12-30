@@ -1,34 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const Footer = () => {
-  const footerNav = [
-    {
-      title: "Product",
-      links: [
-        { label: "Features", href: "/features" },
-        { label: "How It Works", href: "/how-it-works" },
-        { label: "Security", href: "/security" },
-      ],
-    },
-    {
-      title: "Resources",
-      links: [
-        { label: "Financial Guides", href: "/financial-guides" },
-        { label: "Help Center", href: "/help-center" },
-        { label: "Contact Support", href: "/contact-support" },
-      ],
-    },
-    {
-      title: "Company",
-      links: [
-        { label: "About Us", href: "/about-us" },
-        { label: "Privacy Policy", href: "/privacy-policy" },
-        { label: "Terms of Service", href: "/terms-of-service" },
-      ],
-    },
-  ];
+import FooterNav from "./FooterNav";
 
+const Footer = () => {
   const socials = [
     {
       name: "facebook",
@@ -53,8 +28,8 @@ const Footer = () => {
   ];
 
   return (
-    <div className='flex justify-between items-center px-20 py-14 bg-white w-full text-black'>
-      <div className='space-y-4'>
+    <div className='grid lg:grid-cols-2 grid-cols-1 items-center gap-12 px-10 lg:px-16 xl:px-20 py-14 bg-white w-full text-black'>
+      <div className='order-2 lg:order-1 flex flex-col gap-4 place-items-center lg:items-start'>
         <Link href={"/"} aria-label='home'>
           <Image
             src={"/logos/light-logo.svg"}
@@ -64,7 +39,7 @@ const Footer = () => {
             className='h-14 w-auto object-contain pointer-events-none'
           />
         </Link>
-        <div className='flex space-x-6'>
+        <div className='flex justify-self-center md:justify-self-start gap-6'>
           {socials.map(({ name, href, icon }, index) => (
             <Link
               key={index}
@@ -78,33 +53,17 @@ const Footer = () => {
                 width={48}
                 height={48}
                 alt={name}
-                className='h-12 w-auto object-contain pointer-events-none'
+                className='md:h-8 lg:h-12 w-auto object-contain pointer-events-none'
               />
             </Link>
           ))}
         </div>
-        <p className='text-[#808080] font-bold px-1.5'>
+        <p className='text-[#808080] text-sm lg:text-md font-bold px-1.5'>
           Copyright &copy; 2025 | Darsh Parikh
         </p>
       </div>
-      <div className='grid grid-cols-3 gap-32'>
-        {footerNav.map((section, index) => (
-          <div key={index}>
-            <h3 className='text-black font-semibold mb-4'>{section.title}</h3>
-            <ul className='space-y-4'>
-              {section.links.map((link, index) => (
-                <li
-                  key={index}
-                  className='text-[#808080] hover:text-[#454545] w-fit'
-                >
-                  <Link href={link.href} aria-label={link.label}>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+      <div className='order-1 lg:order-2'>
+        <FooterNav />
       </div>
     </div>
   );
