@@ -8,7 +8,7 @@ const HeroCTA = () => {
     <div className='grid grid-cols-1 sm:grid-cols-2 justify-center items-center gap-4 sm:gap-12 mt-2'>
       <Link
         href={loggedIn ? "/dashboard" : "/login"}
-        aria-label={loggedIn ? "Dashboard" : "Login"}
+        aria-label={`Button to ${loggedIn ? "Dashboard" : "Login"}`}
       >
         <Button
           className={

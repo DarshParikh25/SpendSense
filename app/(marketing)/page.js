@@ -1,4 +1,5 @@
 import Features from "@/components/sections/features/Features";
+import FinalCTA from "@/components/sections/finalcta/FinalCTA";
 import Guide from "@/components/sections/guide/Guide";
 import Hero from "@/components/sections/hero/Hero";
 import Stats from "@/components/sections/stats/Stats";
@@ -12,6 +13,7 @@ export default function Home() {
       <Features />
       <Guide />
       <Testimonials />
+      <FinalCTA />
     </>
   );
 }
