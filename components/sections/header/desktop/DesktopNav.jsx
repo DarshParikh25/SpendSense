@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const Navlink = () => {
+const DesktopNav = () => {
   const pathname = usePathname();
 
   const navlinks = [
@@ -13,7 +13,7 @@ const Navlink = () => {
   ];
 
   return (
-    <nav className='hidden lg:flex gap-8 xl:gap-12 font-bold justify-self-center'>
+    <nav className="hidden md:flex text-sm lg:text-[16px] gap-8 xl:gap-12 font-bold justify-self-center">
       {navlinks.map((navlink, index) => (
         <Link
           key={index}
@@ -32,4 +32,4 @@ const Navlink = () => {
   );
 };
 
-export default Navlink;
+export default DesktopNav;
