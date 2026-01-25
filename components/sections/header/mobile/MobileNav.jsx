@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import Overlay from "./Overlay";
 import Drawer from "./Drawer";
 import Toggle from "./Toggle";
+import { useAppSelector } from "@/lib/store/hooks/hooks";
 
 const MobileNav = () => {
-  const [open, setOpen] = useState(false); // change to redux state management later on
+  const open = useAppSelector((state) => state.ui.open);
 
   /* Lock body scroll when menu is open */
   useEffect(() => {

@@ -1,14 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { closeMobileNav } from "@/lib/store/features/ui/uiSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
+import { cn } from "@/lib/utils";
 
 const Overlay = () => {
-  const [open, setOpen] = useState(false); // change to redux state management later on
+  const dispatch = useAppDispatch();
+
+  const open = useAppSelector((state) => state.ui.open);
+
+  const handleClick = () => {
+    if (open) {
+      dispatch(closeMobileNav());
+    }
+  };
 
   return (
     <div
-      className={`fixed inset-0 z-40 bg-black/10 backdrop-blur-sm transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-      onClick={() => setOpen(false)} // just for reference, will be changed using redux later on
+      className={cn(
+        open ? "opacity-100" : "opacity-0 pointer-events-none",
+        "fixed inset-0 z-40 bg-black/10 backdrop-blur-sm transition-opacity duration-300",
+      )}
+      onClick={handleClick}
     />
   );
 };
