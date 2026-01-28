@@ -6,3 +6,4 @@
 2. JavaScript
 3. Tailwind CSS
 4. Redux ToolKit
+5. Clerk
