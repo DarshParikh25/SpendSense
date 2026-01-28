@@ -5,12 +5,10 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 // import { closeMobileNav } from "@/lib/store/features/ui/uiSlice";
 // import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
-// import { setLoggedIn } from "@/lib/store/features/auth/authSlice";
 
 const Login = () => {
   // const dispatch = useAppDispatch();
 
-  // const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   // const open = useAppSelector((state) => state.ui.open);
 
   // this will work only after login is successful
@@ -18,7 +16,6 @@ const Login = () => {
   //   if (open) {
   //     dispatch(closeMobileNav());
   //   }
-  //   dispatch(setLoggedIn());
   // };
 
   return (

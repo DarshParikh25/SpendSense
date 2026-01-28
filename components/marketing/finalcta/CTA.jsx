@@ -1,11 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useAppSelector } from "@/lib/store/hooks/hooks";
+import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 
 const CTA = () => {
-  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  const { user } = useUser();
 
   return (
     <Button
@@ -15,8 +15,8 @@ const CTA = () => {
       asChild
     >
       <Link
-        href={isLoggedIn ? "/dashbord" : "/login"}
-        aria-label={`Button to ${isLoggedIn ? "Dashboard" : "Login"}`}
+        href={user ? "/dashbord" : "/sign-in"}
+        aria-label={`Button to ${user ? "Dashboard" : "Login"}`}
       >
         Get Started
       </Link>

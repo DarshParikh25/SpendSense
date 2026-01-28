@@ -18,7 +18,15 @@ const TooltipWrapper = ({
         side={side}
         align={align}
         sideOffset={sideOffset}
-        className={cn(hideOnDesktop && "lg:hidden", contentClassName)}
+        className={cn(
+          // hideOnDesktop && "lg:hidden",
+          // OR
+          {
+            "lg:hidden": hideOnDesktop, // better for multiple conditionals
+          },
+          "z-60",
+          contentClassName,
+        )}
       >
         {content}
       </TooltipContent>

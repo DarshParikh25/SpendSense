@@ -6,8 +6,9 @@ import { closeMobileNav } from "@/lib/store/features/ui/uiSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
 
 import { cn } from "@/lib/utils";
+import { UserButton } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 import { LayoutDashboard } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 const LoggedInBtns = () => {
@@ -42,17 +43,21 @@ const LoggedInBtns = () => {
       </TooltipWrapper>
 
       {/* Profile Btn */}
-      <TooltipWrapper content={"Profile"}>
-        <Link href={"/profile"}>
-          <Image
-            src={"/profile/priya-sharma.png"}
-            width={40}
-            height={40}
-            className="h-10 w-auto rounded-full object-cover hover:cursor-pointer focus:outline-none"
-            alt="profile"
-          />
-        </Link>
-      </TooltipWrapper>
+      <UserButton
+        appearance={{
+          theme: dark,
+          elements: {
+            avatarBox: "!w-9 !h-9",
+            userButtonPopoverActionButton__signOut: {
+              color: "#FB5756",
+            },
+            userProfileSidebarItem__active: {
+              backgroundColor: "#FB5756",
+              color: "#FFFFFF",
+            },
+          },
+        }}
+      />
     </>
   );
 };

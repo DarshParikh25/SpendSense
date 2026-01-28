@@ -1,11 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useAppSelector } from "@/lib/store/hooks/hooks";
+import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 
 const HeroCTA = () => {
-  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  const { user } = useUser();
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 justify-center items-center gap-4 sm:gap-12 mt-2">
@@ -16,8 +16,8 @@ const HeroCTA = () => {
         asChild
       >
         <Link
-          href={isLoggedIn ? "/dashboard" : "/login"}
-          aria-label={`Button to ${isLoggedIn ? "Dashboard" : "Login"}`}
+          href={user ? "/dashboard" : "/sign-in"}
+          aria-label={`Button to ${user ? "Dashboard" : "Login"}`}
         >
           Get Started
         </Link>
