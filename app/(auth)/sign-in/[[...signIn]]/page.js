@@ -25,7 +25,7 @@ const Login = async () => {
             src={"/logos/logo.png"}
             width={200}
             height={100}
-            className="h-10 w-auto object-cover pointer-events-none"
+            className="h-10 w-auto object-cover pointer-events-none sha"
             alt="logo"
           />
         </h1>
@@ -40,12 +40,11 @@ const Login = async () => {
           elements: {
             headerTitle: "hidden",
             headerSubtitle: "hidden",
-            card: "shadow-xl",
-            socialButtonsBlockButton: "border-2 hover:bg-gray-50",
+            cardBox: "shadow-2xl! border-2!",
             formButtonPrimary:
-              "!bg-[#bebec0] !text-[#1e1e24] hover:!bg-[#b2b2b2]",
-            footerActionLink: "!text-[#fb5756] hover:!text-[#ff3434]",
-            footerActionText: "!text-[#bebec0]",
+              "bg-[#bebec0]! text-[#1e1e24]! hover:bg-[#b2b2b2]!",
+            footerActionLink: "text-[#fb5756]! hover:text-[#ff3434]!",
+            footerActionText: "text-[#bebec0]!",
           },
         }}
       />

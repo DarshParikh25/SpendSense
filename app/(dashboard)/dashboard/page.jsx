@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 export default async function Dashboard() {
   const user = await requiresAuth();
 
+  // This will be taken care by the middleware, but it is a good practice to include it.
   // Redirect to '/sign-in' if not authenticated
   if (!user) {
     redirect("/sign-in");
