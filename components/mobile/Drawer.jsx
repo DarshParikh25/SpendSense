@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 const Drawer = ({ justifyType = "justify-between", children }) => {
   const { isLoaded } = useUser();
 
-  const open = useAppSelector((state) => state.ui.open);
+  const isMenuOpen = useAppSelector((state) => state.ui.isMenuOpen);
 
   if (!isLoaded) {
     return null;
@@ -17,7 +17,7 @@ const Drawer = ({ justifyType = "justify-between", children }) => {
   return (
     <aside
       className={cn(
-        open ? "translate-x-0" : "translate-x-full",
+        isMenuOpen ? "translate-x-0" : "translate-x-full",
         "fixed top-22 right-0 z-50 h-[90vh] w-[85%] max-w-sm bg-[#1d1e24] transform transition-transform duration-300 ease-in-out",
       )}
     >

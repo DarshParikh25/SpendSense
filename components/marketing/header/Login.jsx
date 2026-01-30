@@ -9,11 +9,11 @@ import { Button } from "@/components/ui/button";
 const Login = () => {
   // const dispatch = useAppDispatch();
 
-  // const open = useAppSelector((state) => state.ui.open);
+  // const isMenuOpen = useAppSelector((state) => state.ui.isMenuOpen);
 
   // this will work only after login is successful
   // const handleLogin = () => {
-  //   if (open) {
+  //   if (isMenuOpen) {
   //     dispatch(closeMobileNav());
   //   }
   // };

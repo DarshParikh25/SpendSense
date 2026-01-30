@@ -12,10 +12,10 @@ import Link from "next/link";
 const DashboardBtn = () => {
   const dispatch = useAppDispatch();
 
-  const open = useAppSelector((state) => state.ui.open);
+  const isMenuOpen = useAppSelector((state) => state.ui.isMenuOpen);
 
   const handleDashboard = () => {
-    if (open) {
+    if (isMenuOpen) {
       dispatch(closeMobileNav());
     }
   };
@@ -24,7 +24,7 @@ const DashboardBtn = () => {
     <TooltipWrapper content={"Dashboard"} hideOnDesktop>
       <Button
         className={cn(
-          open
+          isMenuOpen
             ? "border-[#1D1E24] hover:bg-[#b9b9b9]"
             : "border-[#BEBEC0] hover:bg-[#16161b]",
           "font-bold border bg-transparent",
@@ -33,7 +33,7 @@ const DashboardBtn = () => {
       >
         <Link href={"/dashboard"} onClick={handleDashboard}>
           <LayoutDashboard className="h-4 w-4" />
-          <span className={open ? "inline" : "hidden lg:inline"}>
+          <span className={isMenuOpen ? "inline" : "hidden lg:inline"}>
             Dashboard
           </span>
         </Link>

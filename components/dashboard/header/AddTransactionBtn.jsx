@@ -11,10 +11,10 @@ import Link from "next/link";
 const AddTransactionBtn = () => {
   const dispatch = useAppDispatch();
 
-  const open = useAppSelector((state) => state.ui.open);
+  const isMenuOpen = useAppSelector((state) => state.ui.isMenuOpen);
 
   const handleAddTransaction = () => {
-    if (open) {
+    if (isMenuOpen) {
       dispatch(closeMobileNav());
     }
   };
@@ -29,7 +29,7 @@ const AddTransactionBtn = () => {
           <SquarePen className="h-4 w-4" />
           <span
             className={cn(
-              open ? "inline" : "hidden lg:inline",
+              isMenuOpen ? "inline" : "hidden lg:inline",
               "font-semibold",
             )}
           >

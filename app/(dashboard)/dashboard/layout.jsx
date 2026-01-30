@@ -15,7 +15,9 @@ const DashboardLayout = ({ children }) => {
         <DashboardNav />
         <DashboardMobNav />
       </header>
-      <main className="min-h-screen relative mt-24 z-0">{children}</main>
+      <main className="min-h-screen relative mt-24 md:mt-28 px-6 sm:px-10 lg:px-16 xl:px-20 z-0">
+        {children}
+      </main>
       <footer>
         <Footer />
       </footer>
