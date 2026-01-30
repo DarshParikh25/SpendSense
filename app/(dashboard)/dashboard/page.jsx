@@ -11,7 +11,7 @@ export default async function Dashboard() {
   }
 
   return (
-    <div>
+    <div className="mt-24 md:mt-28">
       <h1>Dashboard</h1>
     </div>
   );

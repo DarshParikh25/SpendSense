@@ -1,6 +1,8 @@
 import { Inter } from "next/font/google";
 
 import "./globals.css";
+import StoreProvider from "./StoreProvider";
+
 import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata = {
@@ -27,7 +29,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <ClerkProvider>
         <body className={`${inter.className} bg-[#1D1E24] text-[#BEBEC0]`}>
-          {children}
+          <StoreProvider>{children}</StoreProvider>
         </body>
       </ClerkProvider>
     </html>

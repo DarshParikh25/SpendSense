@@ -1,10 +1,9 @@
 import { Inter } from "next/font/google";
 
 import "../globals.css";
-import Footer from "@/components/marketing/footer/Footer";
-import Navbar from "@/components/marketing/header/Navbar";
-import MobileNav from "@/components/marketing/header/mobile/MobileNav";
-import StoreProvider from "../StoreProvider";
+import Footer from "@/components/footer/Footer";
+import MarketingNav from "@/components/marketing/header/MarketingNav";
+import MarketingMobNav from "@/components/marketing/header/mobile/MarketingMobNav";
 
 export const metadata = {
   title: "Money at Your Fingertips",
@@ -20,15 +19,15 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function MarketingLayout({ children }) {
   return (
-    <StoreProvider>
+    <div>
       <header>
-        <Navbar />
-        <MobileNav />
+        <MarketingNav />
+        <MarketingMobNav />
       </header>
       <main className="min-h-screen relative mt-24 z-0">{children}</main>
       <footer>
         <Footer />
       </footer>
-    </StoreProvider>
+    </div>
   );
 }

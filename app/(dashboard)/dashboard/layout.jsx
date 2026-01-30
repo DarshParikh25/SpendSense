@@ -1,3 +1,7 @@
+import Footer from "@/components/footer/Footer";
+import DashboardMobNav from "@/components/dashboard/header/mobile/DashboardMobNav";
+import DashboardNav from "@/components/dashboard/header/DashboardNav";
+
 export const metadata = {
   title: "Dashboard",
 
@@ -5,7 +9,18 @@ export const metadata = {
 };
 
 const DashboardLayout = ({ children }) => {
-  return <div>{children}</div>;
+  return (
+    <div>
+      <header>
+        <DashboardNav />
+        <DashboardMobNav />
+      </header>
+      <main className="min-h-screen relative mt-24 z-0">{children}</main>
+      <footer>
+        <Footer />
+      </footer>
+    </div>
+  );
 };
 
 export default DashboardLayout;
