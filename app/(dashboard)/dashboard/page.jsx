@@ -2,6 +2,7 @@ import Budget from "@/components/dashboard/budget/Budget";
 import ExpenseBreakdown from "@/components/dashboard/overview/ExpenseBreakdown";
 import RecentTransactions from "@/components/dashboard/overview/RecentTransactions";
 import requiresAuth from "@/lib/auth/requiresAuth";
+
 import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
@@ -14,7 +15,7 @@ export default async function Dashboard() {
   }
 
   return (
-    <div className="py-8 md:py-12 grid lg:grid-cols-2 grid-cols-1 gap-8">
+    <div className="py-8 md:py-12 grid lg:grid-cols-2 grid-cols-1 gap-10">
       <h1 className="text-[#fb5756] font-bold text-4xl lg:text-5xl tracking-tight col-span-2">
         Dashboard
       </h1>

@@ -23,6 +23,8 @@ const Budget = () => {
 
   const progress = useAppSelector(selectBudgetProgress);
 
+  const used = Number(progress) >= 100 ? "100.00" : progress;
+
   const handleBudgetChange = (e) => {
     dispatch(setDraftBudget(e.target.value));
   };
@@ -42,7 +44,7 @@ const Budget = () => {
   };
 
   return (
-    <div className="flex flex-col border-2 border-[#bebec0] col-span-2 rounded-xl px-8 py-6 gap-1">
+    <div className="flex flex-col border-2 border-[#bebec0] col-span-2 rounded-xl p-8 gap-1.5">
       <h2 className="text-white text-lg font-medium">
         Monthly Budget (Default Account)
       </h2>
@@ -68,7 +70,7 @@ const Budget = () => {
 
       {/* Progress bar */}
       <Progress
-        value={progress}
+        value={used}
         className={"bg-[#bebec0] mt-2 *:bg-[#fb5756] *:rounded-full"}
       />
       <p className="w-fit text-sm self-end">{progress}% used</p>

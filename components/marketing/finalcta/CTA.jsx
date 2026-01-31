@@ -15,7 +15,7 @@ const CTA = () => {
       asChild
     >
       <Link
-        href={user ? "/dashbord" : "/sign-in"}
+        href={user ? "/dashboard" : "/sign-in"}
         aria-label={`Button to ${user ? "Dashboard" : "Login"}`}
       >
         Get Started
