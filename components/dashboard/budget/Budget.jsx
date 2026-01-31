@@ -42,7 +42,7 @@ const Budget = () => {
   };
 
   return (
-    <div className="flex flex-col border-2 border-[#bebec0] col-span-2 rounded-2xl px-8 py-6 gap-1">
+    <div className="flex flex-col border-2 border-[#bebec0] col-span-2 rounded-xl px-8 py-6 gap-1">
       <h2 className="text-white text-lg font-medium">
         Monthly Budget (Default Account)
       </h2>

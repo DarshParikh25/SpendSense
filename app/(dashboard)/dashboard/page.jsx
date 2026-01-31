@@ -1,4 +1,6 @@
 import Budget from "@/components/dashboard/budget/Budget";
+import ExpenseBreakdown from "@/components/dashboard/overview/ExpenseBreakdown";
+import RecentTransactions from "@/components/dashboard/overview/RecentTransactions";
 import requiresAuth from "@/lib/auth/requiresAuth";
 import { redirect } from "next/navigation";
 
@@ -16,7 +18,12 @@ export default async function Dashboard() {
       <h1 className="text-[#fb5756] font-bold text-4xl lg:text-5xl tracking-tight col-span-2">
         Dashboard
       </h1>
+      {/* Budget Progress */}
       <Budget />
+
+      {/* Overview */}
+      <RecentTransactions />
+      <ExpenseBreakdown />
     </div>
   );
 }
