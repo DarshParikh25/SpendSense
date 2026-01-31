@@ -7,35 +7,35 @@ const transactions = [
     recurring: true,
     date: "Dec 12, 2025",
     amount: "1500.00",
-    type: "debit",
+    type: "expense",
   },
   {
     title: "Netflix",
     recurring: true,
     date: "Dec 8, 2025",
     amount: "10.00",
-    type: "debit",
+    type: "expense",
   },
   {
     title: "Received Salary",
     recurring: false,
     date: "Dec 5, 2025",
     amount: "5549.52",
-    type: "credit",
+    type: "income",
   },
   {
     title: "Shopping",
     recurring: false,
     date: "Dec 5, 2025",
     amount: "157.21",
-    type: "debit",
+    type: "expense",
   },
   {
     title: "Shopping",
     recurring: false,
     date: "Dec 4, 2025",
     amount: "418.58",
-    type: "debit",
+    type: "expense",
   },
 ];
 
@@ -46,19 +46,19 @@ const LastFiveTransactions = () => {
         <div key={index} className="flex items-center justify-between">
           <div>
             <h4 className="font-bold">
-              {title}
+              {title || "Untitled"}
               <span>{recurring && "(Recurring)"}</span>
             </h4>
             <p className="opacity-75 font-medium">{date}</p>
           </div>
           <div
             className={cn(
-              type === "debit" ? "text-[#FB5756]" : "text-[#72FF52]",
+              type === "expense" ? "text-[#FB5756]" : "text-[#72FF52]",
               "flex justify-center items-center gap-0.5 w-fit",
             )}
           >
             <span>
-              {type === "debit" ? (
+              {type === "expense" ? (
                 <ArrowDownRight className="w-5 h-5" />
               ) : (
                 <ArrowUpRight className="w-5 h-5" />

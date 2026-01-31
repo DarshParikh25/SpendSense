@@ -16,7 +16,7 @@ export default async function Dashboard() {
 
   return (
     <div className="py-8 md:py-12 grid lg:grid-cols-2 grid-cols-1 gap-10">
-      <h1 className="text-[#fb5756] font-bold text-4xl lg:text-5xl tracking-tight col-span-2">
+      <h1 className="text-[#fb5756] font-bold text-4xl lg:text-5xl tracking-tight lg:col-span-2">
         Dashboard
       </h1>
       {/* Budget Progress */}

@@ -1,10 +1,18 @@
-import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import ExpenseChart from "./ExpenseChart";
 
 const ExpenseBreakdown = () => {
   return (
-    <div className="w-full border-2 border-[#bebec0] rounded-xl col-span-1">
-      <h2>Monthly Expense Breakdown</h2>
-    </div>
+    <Card className="border-2 border-[#bebec0] rounded-xl col-span-1 px-4 py-8">
+      <CardHeader>
+        <CardTitle className={"text-lg font-medium text-white"}>
+          Monthly Expense Breakdown
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ExpenseChart />
+      </CardContent>
+    </Card>
   );
 };
 

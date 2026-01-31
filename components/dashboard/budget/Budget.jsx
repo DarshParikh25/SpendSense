@@ -14,6 +14,13 @@ import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
 
 import ProgressInfo from "./ProgressInfo";
 import EditBudget from "./EditBudget";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const Budget = () => {
   const dispatch = useAppDispatch();
@@ -44,37 +51,41 @@ const Budget = () => {
   };
 
   return (
-    <div className="flex flex-col border-2 border-[#bebec0] col-span-2 rounded-xl p-8 gap-1.5">
-      <h2 className="text-white text-lg font-medium">
-        Monthly Budget (Default Account)
-      </h2>
-      <div className="flex items-center gap-2">
-        {/* Budget and spent information */}
-        <ProgressInfo
-          isBudgetEditing={isBudgetEditing}
-          spent={spent}
-          total={total}
-          draftBudget={draftBudget}
-          progress={progress}
-          handleBudgetChange={handleBudgetChange}
-        />
+    <Card className="border-2 border-[#bebec0] lg:col-span-2 gap-0">
+      <CardHeader>
+        <CardTitle className="text-white text-lg font-medium">
+          Monthly Budget (Default Account)
+        </CardTitle>
+      </CardHeader>
+      <CardContent className={"flex flex-col gap-1"}>
+        <div className="flex items-center gap-2">
+          {/* Budget and spent information */}
+          <ProgressInfo
+            isBudgetEditing={isBudgetEditing}
+            spent={spent}
+            total={total}
+            draftBudget={draftBudget}
+            progress={progress}
+            handleBudgetChange={handleBudgetChange}
+          />
 
-        {/* Edit, Save, or Cancel buttons */}
-        <EditBudget
-          isBudgetEditing={isBudgetEditing}
-          handleSaveBudget={handleSaveBudget}
-          handleCancelBudget={handleCancelBudget}
-          handleEditBudget={handleEditBudget}
-        />
-      </div>
+          {/* Edit, Save, or Cancel buttons */}
+          <EditBudget
+            isBudgetEditing={isBudgetEditing}
+            handleSaveBudget={handleSaveBudget}
+            handleCancelBudget={handleCancelBudget}
+            handleEditBudget={handleEditBudget}
+          />
+        </div>
 
-      {/* Progress bar */}
-      <Progress
-        value={used}
-        className={"bg-[#bebec0] mt-2 *:bg-[#fb5756] *:rounded-full"}
-      />
-      <p className="w-fit text-sm self-end">{progress}% used</p>
-    </div>
+        {/* Progress bar */}
+        <Progress
+          value={used}
+          className={"bg-[#bebec0] mt-2 *:bg-[#fb5756] *:rounded-full"}
+        />
+        <p className="w-fit text-sm self-end">{progress}% used</p>
+      </CardContent>
+    </Card>
   );
 };
 
