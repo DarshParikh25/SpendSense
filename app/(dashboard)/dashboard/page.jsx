@@ -1,8 +1,7 @@
+import requiresAuth from "@/lib/auth/requiresAuth";
 import Budget from "@/components/dashboard/budget/Budget";
 import Accounts from "@/components/dashboard/accounts/Accounts";
-import ExpenseBreakdown from "@/components/dashboard/overview/ExpenseBreakdown";
-import RecentTransactions from "@/components/dashboard/overview/RecentTransactions";
-import requiresAuth from "@/lib/auth/requiresAuth";
+import Overview from "@/components/dashboard/overview/Overview";
 
 import { redirect } from "next/navigation";
 
@@ -24,10 +23,7 @@ export default async function Dashboard() {
       <Budget />
 
       {/* Overview */}
-      <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10">
-        <RecentTransactions />
-        <ExpenseBreakdown />
-      </div>
+      <Overview />
 
       {/* Accounts Grid */}
       <Accounts />

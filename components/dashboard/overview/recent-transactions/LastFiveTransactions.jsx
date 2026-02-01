@@ -1,12 +1,13 @@
-import { currencyFormatter } from "@/lib/formatter";
 import { cn } from "@/lib/utils";
+import { currencyFormatter } from "@/lib/formatter";
+
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 const LastFiveTransactions = ({ transactions }) => {
   return (
     <div className="w-full flex flex-col gap-6">
-      {transactions.map(({ title, recurring, date, amount, type }, index) => (
-        <div key={index} className="flex items-center justify-between">
+      {transactions.map(({ id, title, recurring, date, amount, type }) => (
+        <div key={id} className="flex items-center justify-between">
           <div>
             <h4 className="font-bold">
               {title || "Untitled"}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -13,12 +13,22 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
+import { setRecentTransactionAcc } from "@/lib/store/features/ui/uiSlice";
 
 const accounts = ["personal", "work"];
 
 const AccountsDropdown = () => {
-  const [account, setAccount] = useState("personal");
+  const dispatch = useAppDispatch();
+
+  const account = useAppSelector((state) => state.ui.recentTransactionsAcc);
+
   const [open, setOpen] = useState(false);
+
+  const handleAccount = (value) => {
+    dispatch(setRecentTransactionAcc(value));
+    setOpen(false);
+  };
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -36,7 +46,7 @@ const AccountsDropdown = () => {
           <DropdownMenuLabel className={"opacity-75 font-normal"}>
             Accounts
           </DropdownMenuLabel>
-          <DropdownMenuRadioGroup value={account} onValueChange={setAccount}>
+          <DropdownMenuRadioGroup value={account} onValueChange={handleAccount}>
             {/* Later on we'll fetch the accounts of the user from the DB */}
             {accounts.map((acc, index) => (
               <DropdownMenuRadioItem

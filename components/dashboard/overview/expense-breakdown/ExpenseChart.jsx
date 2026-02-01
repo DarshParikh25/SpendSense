@@ -65,6 +65,7 @@ const ExpensePieChart = ({ rawData }) => {
             shape={PieSlice}
             labelLine
             label={renderLabel}
+            isAnimationActive={false}
           />
           <Legend />
         </PieChart>
