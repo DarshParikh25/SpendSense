@@ -2,33 +2,7 @@
 
 import { PieChart, Pie, ResponsiveContainer, Sector, Legend } from "recharts";
 
-/* Raw data */
-const rawData = [
-  { category: "Rental", value: "1500.00", proportion: "35.56" },
-  { category: "Travel", value: "1251.66", proportion: "29.68" },
-  { category: "Entertainment", value: "304.33", proportion: "7.22" },
-  { category: "Shopping", value: "1161.13", proportion: "27.53" },
-];
-
 const RADIAN = Math.PI / 180;
-
-/* Slice colors */
-const COLORS = ["#FB5756", "#4ADE80", "#60A5FA", "#FACC15"];
-
-/* Convert value to number */
-const data = rawData.map((item, index) => ({
-  ...item,
-  name: item.category,
-  value: Number(item.value),
-  fill: COLORS[index % COLORS.length],
-}));
-
-/* Custom slice renderer (OFFICIAL way) */
-const PieSlice = (props) => {
-  const { index } = props;
-
-  return <Sector {...props} fill={COLORS[index % COLORS.length]} />;
-};
 
 /* Percentage labels */
 const renderLabel = ({
@@ -60,7 +34,25 @@ const renderLabel = ({
   );
 };
 
-const ExpensePieChart = () => {
+const ExpensePieChart = ({ rawData }) => {
+  /* Slice colors */
+  const COLORS = ["#FB5756", "#4ADE80", "#60A5FA", "#FACC15"];
+
+  /* Convert value to number */
+  const data = rawData.map((item, index) => ({
+    ...item,
+    name: item.category,
+    value: Number(item.value),
+    fill: COLORS[index % COLORS.length],
+  }));
+
+  /* Custom slice renderer (OFFICIAL way) */
+  const PieSlice = (props) => {
+    const { index } = props;
+
+    return <Sector {...props} fill={COLORS[index % COLORS.length]} />;
+  };
+
   return (
     <div className="w-full h-80">
       <ResponsiveContainer width="100%" height="100%">

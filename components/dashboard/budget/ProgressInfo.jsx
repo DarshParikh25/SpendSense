@@ -27,7 +27,7 @@ const ProgressInfo = ({
             type="number"
           />
         ) : (
-          `$${spent.toFixed(2)} of $${total.toFixed(2)} spent`
+          `${spent} of ${total} spent`
         )}
       </span>
     </div>

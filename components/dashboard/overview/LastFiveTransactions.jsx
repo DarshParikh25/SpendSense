@@ -1,45 +1,8 @@
+import { currencyFormatter } from "@/lib/formatter";
 import { cn } from "@/lib/utils";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 
-const transactions = [
-  {
-    title: "Flat Rent",
-    recurring: true,
-    date: "Dec 12, 2025",
-    amount: "1500.00",
-    type: "expense",
-  },
-  {
-    title: "Netflix",
-    recurring: true,
-    date: "Dec 8, 2025",
-    amount: "10.00",
-    type: "expense",
-  },
-  {
-    title: "Received Salary",
-    recurring: false,
-    date: "Dec 5, 2025",
-    amount: "5549.52",
-    type: "income",
-  },
-  {
-    title: "Shopping",
-    recurring: false,
-    date: "Dec 5, 2025",
-    amount: "157.21",
-    type: "expense",
-  },
-  {
-    title: "Shopping",
-    recurring: false,
-    date: "Dec 4, 2025",
-    amount: "418.58",
-    type: "expense",
-  },
-];
-
-const LastFiveTransactions = () => {
+const LastFiveTransactions = ({ transactions }) => {
   return (
     <div className="w-full flex flex-col gap-6">
       {transactions.map(({ title, recurring, date, amount, type }, index) => (
@@ -64,8 +27,7 @@ const LastFiveTransactions = () => {
                 <ArrowUpRight className="w-5 h-5" />
               )}
             </span>
-            <span>$</span>
-            {amount}
+            {currencyFormatter.format(amount)}
           </div>
         </div>
       ))}

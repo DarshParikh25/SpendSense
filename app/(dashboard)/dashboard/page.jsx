@@ -1,4 +1,5 @@
 import Budget from "@/components/dashboard/budget/Budget";
+import Accounts from "@/components/dashboard/accounts/Accounts";
 import ExpenseBreakdown from "@/components/dashboard/overview/ExpenseBreakdown";
 import RecentTransactions from "@/components/dashboard/overview/RecentTransactions";
 import requiresAuth from "@/lib/auth/requiresAuth";
@@ -15,16 +16,21 @@ export default async function Dashboard() {
   }
 
   return (
-    <div className="py-8 md:py-12 grid lg:grid-cols-2 grid-cols-1 gap-10">
-      <h1 className="text-[#fb5756] font-bold text-4xl lg:text-5xl tracking-tight lg:col-span-2">
+    <div className="py-8 md:py-12 flex flex-col gap-10">
+      <h1 className="text-[#fb5756] font-bold text-4xl lg:text-5xl tracking-tight">
         Dashboard
       </h1>
       {/* Budget Progress */}
       <Budget />
 
       {/* Overview */}
-      <RecentTransactions />
-      <ExpenseBreakdown />
+      <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10">
+        <RecentTransactions />
+        <ExpenseBreakdown />
+      </div>
+
+      {/* Accounts Grid */}
+      <Accounts />
     </div>
   );
 }

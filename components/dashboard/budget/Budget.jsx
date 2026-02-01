@@ -1,7 +1,5 @@
 "use client";
 
-import { Progress } from "@/components/ui/progress";
-import { selectBudgetProgress } from "@/lib/store/features/budget/budgetSelector";
 import {
   setDraftBudget,
   updateBudget,
@@ -10,17 +8,13 @@ import {
   openBudgetEditor,
   closeBudgetEditor,
 } from "@/lib/store/features/ui/uiSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
-
-import ProgressInfo from "./ProgressInfo";
 import EditBudget from "./EditBudget";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import ProgressInfo from "./ProgressInfo";
+import { Progress } from "@/components/ui/progress";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { selectBudgetProgress } from "@/lib/store/features/budget/budgetSelector";
+import { currencyFormatter } from "@/lib/formatter";
 
 const Budget = () => {
   const dispatch = useAppDispatch();
@@ -51,10 +45,10 @@ const Budget = () => {
   };
 
   return (
-    <Card className="border-2 border-[#bebec0] lg:col-span-2 gap-0">
+    <Card className="border-2 border-[#bebec0] gap-0">
       <CardHeader>
-        <CardTitle className="text-white text-lg font-medium">
-          Monthly Budget (Default Account)
+        <CardTitle className="text-white text-xl font-semibold">
+          {`Monthly Budget (Default Account)`}
         </CardTitle>
       </CardHeader>
       <CardContent className={"flex flex-col gap-1"}>
@@ -62,8 +56,8 @@ const Budget = () => {
           {/* Budget and spent information */}
           <ProgressInfo
             isBudgetEditing={isBudgetEditing}
-            spent={spent}
-            total={total}
+            spent={currencyFormatter.format(spent)}
+            total={currencyFormatter.format(total)}
             draftBudget={draftBudget}
             progress={progress}
             handleBudgetChange={handleBudgetChange}
