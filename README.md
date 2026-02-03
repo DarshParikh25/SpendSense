@@ -7,3 +7,4 @@
 3. Tailwind CSS
 4. Redux ToolKit (RTK)
 5. Clerk
+6. react-hook-forms

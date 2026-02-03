@@ -10,6 +10,7 @@ const Logo = () => {
         height={100}
         alt="logo"
         className="h-6 lg:h-10 xl:h-12 w-auto object-cover pointer-events-none"
+        priority
       />
     </Link>
   );

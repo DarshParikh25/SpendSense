@@ -27,11 +27,11 @@ const Testimonials = () => {
   ];
 
   return (
-    <div className='px-6 py-20 md:px-20 md:py-40 flex flex-col justify-center items-center gap-18 lg:gap-24'>
-      <h2 className='text-2xl md:text-4xl font-bold text-center'>
+    <div className="px-6 py-20 md:px-20 md:py-40 flex flex-col justify-center items-center gap-18 lg:gap-24">
+      <h2 className="text-2xl md:text-4xl font-bold text-center">
         What Our Users Are Saying
       </h2>
-      <div className='grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-16'>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-16">
         {testimonialDetails.map(
           ({ profile, name, profession, message }, index) => (
             <Card
@@ -49,15 +49,15 @@ const Testimonials = () => {
                   width={56}
                   height={56}
                   alt={`profile picture ${index + 1}`}
-                  className='h-12 md:h-14 w-auto object-contain'
+                  className="h-12 md:h-14 w-auto object-contain"
                 />
-                <div className='w-full flex flex-col justify-center items-start'>
-                  <h4 className='text-[16px] md:text-lg font-bold'>{name}</h4>
-                  <p className='text-xs md:text-sm font-medium'>{profession}</p>
+                <div className="w-full flex flex-col justify-center items-start">
+                  <h4 className="text-[16px] md:text-lg font-bold">{name}</h4>
+                  <p className="text-xs md:text-sm font-medium">{profession}</p>
                 </div>
               </CardFooter>
             </Card>
-          )
+          ),
         )}
       </div>
     </div>

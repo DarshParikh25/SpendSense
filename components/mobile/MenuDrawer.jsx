@@ -5,7 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import { useAppSelector } from "@/lib/store/hooks/hooks";
 import { cn } from "@/lib/utils";
 
-const Drawer = ({ justifyType = "justify-between", children }) => {
+const MenuDrawer = ({ justifyType = "justify-between", children }) => {
   const { isLoaded } = useUser();
 
   const isMenuOpen = useAppSelector((state) => state.ui.isMenuOpen);
@@ -33,4 +33,4 @@ const Drawer = ({ justifyType = "justify-between", children }) => {
   );
 };
 
-export default Drawer;
+export default MenuDrawer;

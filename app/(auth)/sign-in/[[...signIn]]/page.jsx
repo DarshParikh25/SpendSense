@@ -27,6 +27,7 @@ const Login = async () => {
             height={100}
             className="h-10 w-auto object-cover pointer-events-none sha"
             alt="logo"
+            priority
           />
         </h1>
         <p className="text-[#bebec0]">Please sign in to continue!</p>

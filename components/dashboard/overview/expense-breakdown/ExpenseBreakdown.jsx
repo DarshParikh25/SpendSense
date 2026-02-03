@@ -12,7 +12,7 @@ const ExpenseBreakdown = () => {
   /* Raw data */
   const rawData = [
     {
-      account: "personal",
+      account: "Personal",
       allTransactions: [
         { category: "Rental", value: "1500.00", proportion: "35.56" },
         { category: "Travel", value: "1251.66", proportion: "29.68" },
@@ -21,7 +21,7 @@ const ExpenseBreakdown = () => {
       ],
     },
     {
-      account: "work",
+      account: "Work",
       allTransactions: [],
     },
   ];

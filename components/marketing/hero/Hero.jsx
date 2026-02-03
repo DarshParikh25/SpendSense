@@ -22,6 +22,7 @@ const Hero = () => {
         height={716}
         alt="hero image"
         className="lg:h-129 xl:h-179 w-auto shadow-md object-contain pointer-events-none"
+        priority
       />
     </div>
   );

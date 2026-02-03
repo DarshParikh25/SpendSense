@@ -1,9 +1,9 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import AccountsDropdown from "./AccountsDropdown";
 import LastFiveTransactions from "./LastFiveTransactions";
 import { useAppSelector } from "@/lib/store/hooks/hooks";
+import AccountSelect from "./AccountSelect";
 
 const RecentTransactions = () => {
   const selectedAccount = useAppSelector(
@@ -12,7 +12,7 @@ const RecentTransactions = () => {
 
   const transactionDetails = [
     {
-      account: "personal",
+      account: "Personal",
       transactions: [
         {
           id: 1,
@@ -57,7 +57,7 @@ const RecentTransactions = () => {
       ],
     },
     {
-      account: "work",
+      account: "Work",
       transactions: [],
     },
   ];
@@ -74,7 +74,7 @@ const RecentTransactions = () => {
         </CardTitle>
 
         {/* Dropdown to select the account for the recent transactions */}
-        <AccountsDropdown />
+        <AccountSelect />
       </CardHeader>
 
       <CardContent className={"h-full flex justify-center items-center"}>

@@ -35,8 +35,10 @@ const Footer = () => {
             src={"/logos/logo.png"}
             width={200}
             height={100}
+            loading="eager"
             alt="footer-logo"
             className="h-14 w-auto object-contain pointer-events-none"
+            priority
           />
         </Link>
         <div className="flex justify-self-center md:justify-self-start gap-6">
@@ -54,6 +56,7 @@ const Footer = () => {
                 height={48}
                 alt={name}
                 className="md:h-8 lg:h-12 w-auto object-contain pointer-events-none"
+                loading="eager"
               />
             </Link>
           ))}
