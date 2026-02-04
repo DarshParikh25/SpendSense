@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import {
   Drawer,
   DrawerContent,
@@ -9,8 +13,11 @@ import AddAccountCard from "./AddAccountCard";
 import AddAccountForm from "@/components/forms/add-account/AddAccountForm";
 
 const AddAccount = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   return (
-    <Drawer>
+    <Drawer open={isOpen} onOpenChange={isSubmitting ? undefined : setIsOpen}>
       <DrawerTrigger>
         {/* Add Account Card */}
         <AddAccountCard />
@@ -25,7 +32,10 @@ const AddAccount = () => {
             Create New Account
           </DrawerTitle>
         </DrawerHeader>
-        <AddAccountForm />
+        <AddAccountForm
+          closeDrawer={() => setIsOpen(false)}
+          setIsSubmitting={setIsSubmitting}
+        />
       </DrawerContent>
     </Drawer>
   );

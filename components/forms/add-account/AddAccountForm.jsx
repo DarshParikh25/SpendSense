@@ -1,15 +1,17 @@
 "use client";
 
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import AccountTypeSelect from "./AccountTypeSelect";
 import FormCTAs from "./FormCTAs";
 import InputField from "./Input";
 import DefaultToggle from "./DefaultToggle";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { accountSchema } from "@/lib/validators/accountSchema";
 
 const accountTypes = ["Savings", "Current"];
 
-const AddAccountForm = () => {
+const AddAccountForm = ({ closeDrawer, setIsSubmitting }) => {
   const {
     register,
     handleSubmit,
@@ -17,18 +19,22 @@ const AddAccountForm = () => {
     control,
     formState: { errors, isSubmitting },
   } = useForm({
+    resolver: zodResolver(accountSchema),
     defaultValues: {
       name: "",
       type: "Savings",
-      balance: "",
+      balance: 0,
       isDefault: false,
     },
   });
 
   const onSubmit = (data) => {
+    setIsSubmitting(true);
     console.log(data);
     // logic here
     reset();
+    closeDrawer();
+    setIsSubmitting(false);
   };
 
   return (
@@ -62,6 +68,9 @@ const AddAccountForm = () => {
         register={register}
         errors={errors}
         placeholder="0.0"
+        validation={{
+          valueAsNumber: true,
+        }}
         required
       />
 

@@ -7,6 +7,7 @@ const InputField = ({
   register,
   required,
   placeholder = "",
+  validation,
 }) => {
   return (
     <div className="w-full flex flex-col gap-2">
@@ -15,7 +16,7 @@ const InputField = ({
         {required && <span className="text-[#fb5756]">*</span>}
       </label>
       <Input
-        {...register(name, { required })}
+        {...register(name, { required, ...validation })}
         placeholder={placeholder}
         className="input bg-transparent border-[1.5px] border-[#1e1e24]/30 px-4 py-2 rounded-lg focus-visible:ring-0 focus-visible:border-[#1e1e24] outline-none transition-colors"
       />
