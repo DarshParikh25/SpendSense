@@ -1,6 +1,6 @@
 import Footer from "@/components/footer/Footer";
-import DashboardMobNav from "@/components/dashboard/header/mobile/DashboardMobNav";
-import DashboardNav from "@/components/dashboard/header/DashboardNav";
+import DashboardMobNav from "@/app/(main)/dashboard/_component/dashboard/header/mobile/DashboardMobNav";
+import DashboardNav from "@/app/(main)/dashboard/_component/dashboard/header/DashboardNav";
 
 export const metadata = {
   title: "Dashboard",

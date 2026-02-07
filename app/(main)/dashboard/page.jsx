@@ -1,9 +1,10 @@
 import requiresAuth from "@/lib/auth/requiresAuth";
-import Budget from "@/components/dashboard/budget/Budget";
-import Accounts from "@/components/dashboard/accounts/Accounts";
-import Overview from "@/components/dashboard/overview/Overview";
+import Budget from "@/app/(main)/dashboard/_component/dashboard/budget/Budget";
+import Accounts from "@/app/(main)/dashboard/_component/dashboard/accounts/Accounts";
+import Overview from "@/app/(main)/dashboard/_component/dashboard/overview/Overview";
 
 import { redirect } from "next/navigation";
+import Heading from "../../../components/Heading";
 
 export default async function Dashboard() {
   const user = await requiresAuth();
@@ -16,9 +17,7 @@ export default async function Dashboard() {
 
   return (
     <div className="py-8 md:py-12 flex flex-col gap-10">
-      <h1 className="text-[#fb5756] font-bold text-4xl lg:text-5xl tracking-tight">
-        Dashboard
-      </h1>
+      <Heading title={"Dashboard"} />
       {/* Budget Progress */}
       <Budget />
 

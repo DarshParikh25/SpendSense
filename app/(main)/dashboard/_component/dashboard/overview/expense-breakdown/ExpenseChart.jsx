@@ -67,7 +67,7 @@ const ExpensePieChart = ({ rawData }) => {
             label={renderLabel}
             isAnimationActive={false}
           />
-          <Legend />
+          <Legend iconType="circle" />
         </PieChart>
       </ResponsiveContainer>
     </div>
