@@ -1,5 +1,6 @@
 import Title from "./_component/Title";
 import TransactionOverview from "./_component/stats/TransactionOverview";
+import FilterTransactions from "./_component/transactions/FilterTransactions";
 
 // This will come from DB
 const accountsInfo = [
@@ -30,6 +31,7 @@ const AccountPage = async ({ params }) => {
     <div className="py-8 md:py-12 flex flex-col gap-10">
       <Title accountDetails={accountDetails} />
       <TransactionOverview />
+      <FilterTransactions />
     </div>
   );
 };

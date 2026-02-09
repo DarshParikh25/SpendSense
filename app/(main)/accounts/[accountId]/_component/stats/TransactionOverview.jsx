@@ -3,7 +3,7 @@
 import SelectDropdown from "@/components/SelectDropdown";
 import TransactionBarChart from "./TransactionBarChart";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
-import { setDuration } from "@/lib/store/features/ui/uiSlice";
+import { setBarChartDuration } from "@/lib/store/features/ui/uiSlice";
 import Stats from "./Stats";
 
 // Dummy data
@@ -52,10 +52,10 @@ const durationOpts = [
 const TransactionOverview = () => {
   const dispatch = useAppDispatch();
 
-  const duration = useAppSelector((state) => state.ui.duration);
+  const duration = useAppSelector((state) => state.ui.barChartDuration);
 
   const handleDurationChange = (value) => {
-    dispatch(setDuration(value));
+    dispatch(setBarChartDuration(value));
   };
 
   return (
