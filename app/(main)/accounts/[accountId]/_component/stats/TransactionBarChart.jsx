@@ -1,5 +1,4 @@
-"use client";
-
+import { currencyFormatter } from "@/lib/formatter";
 import { RechartsDevtools } from "@recharts/devtools";
 import {
   Bar,
@@ -12,40 +11,7 @@ import {
   YAxis,
 } from "recharts";
 
-const transactionData = [
-  {
-    name: "Feb 06",
-    income: 2045.75,
-    expense: 560.1,
-  },
-  {
-    name: "Feb 05",
-    income: 1045.75,
-    expense: 260.1,
-  },
-  {
-    name: "Feb 04",
-    income: 2345.15,
-    expense: 960.1,
-  },
-  {
-    name: "Feb 03",
-    income: 245.45,
-    expense: 1005.1,
-  },
-  {
-    name: "Feb 02",
-    income: 3200.7,
-    expense: 500.1,
-  },
-  {
-    name: "Feb 01",
-    income: 2005.0,
-    expense: 260.16,
-  },
-];
-
-const TransactionBarChart = () => {
+const TransactionBarChart = ({ transactionData }) => {
   return (
     <ResponsiveContainer width={"100%"} height={450}>
       <BarChart data={transactionData}>
@@ -53,6 +19,10 @@ const TransactionBarChart = () => {
         <XAxis dataKey={"name"} axisLine={false} tickLine={false} />
         <YAxis axisLine={false} tickLine={false} />
         <Tooltip
+          formatter={(value, name) => [
+            currencyFormatter.format(value),
+            name === "income" ? "Income" : "Expense",
+          ]}
           contentStyle={{
             backgroundColor: "#1e1e24",
             borderWidth: "1.5px",
@@ -63,12 +33,14 @@ const TransactionBarChart = () => {
         <Legend iconType="circle" />
         <Bar
           dataKey={"income"}
+          name={"Income"}
           fill="#72FF52"
           activeBar={{ fill: "#72ff52", stroke: "#1e1e24", strokeWidth: 2 }}
           radius={[10, 10, 0, 0]}
         />
         <Bar
           dataKey={"expense"}
+          name={"Expense"}
           fill="#FB5756"
           activeBar={{ fill: "#FB5756", stroke: "#1e1e24", strokeWidth: 2 }}
           radius={[10, 10, 0, 0]}

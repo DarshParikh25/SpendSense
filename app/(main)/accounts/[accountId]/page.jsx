@@ -1,5 +1,5 @@
-import TransactionBarChart from "./_component/stats/TransactionBarChart";
 import Title from "./_component/Title";
+import TransactionOverview from "./_component/stats/TransactionOverview";
 
 // This will come from DB
 const accountsInfo = [
@@ -29,7 +29,7 @@ const AccountPage = async ({ params }) => {
   return (
     <div className="py-8 md:py-12 flex flex-col gap-10">
       <Title accountDetails={accountDetails} />
-      <TransactionBarChart />
+      <TransactionOverview />
     </div>
   );
 };
