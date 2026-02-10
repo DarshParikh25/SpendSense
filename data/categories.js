@@ -1,0 +1,188 @@
+const transactionCategories = [
+  // Income Categories
+  {
+    id: "salary",
+    name: "Salary",
+    type: "Income",
+    color: "#4CAF50",
+    icon: "Briefcase",
+  },
+  {
+    id: "freelance",
+    name: "Freelance",
+    type: "Income",
+    color: "#2196F3",
+    icon: "Code",
+  },
+  {
+    id: "investments",
+    name: "Investments",
+    type: "Income",
+    color: "#9C27B0",
+    icon: "TrendingUp",
+  },
+  {
+    id: "business",
+    name: "Business",
+    type: "Income",
+    color: "#FF9800",
+    icon: "Store",
+  },
+  {
+    id: "rental",
+    name: "Rental",
+    type: "Income",
+    color: "#795548",
+    icon: "Home",
+  },
+  {
+    id: "gifts",
+    name: "Gifts",
+    type: "Income",
+    color: "#E91E63",
+    icon: "Gift",
+  },
+  {
+    id: "rewards",
+    name: "Rewards",
+    type: "Income",
+    color: "#EC407A",
+    icon: "Gift",
+  },
+
+  // Expense Categories
+  {
+    id: "shopping",
+    name: "Shopping",
+    type: "Expense",
+    color: "#F44336",
+    icon: "ShoppingBag",
+  },
+  {
+    id: "groceries",
+    name: "Groceries",
+    type: "Expense",
+    color: "#8BC34A",
+    icon: "Coffee",
+  },
+  {
+    id: "housing",
+    name: "Housing",
+    type: "Expense",
+    color: "#3F51B5",
+    icon: "Home",
+  },
+  {
+    id: "rent",
+    name: "Rent",
+    type: "Expense",
+    color: "#5C6BC0",
+    icon: "Home",
+  },
+  {
+    id: "transportation",
+    name: "Transportation",
+    type: "Expense",
+    color: "#009688",
+    icon: "Car",
+  },
+  {
+    id: "food",
+    name: "Food",
+    type: "Expense",
+    color: "#FF7043",
+    icon: "Utensils",
+  },
+  {
+    id: "dining",
+    name: "Dining",
+    type: "Expense",
+    color: "#FF5722",
+    icon: "Utensils",
+  },
+  {
+    id: "utilities",
+    name: "Utilities",
+    type: "Expense",
+    color: "#607D8B",
+    icon: "Wifi",
+  },
+  {
+    id: "healthcare",
+    name: "Healthcare",
+    type: "Expense",
+    color: "#D32F2F",
+    icon: "HeartPulse",
+  },
+  {
+    id: "entertainment",
+    name: "Entertainment",
+    type: "Expense",
+    color: "#673AB7",
+    icon: "Film",
+  },
+  {
+    id: "education",
+    name: "Education",
+    type: "Expense",
+    color: "#1976D2",
+    icon: "GraduationCap",
+  },
+  {
+    id: "travel",
+    name: "Travel",
+    type: "Expense",
+    color: "#00BCD4",
+    icon: "Plane",
+  },
+  {
+    id: "insurance",
+    name: "Insurance",
+    type: "Expense",
+    color: "#455A64",
+    icon: "Shield",
+  },
+  {
+    id: "savings",
+    name: "Savings",
+    type: "Expense",
+    color: "#388E3C",
+    icon: "PiggyBank",
+  },
+  {
+    id: "maintenance",
+    name: "Maintenance",
+    type: "Expense",
+    color: "#FFA000",
+    icon: "Wrench",
+  },
+  {
+    id: "repairs",
+    name: "Repairs",
+    type: "Expense",
+    color: "#FFB300",
+    icon: "Wrench",
+  },
+  {
+    id: "mobile",
+    name: "Mobile",
+    type: "Expense",
+    color: "#0288D1",
+    icon: "Phone",
+  },
+  {
+    id: "internet",
+    name: "Internet",
+    type: "Expense",
+    color: "#039BE5",
+    icon: "Wifi",
+  },
+];
+
+export const categoryColors = Object.fromEntries(
+  transactionCategories.map((cat) => [cat.id, cat.color]),
+);
+
+export const categoryIcons = Object.fromEntries(
+  transactionCategories.map((cat) => [cat.id, cat.icon]),
+);
