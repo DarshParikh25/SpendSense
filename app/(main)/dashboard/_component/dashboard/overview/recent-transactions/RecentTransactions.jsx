@@ -6,71 +6,19 @@ import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
 import { setRecentTransactionAcc } from "@/lib/store/features/ui/uiSlice";
 import SelectDropdown from "@/components/SelectDropdown";
 import { useEffect } from "react";
-
-const accountDetails = [
-  {
-    id: 1,
-    name: "Personal",
-    transactions: [
-      {
-        id: 1,
-        title: "Flat Rent",
-        recurring: true,
-        date: "Dec 12, 2025",
-        amount: "1500.00",
-        type: "expense",
-      },
-      {
-        id: 2,
-        title: "Netflix",
-        recurring: true,
-        date: "Dec 8, 2025",
-        amount: "10.00",
-        type: "expense",
-      },
-      {
-        id: 3,
-        title: "Received Salary",
-        recurring: false,
-        date: "Dec 5, 2025",
-        amount: "5549.52",
-        type: "income",
-      },
-      {
-        id: 4,
-        title: "Shopping",
-        recurring: false,
-        date: "Dec 5, 2025",
-        amount: "157.21",
-        type: "expense",
-      },
-      {
-        id: 5,
-        title: "Shopping",
-        recurring: false,
-        date: "Dec 4, 2025",
-        amount: "418.58",
-        type: "expense",
-      },
-    ],
-    isDefault: true,
-  },
-  {
-    id: 2,
-    name: "Work",
-    transactions: [],
-    isDefault: false,
-  },
-];
+import { db } from "@/data/db";
 
 const RecentTransactions = () => {
   const dispatch = useAppDispatch();
 
+  const accOpts = db.map((acc) => acc.account.name);
+
   useEffect(() => {
-    const defaultAccount = accountDetails.find((acc) => acc.isDefault);
+    const defaultAccount = db.find((acc) => acc.account.isDefault);
+    console.log(defaultAccount);
 
     if (defaultAccount) {
-      dispatch(setRecentTransactionAcc(defaultAccount.name));
+      dispatch(setRecentTransactionAcc(defaultAccount.account.name));
     }
   }, [dispatch]);
 
@@ -84,9 +32,9 @@ const RecentTransactions = () => {
     (state) => state.ui.recentTransactionsAcc,
   );
 
-  const accountTransactions =
-    accountDetails.find((acc) => acc.name === selectedAccount)?.transactions ??
-    [];
+  const accountTransactions = db.find(
+    (acc) => acc.account.name === selectedAccount,
+  )?.account?.transactions;
 
   return (
     <Card className="border-2 border-[#bebec0] rounded-xl px-4 py-8 col-span-1 gap-8">
@@ -97,7 +45,7 @@ const RecentTransactions = () => {
 
         {/* Dropdown to select the account for the recent transactions */}
         <SelectDropdown
-          options={accountDetails}
+          options={accOpts}
           label={"Accounts"}
           value={account}
           onChange={handleAccountChange}

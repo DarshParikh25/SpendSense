@@ -1,41 +1,20 @@
+import { db } from "@/data/db";
 import Title from "./_component/Title";
 import TransactionOverview from "./_component/stats/TransactionOverview";
-import FilterTransactions from "./_component/transactions/FilterTransactions";
-import TransactionTable from "./_component/transactions/TransactionTable";
-
-// This will come from DB
-const accountsInfo = [
-  {
-    id: 1,
-    name: "Work",
-    isDefault: false,
-    balance: "5941.00",
-    type: "Current Account",
-    transactionCount: 34,
-  },
-  {
-    id: 2,
-    name: "Personal",
-    isDefault: true,
-    balance: "152124.00",
-    type: "Savings Account",
-    transactionCount: 178,
-  },
-];
+import AllTransactions from "./_component/transactions/AllTransactions";
 
 const AccountPage = async ({ params }) => {
   const { accountId } = await params;
 
-  const accountDetails = accountsInfo[accountId - 1];
+  const accountDetails = db.find(
+    (acc) => acc.account.id === Number(accountId),
+  )?.account;
 
   return (
     <div className="overflow-x-hidden py-8 md:py-12 flex flex-col gap-10">
       <Title accountDetails={accountDetails} />
       <TransactionOverview />
-      <div className="flex flex-col gap-4">
-        <FilterTransactions />
-        <TransactionTable />
-      </div>
+      <AllTransactions accountDetails={accountDetails} />
     </div>
   );
 };

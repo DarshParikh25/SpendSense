@@ -1,3 +1,8 @@
+"use client";
+
+import { format } from "date-fns";
+import { ChevronDown, ChevronUp, Clock, Ellipsis, History } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -11,9 +16,6 @@ import {
 import { categoryColors, categoryIcons } from "@/data/categories";
 import { currencyFormatter } from "@/lib/formatter";
 import { cn } from "@/lib/utils";
-
-import { format } from "date-fns";
-import { Clock, Ellipsis, History } from "lucide-react";
 import CategoryIcon from "./CategoryIcon";
 import TooltipWrapper from "@/components/ui/TooltipWrapper";
 import {
@@ -21,82 +23,81 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useMemo, useState } from "react";
+import { useAppSelector } from "@/lib/store/hooks/hooks";
 
-// dummy transactions
-const transactions = [
-  {
-    id: 1,
-    date: format(new Date(), "PP"),
-    description: "Dummy Description",
-    category: "Travel",
-    isRecurring: false,
-    recurringDuration: null,
-    recurringDate: null,
-    type: "Expense",
-    amount: 200.55,
-  },
-  {
-    id: 2,
-    date: format(new Date(), "PP"),
-    description: "Dummy Description",
-    category: "Insurance",
-    isRecurring: true,
-    recurringDuration: "Yearly",
-    recurringDate: format(new Date(), "PP"),
-    type: "Expense",
-    amount: 292.12,
-  },
-  {
-    id: 3,
-    date: format(new Date(), "PP"),
-    description: "Dummy Description",
-    category: "Shopping",
-    isRecurring: false,
-    recurringDuration: null,
-    recurringDate: null,
-    type: "Expense",
-    amount: 2300.15,
-  },
-  {
-    id: 4,
-    date: format(new Date(), "PP"),
-    description: "Dummy Description",
-    category: "Salary",
-    isRecurring: true,
-    recurringDuration: "Monthly",
-    recurringDate: format(new Date(), "PP"),
-    type: "Income",
-    amount: 30000.0,
-  },
-  {
-    id: 5,
-    date: format(new Date(), "PP"),
-    description: "Dummy Description",
-    category: "Dining",
-    isRecurring: false,
-    recurringDuration: null,
-    recurringDate: null,
-    type: "Income",
-    amount: 1365.25,
-  },
-  {
-    id: 6,
-    date: format(new Date(), "PP"),
-    description: "Dummy Description",
-    category: "Internet",
-    isRecurring: false,
-    recurringDuration: "",
-    recurringDate: null,
-    type: "Income",
-    amount: 1610.13,
-  },
-];
+const TransactionTable = ({ accountDetails }) => {
+  const [sortConfig, setSortConfig] = useState({
+    key: "date",
+    direction: "asc",
+  });
 
-const TransactionTable = () => {
-  const filterAndSortedTransaction = transactions;
+  const {
+    selectedTransactionType: transactionType,
+    selectedRecurringType: recurringType,
+    search,
+  } = useAppSelector((state) => state.transaction);
+
+  let filterAndSortedTransaction = useMemo(() => {
+    const transactions = accountDetails?.transactions ?? [];
+
+    return transactions
+      .filter((transaction) =>
+        transactionType === "All Types"
+          ? true
+          : transaction.type === transactionType,
+      )
+      .filter((transaction) =>
+        recurringType === "Recurring Only"
+          ? transaction.isRecurring
+          : recurringType === "Non-recurring Only"
+            ? !transaction.isRecurring
+            : true,
+      )
+      .filter((transaction) => {
+        const searchLower = search.toLowerCase() || "";
+
+        return (
+          transaction.description?.toLowerCase().includes(searchLower) ||
+          transaction.category?.toLowerCase().includes(searchLower)
+        );
+      })
+      .map((transaction) => ({
+        ...transaction,
+        timestamp: new Date(transaction.date).getTime(),
+      }))
+      .sort((a, b) => {
+        const { key, direction } = sortConfig;
+        const factor = direction === "asc" ? 1 : -1;
+
+        if (key === "date") {
+          if (a.timestamp !== b.timestamp) {
+            return (a.timestamp - b.timestamp) * factor;
+          }
+
+          return (a.amount - b.amount) * factor;
+        }
+
+        if (key === "amount") {
+          if (a.amount !== b.amount) {
+            return (a.amount - b.amount) * factor;
+          }
+
+          return (a.timestamp - b.timestamp) * factor;
+        }
+
+        return 0;
+      });
+  }, [accountDetails, transactionType, recurringType, search, sortConfig]);
+
+  const handleSort = (key) => {
+    setSortConfig((prev) => ({
+      key,
+      direction: prev.key === key && prev.direction === "asc" ? "desc" : "asc",
+    }));
+  };
 
   return (
     <Table>
@@ -105,11 +106,37 @@ const TransactionTable = () => {
           <TableHead className={"w-12"}>
             <Checkbox className={"cursor-pointer"} />
           </TableHead>
-          <TableHead className={"cursor-pointer font-semibold"}>Date</TableHead>
+          <TableHead
+            onClick={() => handleSort("date")}
+            className={
+              "w-fit cursor-pointer font-semibold flex justify-baseline items-center gap-4"
+            }
+          >
+            Date
+            <span>
+              {sortConfig.key === "date" && sortConfig.direction === "asc" ? (
+                <ChevronUp className="w-4 h-4" />
+              ) : (
+                <ChevronDown className="w-4 h-4" />
+              )}
+            </span>
+          </TableHead>
           <TableHead className={"font-semibold"}>Description</TableHead>
           <TableHead className={"font-semibold"}>Category</TableHead>
+          <TableHead
+            onClick={() => handleSort("amount")}
+            className="w-fit text-right font-semibold flex justify-end items-center gap-4 justify-self-end cursor-pointer"
+          >
+            Amount
+            <span>
+              {sortConfig.key === "amount" && sortConfig.direction === "asc" ? (
+                <ChevronUp className="w-4 h-4" />
+              ) : (
+                <ChevronDown className="w-4 h-4" />
+              )}
+            </span>
+          </TableHead>
           <TableHead className={"font-semibold"}>Recurring</TableHead>
-          <TableHead className="text-right font-semibold">Amount</TableHead>
           <TableHead></TableHead>
         </TableRow>
       </TableHeader>
@@ -137,7 +164,7 @@ const TransactionTable = () => {
                 <TableCell>
                   <Checkbox className={"cursor-pointer"} />
                 </TableCell>
-                <TableCell>{date}</TableCell>
+                <TableCell>{format(date, "PP")}</TableCell>
                 <TableCell>{description}</TableCell>
                 <TableCell>
                   <Badge
@@ -152,19 +179,28 @@ const TransactionTable = () => {
                     <span>{category}</span>
                   </Badge>
                 </TableCell>
+                <TableCell
+                  className={cn(
+                    type === "Income" ? "text-[#72FF52]" : "text-[#FB5756]",
+                    "text-right",
+                  )}
+                >
+                  {type === "Income" ? "+ " : "- "}
+                  {currencyFormatter.format(amount)}
+                </TableCell>
                 <TableCell>
                   {isRecurring ? (
                     <TooltipWrapper
                       content={
                         <div>
                           <p>Next Date:</p>
-                          <p>{recurringDate}</p>
+                          <p>{format(recurringDate, "PP")}</p>
                         </div>
                       }
                       contentClassName={"bg-[#bebec0] text-[#1e1e24]"}
                       side="top"
                     >
-                      <Badge className={"rounded text-white bg-purple-600"}>
+                      <Badge className={"rounded text-[#1e1e24] bg-purple-300"}>
                         <History />
                         <span>{recurringDuration}</span>
                       </Badge>
@@ -179,19 +215,10 @@ const TransactionTable = () => {
                     </Badge>
                   )}
                 </TableCell>
-                <TableCell
-                  className={cn(
-                    type === "Income" ? "text-[#72FF52]" : "text-[#FB5756]",
-                    "text-right",
-                  )}
-                >
-                  {type === "Income" ? "+ " : "- "}
-                  {currencyFormatter.format(amount)}
-                </TableCell>
                 <TableCell className={"text-right"}>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Ellipsis className="cursor-pointer w-4 h-4" />
+                      <Ellipsis className="cursor-pointer w-4 h-4 justify-self-end" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className={"bg-[#bebec0]"}>
                       <DropdownMenuGroup>

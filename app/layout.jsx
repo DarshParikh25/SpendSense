@@ -4,6 +4,7 @@ import "./globals.css";
 import StoreProvider from "./StoreProvider";
 
 import { ClerkProvider } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 
 export const metadata = {
   // metadataBase: "",
@@ -25,13 +26,15 @@ export const metadata = {
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
+  auth();
+
   return (
-    <html lang="en">
-      <ClerkProvider>
+    <ClerkProvider>
+      <html lang="en">
         <body className={`${inter.className} bg-[#1D1E24] text-[#BEBEC0]`}>
           <StoreProvider>{children}</StoreProvider>
         </body>
-      </ClerkProvider>
-    </html>
+      </html>
+    </ClerkProvider>
   );
 }

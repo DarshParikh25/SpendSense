@@ -13,7 +13,7 @@ const Title = ({ accountDetails }) => {
           {currencyFormatter.format(accountDetails.balance)}
         </p>
         <p className="font-medium">
-          {accountDetails.transactionCount} transactions
+          {accountDetails.transactions.length} transactions
         </p>
       </div>
     </div>

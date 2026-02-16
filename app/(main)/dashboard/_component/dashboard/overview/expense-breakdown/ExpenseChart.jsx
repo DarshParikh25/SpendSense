@@ -2,6 +2,8 @@
 
 import { PieChart, Pie, ResponsiveContainer, Sector, Legend } from "recharts";
 
+import { currencyFormatter } from "@/lib/formatter";
+
 const RADIAN = Math.PI / 180;
 
 /* Percentage labels */
@@ -12,7 +14,7 @@ const renderLabel = ({
   outerRadius,
   fill,
   value,
-  proportion,
+  payload,
 }) => {
   const radius = outerRadius + 20;
 
@@ -29,24 +31,24 @@ const renderLabel = ({
       fontSize={12}
       fontWeight={500}
     >
-      ${proportion}%: $${value.toFixed(2)}
+      {payload.proportion}%: {currencyFormatter.format(value)}
     </text>
   );
 };
 
-const ExpensePieChart = ({ rawData }) => {
+const ExpensePieChart = ({ costPerCat }) => {
   /* Slice colors */
   const COLORS = ["#FB5756", "#4ADE80", "#60A5FA", "#FACC15"];
 
   /* Convert value to number */
-  const data = rawData.map((item, index) => ({
+  const data = costPerCat.map((item, index) => ({
     ...item,
     name: item.category,
-    value: Number(item.value),
+    value: Number(item.total),
     fill: COLORS[index % COLORS.length],
   }));
 
-  /* Custom slice renderer (OFFICIAL way) */
+  /* Custom slice */
   const PieSlice = (props) => {
     const { index } = props;
 
@@ -55,12 +57,12 @@ const ExpensePieChart = ({ rawData }) => {
 
   return (
     <div className="w-full flex h-80">
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="120%" height="100%">
         <PieChart>
           <Pie
             data={data}
             dataKey="value"
-            nameKey="category"
+            nameKey="name"
             outerRadius={90}
             shape={PieSlice}
             labelLine
