@@ -7,11 +7,10 @@ import SearchInput from "@/components/SearchInput";
 import SelectDropdown from "@/components/SelectDropdown";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
 import {
-  setIsDeleting,
-  setIsFiltered,
   setSearch,
   setSelectedRecurringType,
   setSelectedTransactionType,
+  clearSelection,
 } from "@/lib/store/features/transaction/transactionSlice";
 import { useDebounce } from "@/lib/store/hooks/useDebounce";
 import TooltipWrapper from "@/components/ui/TooltipWrapper";
@@ -39,34 +38,37 @@ const FilterTransactions = () => {
   const {
     selectedTransactionType: transactionType,
     selectedRecurringType: recurringType,
-    isFiltered,
-    isDeleting,
+    selectedTransactionIds: selectedIds,
+    search,
   } = useAppSelector((state) => state.transaction);
+
+  const isDeleting = selectedIds.length > 0;
+
+  const isFiltered =
+    transactionType !== "All Types" ||
+    recurringType !== "All Transactions" ||
+    search.length > 0;
 
   const handleTypeChange = (value) => {
     dispatch(setSelectedTransactionType(value));
-    !isFiltered && dispatch(setIsFiltered());
   };
 
   const handleRecurringType = (value) => {
     dispatch(setSelectedRecurringType(value));
-    !isFiltered && dispatch(setIsFiltered());
   };
 
   const handleSearch = (e) => {
     setLocalSearch(e.target.value);
-    !isFiltered && dispatch(setIsFiltered());
   };
 
   const handleFilters = () => {
-    isFiltered && dispatch(setIsFiltered());
     setLocalSearch("");
     dispatch(setSelectedRecurringType("All Transactions"));
     dispatch(setSelectedTransactionType("All Types"));
   };
 
   const handleDelete = () => {
-    isDeleting && dispatch(setIsDeleting());
+    dispatch(clearSelection());
   };
 
   return (

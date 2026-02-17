@@ -25,20 +25,32 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useMemo, useState } from "react";
-import { useAppSelector } from "@/lib/store/hooks/hooks";
+import { useEffect, useMemo, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
+import {
+  clearSelection,
+  selectAllTransactions,
+  toggleTransactionSelection,
+} from "@/lib/store/features/transaction/transactionSlice";
 
 const TransactionTable = ({ accountDetails }) => {
+  const dispatch = useAppDispatch();
+
   const [sortConfig, setSortConfig] = useState({
     key: "date",
-    direction: "asc",
+    direction: "desc",
   });
 
   const {
     selectedTransactionType: transactionType,
     selectedRecurringType: recurringType,
+    selectedTransactionIds: selectedIds,
     search,
   } = useAppSelector((state) => state.transaction);
+
+  useEffect(() => {
+    dispatch(clearSelection());
+  }, [transactionType, recurringType, search, dispatch]);
 
   const searchLower = search?.toLowerCase() || "";
 
@@ -98,6 +110,11 @@ const TransactionTable = ({ accountDetails }) => {
       });
   }, [accountDetails, transactionType, recurringType, searchLower, sortConfig]);
 
+  const allIds = filterAndSortedTransaction.map((t) => t.id);
+
+  const isAllSelected =
+    allIds.length > 0 && allIds.every((id) => selectedIds.includes(id));
+
   const handleSort = (key) => {
     setSortConfig((prev) => ({
       key,
@@ -105,12 +122,28 @@ const TransactionTable = ({ accountDetails }) => {
     }));
   };
 
+  const handleCheckAll = (checked) => {
+    const isChecked = checked === true;
+
+    if (isChecked) {
+      dispatch(selectAllTransactions(allIds));
+    } else {
+      dispatch(clearSelection());
+    }
+  };
+
   return (
     <Table>
       <TableHeader>
         <TableRow>
           <TableHead className={"w-12"}>
-            <Checkbox className={"cursor-pointer"} />
+            <Checkbox
+              checked={isAllSelected}
+              onCheckedChange={handleCheckAll}
+              className={
+                "cursor-pointer data-[state=checked]:bg-[#bebec0] data-[state=checked]:text-[#1e1e24]"
+              }
+            />
           </TableHead>
           <TableHead
             onClick={() => handleSort("date")}
@@ -168,7 +201,15 @@ const TransactionTable = ({ accountDetails }) => {
             }) => (
               <TableRow key={id}>
                 <TableCell>
-                  <Checkbox className={"cursor-pointer"} />
+                  <Checkbox
+                    checked={selectedIds.includes(id)}
+                    onCheckedChange={() =>
+                      dispatch(toggleTransactionSelection(id))
+                    }
+                    className={
+                      "cursor-pointer data-[state=checked]:bg-[#bebec0] data-[state=checked]:text-[#1e1e24]"
+                    }
+                  />
                 </TableCell>
                 <TableCell>{format(date, "PP")}</TableCell>
                 <TableCell>{description}</TableCell>
