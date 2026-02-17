@@ -40,29 +40,35 @@ const TransactionTable = ({ accountDetails }) => {
     search,
   } = useAppSelector((state) => state.transaction);
 
-  let filterAndSortedTransaction = useMemo(() => {
+  const searchLower = search?.toLowerCase() || "";
+
+  // These will be handled by the backend later on
+  const filterAndSortedTransaction = useMemo(() => {
     const transactions = accountDetails?.transactions ?? [];
 
     return transactions
-      .filter((transaction) =>
-        transactionType === "All Types"
-          ? true
-          : transaction.type === transactionType,
-      )
-      .filter((transaction) =>
-        recurringType === "Recurring Only"
-          ? transaction.isRecurring
-          : recurringType === "Non-recurring Only"
-            ? !transaction.isRecurring
-            : true,
-      )
       .filter((transaction) => {
-        const searchLower = search.toLowerCase() || "";
+        if (
+          transactionType !== "All Types" &&
+          transaction.type !== transactionType
+        )
+          return false;
 
-        return (
-          transaction.description?.toLowerCase().includes(searchLower) ||
-          transaction.category?.toLowerCase().includes(searchLower)
-        );
+        if (recurringType === "Recurring Only" && !transaction.isRecurring)
+          return false;
+
+        if (recurringType === "Non-recurring Only" && transaction.isRecurring)
+          return false;
+
+        if (searchLower) {
+          const match =
+            transaction.description?.toLowerCase().includes(searchLower) ||
+            transaction.category?.toLowerCase().includes(searchLower);
+
+          if (!match) return false;
+        }
+
+        return true;
       })
       .map((transaction) => ({
         ...transaction,
@@ -90,7 +96,7 @@ const TransactionTable = ({ accountDetails }) => {
 
         return 0;
       });
-  }, [accountDetails, transactionType, recurringType, search, sortConfig]);
+  }, [accountDetails, transactionType, recurringType, searchLower, sortConfig]);
 
   const handleSort = (key) => {
     setSortConfig((prev) => ({
