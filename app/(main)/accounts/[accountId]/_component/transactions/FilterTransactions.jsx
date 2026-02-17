@@ -11,10 +11,12 @@ import {
   setSelectedRecurringType,
   setSelectedTransactionType,
   clearSelection,
+  toggleIsDeleting,
 } from "@/lib/store/features/transaction/transactionSlice";
 import { useDebounce } from "@/lib/store/hooks/useDebounce";
 import TooltipWrapper from "@/components/ui/TooltipWrapper";
 import { Button } from "@/components/ui/button";
+import DeleteDialog from "./DeleteDialog";
 
 const TYPES = ["Income", "Expense", "All Types"];
 
@@ -40,9 +42,8 @@ const FilterTransactions = () => {
     selectedRecurringType: recurringType,
     selectedTransactionIds: selectedIds,
     search,
+    isDeleting,
   } = useAppSelector((state) => state.transaction);
-
-  const isDeleting = selectedIds.length > 0;
 
   const isFiltered =
     transactionType !== "All Types" ||
@@ -67,7 +68,9 @@ const FilterTransactions = () => {
     dispatch(setSelectedTransactionType("All Types"));
   };
 
-  const handleDelete = () => {
+  const handleDelete = (ids) => {
+    !isDeleting && dispatch(toggleIsDeleting());
+    // dispatch(deleteTransactions(ids));
     dispatch(clearSelection());
   };
 
@@ -109,17 +112,21 @@ const FilterTransactions = () => {
 
         {/* Only visible when any transaction(s) is/are selected */}
         <TooltipWrapper
-          content={"Delete Transactions"}
+          content={`Delete ${selectedIds.length} Transactions`}
           contentClassName={"bg-[#bebec0] text-[#1e1e24]"}
         >
-          {isDeleting && (
-            <Button
-              onClick={handleDelete}
-              className={"bg-[#FB5756] text-[#1e1e24] cursor-pointer"}
-            >
-              <Trash2 />
-            </Button>
-          )}
+          <DeleteDialog selectedIds={selectedIds} onConfirm={handleDelete}>
+            {selectedIds.length > 0 && (
+              <Button
+                className={
+                  "flex justify-center items-center gap-1 bg-[#FB5756] text-white cursor-pointer"
+                }
+              >
+                <Trash2 />
+                <span>({selectedIds.length})</span>
+              </Button>
+            )}
+          </DeleteDialog>
         </TooltipWrapper>
       </div>
     </div>

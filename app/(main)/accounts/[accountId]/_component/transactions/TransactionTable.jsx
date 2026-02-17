@@ -32,10 +32,12 @@ import {
   selectAllTransactions,
   toggleTransactionSelection,
 } from "@/lib/store/features/transaction/transactionSlice";
+import DeleteDialog from "./DeleteDialog";
 
 const TransactionTable = ({ accountDetails }) => {
   const dispatch = useAppDispatch();
 
+  const [openMenuId, setOpenMenuId] = useState(null);
   const [sortConfig, setSortConfig] = useState({
     key: "date",
     direction: "desc",
@@ -132,167 +134,194 @@ const TransactionTable = ({ accountDetails }) => {
     }
   };
 
+  const handleDelete = (ids) => {
+    // dispatch(deleteTransactions(ids));
+    dispatch(clearSelection());
+    setOpenMenuId(null);
+  };
+
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead className={"w-12"}>
-            <Checkbox
-              checked={isAllSelected}
-              onCheckedChange={handleCheckAll}
+    <div
+      className={"border border-[#bebec0]/40 rounded-md overflow-hidden px-1"}
+    >
+      <Table>
+        <TableHeader className={"sticky top-0 z-10"}>
+          <TableRow className={"text-white border-b border-[#bebec0]/30"}>
+            <TableHead className={"w-12"}>
+              <Checkbox
+                checked={isAllSelected}
+                onCheckedChange={handleCheckAll}
+                className={
+                  "cursor-pointer data-[state=checked]:bg-[#bebec0] data-[state=checked]:text-[#1e1e24]"
+                }
+              />
+            </TableHead>
+            <TableHead
+              onClick={() => handleSort("date")}
               className={
-                "cursor-pointer data-[state=checked]:bg-[#bebec0] data-[state=checked]:text-[#1e1e24]"
+                "w-fit cursor-pointer font-semibold flex justify-baseline items-center gap-4"
               }
-            />
-          </TableHead>
-          <TableHead
-            onClick={() => handleSort("date")}
-            className={
-              "w-fit cursor-pointer font-semibold flex justify-baseline items-center gap-4"
-            }
-          >
-            Date
-            <span>
-              {sortConfig.key === "date" && sortConfig.direction === "asc" ? (
-                <ChevronUp className="w-4 h-4" />
-              ) : (
-                <ChevronDown className="w-4 h-4" />
-              )}
-            </span>
-          </TableHead>
-          <TableHead className={"font-semibold"}>Description</TableHead>
-          <TableHead className={"font-semibold"}>Category</TableHead>
-          <TableHead
-            onClick={() => handleSort("amount")}
-            className="w-fit text-right font-semibold flex justify-end items-center gap-4 justify-self-end cursor-pointer"
-          >
-            Amount
-            <span>
-              {sortConfig.key === "amount" && sortConfig.direction === "asc" ? (
-                <ChevronUp className="w-4 h-4" />
-              ) : (
-                <ChevronDown className="w-4 h-4" />
-              )}
-            </span>
-          </TableHead>
-          <TableHead className={"font-semibold"}>Recurring</TableHead>
-          <TableHead></TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {filterAndSortedTransaction.length === 0 ? (
-          <TableRow>
-            <TableCell colSpan={7} className={"text-center font-medium"}>
-              No transactions found
-            </TableCell>
+            >
+              Date
+              <span>
+                {sortConfig.key === "date" && sortConfig.direction === "asc" ? (
+                  <ChevronUp className="w-4 h-4" />
+                ) : (
+                  <ChevronDown className="w-4 h-4" />
+                )}
+              </span>
+            </TableHead>
+            <TableHead className={"font-semibold"}>Description</TableHead>
+            <TableHead className={"font-semibold"}>Category</TableHead>
+            <TableHead
+              onClick={() => handleSort("amount")}
+              className="w-fit text-right font-semibold flex justify-end items-center gap-4 justify-self-end cursor-pointer"
+            >
+              Amount
+              <span>
+                {sortConfig.key === "amount" &&
+                sortConfig.direction === "asc" ? (
+                  <ChevronUp className="w-4 h-4" />
+                ) : (
+                  <ChevronDown className="w-4 h-4" />
+                )}
+              </span>
+            </TableHead>
+            <TableHead className={"font-semibold"}>Recurring</TableHead>
+            <TableHead></TableHead>
           </TableRow>
-        ) : (
-          filterAndSortedTransaction.map(
-            ({
-              id,
-              date,
-              description,
-              category,
-              isRecurring,
-              recurringDate,
-              recurringDuration,
-              type,
-              amount,
-            }) => (
-              <TableRow key={id}>
-                <TableCell>
-                  <Checkbox
-                    checked={selectedIds.includes(id)}
-                    onCheckedChange={() =>
-                      dispatch(toggleTransactionSelection(id))
-                    }
-                    className={
-                      "cursor-pointer data-[state=checked]:bg-[#bebec0] data-[state=checked]:text-[#1e1e24]"
-                    }
-                  />
-                </TableCell>
-                <TableCell>{format(date, "PP")}</TableCell>
-                <TableCell>{description}</TableCell>
-                <TableCell>
-                  <Badge
-                    style={{
-                      backgroundColor: categoryColors[category.toLowerCase()],
-                    }}
-                    className={"bg-[#bebec0] text-[#1e1e24] rounded"}
-                  >
-                    <CategoryIcon
-                      name={categoryIcons[category.toLowerCase()]}
-                    />
-                    <span>{category}</span>
-                  </Badge>
-                </TableCell>
-                <TableCell
-                  className={cn(
-                    type === "Income" ? "text-[#72FF52]" : "text-[#FB5756]",
-                    "text-right",
-                  )}
+        </TableHeader>
+        <TableBody>
+          {filterAndSortedTransaction.length === 0 ? (
+            <TableRow className={"py-0.5"}>
+              <TableCell colSpan={7} className={"text-center font-medium"}>
+                No transactions found
+              </TableCell>
+            </TableRow>
+          ) : (
+            filterAndSortedTransaction.map(
+              ({
+                id,
+                date,
+                description,
+                category,
+                isRecurring,
+                recurringDate,
+                recurringDuration,
+                type,
+                amount,
+              }) => (
+                <TableRow
+                  key={id}
+                  className={
+                    "hover:bg-[#25252b] transition border-b border-[#bebec0]/30 last:border-0"
+                  }
                 >
-                  {type === "Income" ? "+ " : "- "}
-                  {currencyFormatter.format(amount)}
-                </TableCell>
-                <TableCell>
-                  {isRecurring ? (
-                    <TooltipWrapper
-                      content={
-                        <div>
-                          <p>Next Date:</p>
-                          <p>{format(recurringDate, "PP")}</p>
-                        </div>
+                  <TableCell>
+                    <Checkbox
+                      checked={selectedIds.includes(id)}
+                      onCheckedChange={() =>
+                        dispatch(toggleTransactionSelection(id))
                       }
-                      contentClassName={"bg-[#bebec0] text-[#1e1e24]"}
-                      side="top"
-                    >
-                      <Badge className={"rounded text-[#1e1e24] bg-purple-300"}>
-                        <History />
-                        <span>{recurringDuration}</span>
-                      </Badge>
-                    </TooltipWrapper>
-                  ) : (
+                      className={
+                        "cursor-pointer data-[state=checked]:bg-[#bebec0] data-[state=checked]:text-[#1e1e24]"
+                      }
+                    />
+                  </TableCell>
+                  <TableCell>{format(date, "PP")}</TableCell>
+                  <TableCell>{description}</TableCell>
+                  <TableCell>
                     <Badge
-                      variant={"outline"}
-                      className={"rounded border border-[#bebec0]/50"}
+                      style={{
+                        backgroundColor: categoryColors[category.toLowerCase()],
+                      }}
+                      className={"bg-[#bebec0] text-[#1e1e24] rounded"}
                     >
-                      <Clock />
-                      <span>One-time</span>
+                      <CategoryIcon
+                        name={categoryIcons[category.toLowerCase()]}
+                      />
+                      <span>{category}</span>
                     </Badge>
-                  )}
-                </TableCell>
-                <TableCell className={"text-right"}>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Ellipsis className="cursor-pointer w-4 h-4 justify-self-end" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className={"bg-[#bebec0]"}>
-                      <DropdownMenuGroup>
-                        <DropdownMenuItem
-                          className={
-                            "text-[#1e1e24] cursor-pointer hover:bg-[#c3c3c6]"
-                          }
+                  </TableCell>
+                  <TableCell
+                    className={cn(
+                      type === "Income" ? "text-[#72FF52]" : "text-[#FB5756]",
+                      "text-right",
+                    )}
+                  >
+                    {type === "Income" ? "+ " : "- "}
+                    {currencyFormatter.format(amount)}
+                  </TableCell>
+                  <TableCell>
+                    {isRecurring ? (
+                      <TooltipWrapper
+                        content={
+                          <div>
+                            <p>Next Date:</p>
+                            <p>{format(recurringDate, "PP")}</p>
+                          </div>
+                        }
+                        contentClassName={"bg-[#bebec0] text-[#1e1e24]"}
+                        side="top"
+                      >
+                        <Badge
+                          className={"rounded text-[#1e1e24] bg-purple-300"}
                         >
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className={
-                            "text-red-600 cursor-pointer hover:bg-[#c3c3c6]"
-                          }
-                        >
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuGroup>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            ),
-          )
-        )}
-      </TableBody>
-    </Table>
+                          <History />
+                          <span>{recurringDuration}</span>
+                        </Badge>
+                      </TooltipWrapper>
+                    ) : (
+                      <Badge
+                        variant={"outline"}
+                        className={"rounded border border-[#bebec0]/50"}
+                      >
+                        <Clock />
+                        <span>One-time</span>
+                      </Badge>
+                    )}
+                  </TableCell>
+                  <TableCell className={"text-right"}>
+                    <DropdownMenu
+                      open={openMenuId === id}
+                      onOpenChange={(open) => setOpenMenuId(open ? id : null)}
+                    >
+                      <DropdownMenuTrigger asChild>
+                        <Ellipsis className="cursor-pointer w-4 h-4 justify-self-end" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className={"bg-[#bebec0]"}>
+                        <DropdownMenuGroup>
+                          <DropdownMenuItem
+                            className={
+                              "text-[#1e1e24] cursor-pointer hover:bg-[#c3c3c6]"
+                            }
+                          >
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onSelect={(e) => e.preventDefault()}
+                            className={
+                              "text-red-600 cursor-pointer hover:bg-[#c3c3c6]"
+                            }
+                          >
+                            <DeleteDialog
+                              selectedIds={[id]}
+                              onConfirm={handleDelete}
+                            >
+                              <span>Delete</span>
+                            </DeleteDialog>
+                          </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ),
+            )
+          )}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 
