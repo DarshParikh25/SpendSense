@@ -1,6 +1,6 @@
 "use client";
 
-import SelectDropdown from "@/components/SelectDropdown";
+import SelectDropdown from "@/app/(main)/_components/SelectDropdown";
 import TransactionBarChart from "./TransactionBarChart";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
 import { setBarChartDuration } from "@/lib/store/features/ui/uiSlice";

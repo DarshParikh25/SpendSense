@@ -1,5 +1,5 @@
 import AddTransactionForm from "@/components/forms/add-transaction/AddTransactionForm";
-import Heading from "@/components/Heading";
+import Heading from "@/app/(main)/_components/Heading";
 import { Button } from "@/components/ui/button";
 
 import { Scan } from "lucide-react";

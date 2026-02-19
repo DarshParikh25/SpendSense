@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { RotateCcw, Trash2 } from "lucide-react";
 
-import SearchInput from "@/components/SearchInput";
-import SelectDropdown from "@/components/SelectDropdown";
+import SearchInput from "@/app/(main)/_components/SearchInput";
+import SelectDropdown from "@/app/(main)/_components/SelectDropdown";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
 import {
   setSearch,

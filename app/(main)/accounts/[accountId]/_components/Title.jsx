@@ -1,4 +1,4 @@
-import Heading from "@/components/Heading";
+import Heading from "@/app/(main)/_components/Heading";
 import { currencyFormatter } from "@/lib/formatter";
 
 const Title = ({ accountDetails }) => {

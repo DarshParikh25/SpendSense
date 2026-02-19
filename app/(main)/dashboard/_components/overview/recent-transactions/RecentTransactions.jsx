@@ -4,9 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import LastFiveTransactions from "./LastFiveTransactions";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
 import { setRecentTransactionAcc } from "@/lib/store/features/ui/uiSlice";
-import SelectDropdown from "@/components/SelectDropdown";
-import { useEffect } from "react";
+import SelectDropdown from "@/app/(main)/_components/SelectDropdown";
 import { db } from "@/data/db";
+
+import { useEffect } from "react";
 
 const RecentTransactions = () => {
   const dispatch = useAppDispatch();
