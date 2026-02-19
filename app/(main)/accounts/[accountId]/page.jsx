@@ -1,7 +1,7 @@
 import { db } from "@/data/db";
-import Title from "./_component/Title";
-import TransactionOverview from "./_component/stats/TransactionOverview";
-import AllTransactions from "./_component/transactions/AllTransactions";
+import Title from "./_components/Title";
+import TransactionOverview from "./_components/stats/TransactionOverview";
+import AllTransactions from "./_components/transactions/AllTransactions";
 
 const AccountPage = async ({ params }) => {
   const { accountId } = await params;

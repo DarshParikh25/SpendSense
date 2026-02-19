@@ -5,6 +5,7 @@ export const db = [
       name: "Work",
       isDefault: false,
       balance: 5941.0,
+      budget: 1250.0,
       type: "Current Account",
       transactions: [
         {
@@ -82,6 +83,7 @@ export const db = [
       name: "Personal",
       isDefault: true,
       balance: 152124.0,
+      budget: 25000.0,
       type: "Savings Account",
       transactions: [
         {

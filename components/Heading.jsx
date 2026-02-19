@@ -1,6 +1,13 @@
-const Heading = ({ title }) => {
+import { cn } from "@/lib/utils";
+
+const Heading = ({ title, className }) => {
   return (
-    <h1 className="text-[#fb5756] font-bold text-4xl lg:text-5xl tracking-tight">
+    <h1
+      className={cn(
+        "text-[#fb5756] font-bold text-4xl lg:text-5xl tracking-tight",
+        className,
+      )}
+    >
       {title}
     </h1>
   );

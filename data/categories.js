@@ -1,4 +1,4 @@
-const transactionCategories = [
+export const transactionCategories = [
   // Income Categories
   {
     id: "salary",

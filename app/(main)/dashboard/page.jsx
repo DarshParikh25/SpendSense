@@ -1,10 +1,10 @@
 import requiresAuth from "@/lib/auth/requiresAuth";
-import Budget from "@/app/(main)/dashboard/_component/dashboard/budget/Budget";
-import Accounts from "@/app/(main)/dashboard/_component/dashboard/accounts/Accounts";
-import Overview from "@/app/(main)/dashboard/_component/dashboard/overview/Overview";
+import Budget from "@/app/(main)/dashboard/_components/budget/Budget";
+import Accounts from "@/app/(main)/dashboard/_components/accounts/Accounts";
+import Overview from "@/app/(main)/dashboard/_components/overview/Overview";
 
 import { redirect } from "next/navigation";
-import Heading from "../../../components/Heading";
+import Heading from "@/components/Heading";
 
 export default async function Dashboard() {
   const user = await requiresAuth();

@@ -8,30 +8,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
+import { db } from "@/data/db";
 import { currencyFormatter } from "@/lib/formatter";
 import { cn } from "@/lib/utils";
 
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
-// This will come from DB
-let accountsInfo = [
-  {
-    id: 1,
-    name: "Work",
-    isDefault: false,
-    balance: "5941.00",
-    type: "Current Account",
-  },
-  {
-    id: 2,
-    name: "Personal",
-    isDefault: true,
-    balance: "152124.00",
-    type: "Savings Account",
-  },
-];
 
 const ChoiceCard = () => {
   const router = useRouter();
@@ -40,7 +23,7 @@ const ChoiceCard = () => {
   const [loadingId, setLoadingId] = useState(null);
 
   useEffect(() => {
-    setAccounts(accountsInfo);
+    setAccounts(db);
   }, []);
 
   const handleMakeDefault = (id) => {
@@ -50,7 +33,10 @@ const ChoiceCard = () => {
       setAccounts((prev) =>
         prev.map((acc) => ({
           ...acc,
-          isDefault: acc.id === id,
+          account: {
+            ...acc.account,
+            isDefault: acc.account.id === id,
+          },
         })),
       );
     } catch (error) {
@@ -60,7 +46,7 @@ const ChoiceCard = () => {
     }
   };
 
-  return accounts.map(({ id, name, isDefault, balance, type }) => (
+  return accounts.map(({ account: { id, isDefault, name, balance, type } }) => (
     <Card
       key={id}
       onClick={() => router.push(`/accounts/${id}`)}

@@ -1,20 +1,36 @@
 import { Switch } from "@/components/ui/switch";
+import { cn } from "@/lib/utils";
 
 import { Controller } from "react-hook-form";
 
-const DefaultToggle = ({ control }) => {
+const ToggleSwitch = ({
+  name,
+  control,
+  heading,
+  content,
+  cardClassName,
+  contentClassName,
+}) => {
   return (
     <Controller
-      name="isDefault"
+      name={name}
       control={control}
       render={({ field }) => (
-        <div className="flex items-center justify-between border-[1.5px] border-[#1e1e24]/30 w-full px-2 md:px-4 py-2 md:py-3 gap-2 rounded-lg">
+        <div
+          className={cn(
+            "flex items-center justify-between border-[1.5px] w-full px-2 md:px-4 py-2 md:py-3 gap-2 rounded-lg",
+            cardClassName,
+          )}
+        >
           <div className="flex flex-col justify-center item-baseline gap-1">
-            <h4 className="text-base md:text-lg font-semibold">
-              Set as Default
-            </h4>
-            <p className="text-sm leading-4 tracking-tight md:tracking-normal text-[#1e1e24]/75">
-              This account will be selected by default for transactions
+            <h4 className="text-base md:text-lg font-semibold">{heading}</h4>
+            <p
+              className={cn(
+                "text-sm leading-4 tracking-tight md:tracking-normal",
+                contentClassName,
+              )}
+            >
+              {content}
             </p>
           </div>
           <Switch
@@ -30,4 +46,4 @@ const DefaultToggle = ({ control }) => {
   );
 };
 
-export default DefaultToggle;
+export default ToggleSwitch;

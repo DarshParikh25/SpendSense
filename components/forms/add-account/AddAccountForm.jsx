@@ -2,14 +2,14 @@
 
 import { useForm } from "react-hook-form";
 
-import AccountTypeSelect from "./AccountTypeSelect";
-import FormCTAs from "./FormCTAs";
-import InputField from "./Input";
-import DefaultToggle from "./DefaultToggle";
+import TypeSelect from "../TypeSelect";
+import FormCTAs from "../FormCTAs";
+import InputField from "../InputField";
+import ToggleSwitch from "./ToggleSwitch";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { accountSchema } from "@/lib/validators/accountSchema";
 
-const accountTypes = ["Savings", "Current"];
+const ACCOUNT_TYPES = ["Savings", "Current"];
 
 const AddAccountForm = ({ closeDrawer, setIsSubmitting }) => {
   const {
@@ -50,15 +50,23 @@ const AddAccountForm = ({ closeDrawer, setIsSubmitting }) => {
         required
         register={register}
         placeholder="e.g., Personal"
+        className={"border-[#1e1e24]/30 focus-visible:border-[#1e1e24]"}
       />
 
       {/* Account Type */}
       <div className="w-full flex flex-col gap-2">
         <label className="font-semibold">Account Type</label>
-        <AccountTypeSelect control={control} accountTypes={accountTypes} />
-        {errors.type && (
-          <p className="text-[#fb5756] text-sm">{errors.type.message}</p>
-        )}
+        <TypeSelect
+          name={"type"}
+          control={control}
+          types={ACCOUNT_TYPES}
+          label="Account Types"
+          triggerClassName={"border-[#1e1e24]/30"}
+          contentClassName={
+            "border-[1.5px] border-[#1e1e24] bg-[#bebec0] text-[#1e1e24]"
+          }
+          itemClassName={"bg-transparent hover:bg-[#c3c3c3]"}
+        />
       </div>
 
       {/* Initial Balance */}
@@ -72,13 +80,28 @@ const AddAccountForm = ({ closeDrawer, setIsSubmitting }) => {
           valueAsNumber: true,
         }}
         required
+        className={"border-[#1e1e24]/30 focus-visible:border-[#1e1e24]"}
       />
 
       {/* Set Account as default */}
-      <DefaultToggle control={control} />
+      <ToggleSwitch
+        name={"isDefault"}
+        control={control}
+        heading="Set as Default"
+        content="This account will be selected by default for transactions"
+        cardClassName={"border-[#1e1e24]/30"}
+        contentClassName={"text-[#1e1e24]/75"}
+      />
 
       {/* Form CTAs */}
-      <FormCTAs isSubmitting={isSubmitting} />
+      <FormCTAs
+        isSubmitting={isSubmitting}
+        submitText={"Create Account"}
+        loadingText={"Creating..."}
+        inSheet={true}
+        cancelBtnClassName={"border-[#1e1e24] hover:bg-[#c3c3c3]"}
+        submitBtnClassName={"bg-[#1e1e24] text-[#bebec0] hover:bg-[#27272e]"}
+      />
     </form>
   );
 };
