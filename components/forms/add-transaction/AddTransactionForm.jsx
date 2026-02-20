@@ -184,7 +184,7 @@ const AddTransactionForm = () => {
         control={control}
         heading={"Recurring Transaction"}
         content={"Set up a recurring schedule for this transaction"}
-        contentClassName={"text-[#bebec0]/30"}
+        contentClassName={"text-[#bebec0]/60"}
       />
 
       {

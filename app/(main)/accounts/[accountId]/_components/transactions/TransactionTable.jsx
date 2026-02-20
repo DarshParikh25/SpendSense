@@ -1,6 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
+import { useEffect, useMemo, useState } from "react";
 import { ChevronDown, ChevronUp, Clock, Ellipsis, History } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -25,7 +26,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
 import {
   clearSelection,
@@ -188,7 +188,7 @@ const TransactionTable = ({ accountDetails }) => {
               </span>
             </TableHead>
             <TableHead className={"font-semibold"}>Recurring</TableHead>
-            <TableHead></TableHead>
+            <TableHead />
           </TableRow>
         </TableHeader>
         <TableBody>

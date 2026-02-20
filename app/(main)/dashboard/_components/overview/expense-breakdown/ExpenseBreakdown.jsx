@@ -1,9 +1,13 @@
 "use client";
 
-import ExpenseChart from "./ExpenseChart";
+import { lazy, Suspense } from "react";
+
 import { useAppSelector } from "@/lib/store/hooks/hooks";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { db } from "@/data/db";
+import CardSkeleton from "@/app/(main)/_components/CardSkeleton";
+
+const ExpenseChart = lazy(() => import("./ExpenseChart"));
 
 const TOP_N = 5;
 
@@ -79,7 +83,11 @@ const ExpenseBreakdown = () => {
       </CardHeader>
       <CardContent className={"h-full flex justify-center items-center"}>
         {costPerCat?.length > 0 ? (
-          <ExpenseChart costPerCat={finalCostPerCat} />
+          <Suspense
+            fallback={<CardSkeleton className={"w-full h-80 border-none"} />}
+          >
+            <ExpenseChart costPerCat={finalCostPerCat} />
+          </Suspense>
         ) : (
           <p className="font-medium">No expenses these months</p>
         )}
