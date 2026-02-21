@@ -1,7 +1,7 @@
 "use client";
 
-import { format } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
+import { format } from "date-fns";
 import {
   ChevronDown,
   ChevronUp,
@@ -11,6 +11,12 @@ import {
   Trash2Icon,
 } from "lucide-react";
 
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
+import {
+  clearSelection,
+  selectAllTransactions,
+  toggleTransactionSelection,
+} from "@/lib/store/features/transaction/transactionSlice";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -24,7 +30,7 @@ import {
 import { categoryColors, categoryIcons } from "@/data/categories";
 import { currencyFormatter } from "@/lib/formatter";
 import { cn } from "@/lib/utils";
-import CategoryIcon from "./CategoryIcon";
+import CategoryIcon from "@/app/(main)/accounts/[accountId]/_components/transactions/CategoryIcon";
 import TooltipWrapper from "@/components/ui/TooltipWrapper";
 import {
   DropdownMenu,
@@ -33,15 +39,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
-import {
-  clearSelection,
-  selectAllTransactions,
-  toggleTransactionSelection,
-} from "@/lib/store/features/transaction/transactionSlice";
 import DialogBox from "@/app/(main)/_components/DialogBox";
 
-const TransactionTable = ({ accountDetails }) => {
+const TransactionTable = ({
+  children,
+  transactions = [],
+  showAccountColumn = false,
+}) => {
   const dispatch = useAppDispatch();
 
   const [openMenuId, setOpenMenuId] = useState(null);
@@ -54,19 +58,20 @@ const TransactionTable = ({ accountDetails }) => {
     selectedTransactionType: transactionType,
     selectedRecurringType: recurringType,
     selectedTransactionIds: selectedIds,
+    selectedAccount,
     search,
   } = useAppSelector((state) => state.transaction);
 
+  // Clear selection when filters change
   useEffect(() => {
     dispatch(clearSelection());
   }, [transactionType, recurringType, search, dispatch]);
 
   const searchLower = search?.toLowerCase() || "";
 
+  // Filter + Sort
   // These will be handled by the backend later on
   const filterAndSortedTransaction = useMemo(() => {
-    const transactions = accountDetails?.transactions ?? [];
-
     return transactions
       .filter((transaction) => {
         if (
@@ -79,6 +84,12 @@ const TransactionTable = ({ accountDetails }) => {
           return false;
 
         if (recurringType === "Non-recurring Only" && transaction.isRecurring)
+          return false;
+
+        if (
+          selectedAccount !== "All Accounts" &&
+          transaction.accountName !== selectedAccount
+        )
           return false;
 
         if (searchLower) {
@@ -117,13 +128,21 @@ const TransactionTable = ({ accountDetails }) => {
 
         return 0;
       });
-  }, [accountDetails, transactionType, recurringType, searchLower, sortConfig]);
+  }, [
+    transactions,
+    transactionType,
+    recurringType,
+    selectedAccount,
+    searchLower,
+    sortConfig,
+  ]);
 
   const allIds = filterAndSortedTransaction.map((t) => t.id);
 
   const isAllSelected =
     allIds.length > 0 && allIds.every((id) => selectedIds.includes(id));
 
+  // Sorting
   const handleSort = (key) => {
     setSortConfig((prev) => ({
       key,
@@ -131,6 +150,7 @@ const TransactionTable = ({ accountDetails }) => {
     }));
   };
 
+  // Select All
   const handleCheckAll = (checked) => {
     const isChecked = checked === true;
 
@@ -141,6 +161,7 @@ const TransactionTable = ({ accountDetails }) => {
     }
   };
 
+  // Delete
   const handleDelete = (ids) => {
     // dispatch(deleteTransactions(ids));
     dispatch(clearSelection());
@@ -195,6 +216,9 @@ const TransactionTable = ({ accountDetails }) => {
               </span>
             </TableHead>
             <TableHead className={"font-semibold"}>Recurring</TableHead>
+            {showAccountColumn && (
+              <TableHead className={"font-semibold"}>Account</TableHead>
+            )}
             <TableHead />
           </TableRow>
         </TableHeader>
@@ -217,6 +241,7 @@ const TransactionTable = ({ accountDetails }) => {
                 recurringDuration,
                 type,
                 amount,
+                accountName = "",
               }) => (
                 <TableRow
                   key={id}
@@ -224,6 +249,7 @@ const TransactionTable = ({ accountDetails }) => {
                     "hover:bg-[#25252b] transition border-b border-[#bebec0]/30 last:border-0"
                   }
                 >
+                  {/* Checkbox */}
                   <TableCell>
                     <Checkbox
                       checked={selectedIds.includes(id)}
@@ -235,8 +261,14 @@ const TransactionTable = ({ accountDetails }) => {
                       }
                     />
                   </TableCell>
+
+                  {/* Date */}
                   <TableCell>{format(date, "PP")}</TableCell>
+
+                  {/* Description */}
                   <TableCell>{description}</TableCell>
+
+                  {/* Category */}
                   <TableCell>
                     <Badge
                       style={{
@@ -250,6 +282,8 @@ const TransactionTable = ({ accountDetails }) => {
                       <span>{category}</span>
                     </Badge>
                   </TableCell>
+
+                  {/* Amount */}
                   <TableCell
                     className={cn(
                       type === "Income" ? "text-[#72FF52]" : "text-[#FB5756]",
@@ -259,6 +293,8 @@ const TransactionTable = ({ accountDetails }) => {
                     {type === "Income" ? "+ " : "- "}
                     {currencyFormatter.format(amount)}
                   </TableCell>
+
+                  {/* Recurring */}
                   <TableCell>
                     {isRecurring ? (
                       <TooltipWrapper
@@ -288,6 +324,20 @@ const TransactionTable = ({ accountDetails }) => {
                       </Badge>
                     )}
                   </TableCell>
+
+                  {/* Extra Cell */}
+                  {showAccountColumn && (
+                    <TableCell>
+                      <Badge
+                        variant={"outline"}
+                        className={"rounded border border-[#bebec0]/50"}
+                      >
+                        {accountName}
+                      </Badge>
+                    </TableCell>
+                  )}
+
+                  {/* Actions */}
                   <TableCell className={"text-right"}>
                     <DropdownMenu
                       open={openMenuId === id}
@@ -332,6 +382,7 @@ const TransactionTable = ({ accountDetails }) => {
               ),
             )
           )}
+          {children}
         </TableBody>
       </Table>
     </div>

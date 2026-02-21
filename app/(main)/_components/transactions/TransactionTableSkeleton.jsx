@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const TransactionTableSkeleton = ({ rows }) => {
+const TransactionTableSkeleton = () => {
   return (
     <div
       className={"border border-[#bebec0]/40 rounded-md overflow-hidden px-1"}
@@ -29,7 +29,7 @@ const TransactionTableSkeleton = ({ rows }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {Array.from({ length: rows }).map((_, i) => (
+          {Array.from({ length: 10 }).map((_, i) => (
             <TableRow
               key={i}
               className={
@@ -40,7 +40,7 @@ const TransactionTableSkeleton = ({ rows }) => {
                 <CardSkeleton className={"w-4 h-4 rounded"} />
               </TableCell>
               {Array.from({ length: 5 }).map((_, idx) => (
-                <TableCell key={idx}>
+                <TableCell key={idx} className={idx === 3 && "place-items-end"}>
                   <TextSkeleton className={"h-6 w-32"} />
                 </TableCell>
               ))}

@@ -1,5 +1,7 @@
 import CardSkeleton from "@/app/(main)/_components/CardSkeleton";
 import TitleSkeleton from "./_components/TitleSkeleton";
+import TransactionTableSkeleton from "@/app/(main)/_components/transactions/TransactionTableSkeleton";
+import FilterTransactionsSkeleton from "@/app/(main)/_components/transactions/FilterTransactionsSkeleton";
 
 export default function Loading() {
   return (
@@ -14,6 +16,12 @@ export default function Loading() {
 
       {/* Bar Chart */}
       <CardSkeleton className={"h-180"} />
+
+      {/* Transactions Table */}
+      <div className="flex flex-col gap-4">
+        <FilterTransactionsSkeleton count={2} />
+        <TransactionTableSkeleton />
+      </div>
     </div>
   );
 }

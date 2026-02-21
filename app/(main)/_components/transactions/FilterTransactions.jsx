@@ -12,11 +12,13 @@ import {
   setSelectedTransactionType,
   clearSelection,
   toggleIsDeleting,
+  setSelectedAccount,
 } from "@/lib/store/features/transaction/transactionSlice";
 import { useDebounce } from "@/lib/store/hooks/useDebounce";
 import TooltipWrapper from "@/components/ui/TooltipWrapper";
 import { Button } from "@/components/ui/button";
 import DialogBox from "@/app/(main)/_components/DialogBox";
+import { db } from "@/data/db";
 
 const TYPES = ["Income", "Expense", "All Types"];
 
@@ -26,7 +28,9 @@ const RECURRING_TYPES = [
   "All Transactions",
 ];
 
-const FilterTransactions = () => {
+const ACCOUNTS = db.map((item) => item?.account.name);
+
+const FilterTransactions = ({ showAccountsSelectDropdown }) => {
   const dispatch = useAppDispatch();
 
   const [localSearch, setLocalSearch] = useState("");
@@ -37,10 +41,17 @@ const FilterTransactions = () => {
     dispatch(setSearch(debouncedSearch));
   }, [debouncedSearch, dispatch]);
 
+  useEffect(() => {
+    dispatch(setSelectedRecurringType("All Transactions"));
+    dispatch(setSelectedTransactionType("All Types"));
+    dispatch(setSelectedAccount("All Accounts"));
+  }, [dispatch]);
+
   const {
     selectedTransactionType: transactionType,
     selectedRecurringType: recurringType,
     selectedTransactionIds: selectedIds,
+    selectedAccount,
     search,
     isDeleting,
   } = useAppSelector((state) => state.transaction);
@@ -48,9 +59,12 @@ const FilterTransactions = () => {
   const isFiltered =
     transactionType !== "All Types" ||
     recurringType !== "All Transactions" ||
+    selectedAccount !== "All Accounts" ||
     search.length > 0;
 
   const count = selectedIds.length;
+
+  const accounts = [...ACCOUNTS, "All Accounts"];
 
   const handleTypeChange = (value) => {
     dispatch(setSelectedTransactionType(value));
@@ -58,6 +72,10 @@ const FilterTransactions = () => {
 
   const handleRecurringType = (value) => {
     dispatch(setSelectedRecurringType(value));
+  };
+
+  const handleSelectedAccount = (value) => {
+    dispatch(setSelectedAccount(value));
   };
 
   const handleSearch = (e) => {
@@ -68,6 +86,7 @@ const FilterTransactions = () => {
     setLocalSearch("");
     dispatch(setSelectedRecurringType("All Transactions"));
     dispatch(setSelectedTransactionType("All Types"));
+    dispatch(setSelectedAccount("All Accounts"));
   };
 
   const handleDelete = (ids) => {
@@ -96,6 +115,14 @@ const FilterTransactions = () => {
           value={recurringType}
           onChange={handleRecurringType}
         />
+        {showAccountsSelectDropdown && (
+          <SelectDropdown
+            options={accounts}
+            label={"Accounts"}
+            value={selectedAccount}
+            onChange={handleSelectedAccount}
+          />
+        )}
 
         {/* Only visible when transactions are filtered */}
         <TooltipWrapper
