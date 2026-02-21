@@ -11,9 +11,16 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-import { Trash2Icon } from "lucide-react";
-
-const DeleteDialog = ({ children, selectedIds, onConfirm }) => {
+const DialogBox = ({
+  children,
+  selectedIds = [],
+  onConfirm,
+  onCancel,
+  Icon,
+  title,
+  desc,
+  actionText,
+}) => {
   const count = selectedIds.length;
 
   return (
@@ -24,21 +31,15 @@ const DeleteDialog = ({ children, selectedIds, onConfirm }) => {
       <AlertDialogContent size="sm" className={"bg-[#1e1e24]"}>
         <AlertDialogHeader>
           <AlertDialogMedia className="bg-[#FB5756]">
-            <Trash2Icon className="text-white" />
+            <Icon className="text-white" />
           </AlertDialogMedia>
-          <AlertDialogTitle className={"text-white"}>
-            Delete {count > 1 && count} transaction
-            {count > 1 && "s"}?
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            This will permanently delete {count > 1 ? "these" : "this"}{" "}
-            transaction
-            {count > 1 && "s"}. This action cannot be undone.
-          </AlertDialogDescription>
+          <AlertDialogTitle className={"text-white"}>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{desc}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel
             variant="outline"
+            onClick={onCancel}
             className={
               "cursor-pointer bg-transparent hover:bg-[#24252c] transition"
             }
@@ -52,7 +53,7 @@ const DeleteDialog = ({ children, selectedIds, onConfirm }) => {
               "bg-[#FB5756] hover:bg-[#ff6f6f] text-white cursor-pointer transition"
             }
           >
-            Delete
+            {actionText}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -60,4 +61,4 @@ const DeleteDialog = ({ children, selectedIds, onConfirm }) => {
   );
 };
 
-export default DeleteDialog;
+export default DialogBox;

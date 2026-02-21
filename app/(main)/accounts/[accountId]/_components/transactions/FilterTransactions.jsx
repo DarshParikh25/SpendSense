@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { RotateCcw, Trash2 } from "lucide-react";
+import { RotateCcw, Trash2, Trash2Icon } from "lucide-react";
 
 import SearchInput from "@/app/(main)/_components/SearchInput";
 import SelectDropdown from "@/app/(main)/_components/SelectDropdown";
@@ -16,7 +16,7 @@ import {
 import { useDebounce } from "@/lib/store/hooks/useDebounce";
 import TooltipWrapper from "@/components/ui/TooltipWrapper";
 import { Button } from "@/components/ui/button";
-import DeleteDialog from "./DeleteDialog";
+import DialogBox from "@/app/(main)/_components/DialogBox";
 
 const TYPES = ["Income", "Expense", "All Types"];
 
@@ -49,6 +49,8 @@ const FilterTransactions = () => {
     transactionType !== "All Types" ||
     recurringType !== "All Transactions" ||
     search.length > 0;
+
+  const count = selectedIds.length;
 
   const handleTypeChange = (value) => {
     dispatch(setSelectedTransactionType(value));
@@ -115,7 +117,14 @@ const FilterTransactions = () => {
           content={`Delete ${selectedIds.length} Transactions`}
           contentClassName={"bg-[#bebec0] text-[#1e1e24]"}
         >
-          <DeleteDialog selectedIds={selectedIds} onConfirm={handleDelete}>
+          <DialogBox
+            selectedIds={selectedIds}
+            onConfirm={handleDelete}
+            Icon={Trash2Icon}
+            title={`Delete ${count > 1 && count} transaction${count > 1 && "s"}?`}
+            desc={`This will permanently delete ${count > 1 ? "these" : "this"} transaction${count > 1 && "s"}. This action cannot be undone.`}
+            actionText={"Delete"}
+          >
             {selectedIds.length > 0 && (
               <Button
                 className={
@@ -126,7 +135,7 @@ const FilterTransactions = () => {
                 <span>({selectedIds.length})</span>
               </Button>
             )}
-          </DeleteDialog>
+          </DialogBox>
         </TooltipWrapper>
       </div>
     </div>

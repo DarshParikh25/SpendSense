@@ -2,7 +2,14 @@
 
 import { format } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
-import { ChevronDown, ChevronUp, Clock, Ellipsis, History } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  Ellipsis,
+  History,
+  Trash2Icon,
+} from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -32,7 +39,7 @@ import {
   selectAllTransactions,
   toggleTransactionSelection,
 } from "@/lib/store/features/transaction/transactionSlice";
-import DeleteDialog from "./DeleteDialog";
+import DialogBox from "@/app/(main)/_components/DialogBox";
 
 const TransactionTable = ({ accountDetails }) => {
   const dispatch = useAppDispatch();
@@ -304,12 +311,18 @@ const TransactionTable = ({ accountDetails }) => {
                               "text-red-600 cursor-pointer hover:bg-[#c3c3c6]"
                             }
                           >
-                            <DeleteDialog
+                            <DialogBox
                               selectedIds={[id]}
                               onConfirm={handleDelete}
+                              Icon={Trash2Icon}
+                              title={`Delete transaction?`}
+                              desc={
+                                "This will permanently delete this transaction. This action cannot be undone."
+                              }
+                              actionText={"Delete"}
                             >
                               <span>Delete</span>
-                            </DeleteDialog>
+                            </DialogBox>
                           </DropdownMenuItem>
                         </DropdownMenuGroup>
                       </DropdownMenuContent>

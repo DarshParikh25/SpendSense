@@ -1,14 +1,16 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { AlertTriangle } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
+
 import { db } from "@/data/db";
 import { transactionSchema } from "@/lib/validators/transactionSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format } from "date-fns";
-import { useForm, useWatch } from "react-hook-form";
 import InputField from "../InputField";
 import TypeSelect from "../TypeSelect";
 import { currencyFormatter } from "@/lib/formatter";
-import { useEffect, useMemo } from "react";
 import { transactionCategories } from "@/data/categories";
 import DateSelector from "../DateSelector";
 import ToggleSwitch from "../add-account/ToggleSwitch";
@@ -30,6 +32,10 @@ const RECURRING_INTERVALS = [
 ];
 
 const AddTransactionForm = () => {
+  const router = useRouter();
+
+  const [showDialog, setShowDialog] = useState(false);
+
   const defaultAccount = db.filter((acc) => acc.account.isDefault)[0];
 
   const {
@@ -88,6 +94,15 @@ const AddTransactionForm = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+  };
+
+  const handleCancel = () => {
+    setShowDialog(false);
+  };
+
+  const handleConfirm = () => {
+    setShowDialog(false);
+    router.back();
   };
 
   return (
@@ -215,6 +230,14 @@ const AddTransactionForm = () => {
         submitText={"Create Account"}
         loadingText={"Creating..."}
         inSheet={false}
+        handleCancel={handleCancel}
+        handleConfirm={handleConfirm}
+        Icon={AlertTriangle}
+        title={"Are you sure you want to navigate away from this page?"}
+        desc={
+          "You will lose all changes made. Press Proceed to continue to the previous page, or Cancel to stay on the current page."
+        }
+        actionText="Proceed"
         cancelBtnClassName="hover:bg-[#27272e]"
         submitBtnClassName="bg-[#fb5756] text-white hover:bg-[#ff6f6f]"
       />
