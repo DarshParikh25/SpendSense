@@ -18,11 +18,6 @@ import FormCTAs from "../FormCTAs";
 
 const TYPES = ["Expense", "Income"];
 
-const ACCOUNTS = db.map(
-  (acc) =>
-    `${acc.account.name} (${currencyFormatter.format(acc.account.balance)})`,
-);
-
 const RECURRING_INTERVALS = [
   "Daily",
   "Weekly",
@@ -36,7 +31,14 @@ const AddTransactionForm = () => {
 
   const [showDialog, setShowDialog] = useState(false);
 
-  const defaultAccount = db.filter((acc) => acc.account.isDefault)[0];
+  const ACCOUNTS = useMemo(() => {
+    return db.map((item) => ({
+      value: String(item.account.id),
+      label: `${item.account.name} (${currencyFormatter.format(item.account.balance)})`,
+    }));
+  }, []);
+
+  const defaultAccount = db.find((item) => item.account.isDefault);
 
   const {
     register,
@@ -48,13 +50,13 @@ const AddTransactionForm = () => {
     resolver: zodResolver(transactionSchema),
     defaultValues: {
       type: "Expense",
-      amount: null,
-      account: "",
+      amount: "",
+      accountId: "",
       category: "",
       date: null,
       description: "",
       isRecurring: false,
-      recurringInterval: "",
+      recurringInterval: undefined,
     },
   });
 
@@ -63,16 +65,17 @@ const AddTransactionForm = () => {
 
     reset({
       type: "Expense",
-      amount: null,
-      account: `${defaultAccount?.account.name} (${currencyFormatter.format(defaultAccount?.account.balance)})`,
+      amount: "",
+      accountId: String(defaultAccount?.account.id),
       category: "",
       date: new Date(),
       description: "",
       isRecurring: false,
-      recurringInterval: "",
+      recurringInterval: undefined,
     });
   }, [defaultAccount, reset]);
 
+  // Watch
   const type = useWatch({
     control,
     name: "type",
@@ -83,17 +86,45 @@ const AddTransactionForm = () => {
     name: "isRecurring",
   });
 
+  const selectedCategory = useWatch({
+    control,
+    name: "category",
+  });
+
+  const amount = useWatch({
+    control,
+    name: "amount",
+  });
+
+  useEffect(() => {
+    console.log("Amount value:", amount, typeof amount);
+  }, [amount]);
+
+  useEffect(() => {
+    if (selectedCategory === "__add_new__") {
+      console.log(selectedCategory);
+    }
+  }, [selectedCategory]);
+
   const categories = useMemo(() => {
     return [
       ...transactionCategories
         .filter((cat) => cat.type === type)
-        .map((cat) => cat.name),
-      `+ Add new ${type.toLowerCase()} category`, // later will add the dialog box for the addition of new category
+        .map((cat) => ({
+          value: cat.name,
+          label: cat.name,
+        })),
+      {
+        value: "__add_new__",
+        label: `+ Add new ${type.toLowerCase()} category`,
+      }, // later will add the dialog box for the addition of new category
     ];
   }, [type]);
 
   const onSubmit = (data) => {
     console.log(data);
+    reset();
+    router.back();
   };
 
   const handleCancel = () => {
@@ -127,22 +158,21 @@ const AddTransactionForm = () => {
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Amount */}
         <InputField
+          control={control}
           name={"amount"}
           label={"Amount"}
           register={register}
           placeholder="0.00"
           errors={errors}
-          validation={{
-            valueAsNumber: true,
-          }}
           required
           className={"w-full"}
         />
 
+        {/* Account */}
         <div className="w-full flex flex-col gap-2">
           <label className="font-semibold">Account</label>
           <TypeSelect
-            name={"account"}
+            name={"accountId"}
             control={control}
             types={ACCOUNTS}
             label="Accounts"
@@ -184,6 +214,7 @@ const AddTransactionForm = () => {
 
       {/* Description */}
       <InputField
+        control={control}
         name={"description"}
         label={"Description"}
         register={register}

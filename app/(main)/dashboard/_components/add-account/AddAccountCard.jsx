@@ -6,7 +6,7 @@ const AddAccountCard = () => {
   return (
     <Card
       className={
-        "h-full hidden md:flex border-2 border-[#bebec0] px-4 py-8 cursor-pointer bg-transparent hover:bg-[#26272f]"
+        "h-60 border-2 border-[#bebec0] px-4 py-8 cursor-pointer bg-transparent hover:bg-[#26272f]"
       }
     >
       <CardContent

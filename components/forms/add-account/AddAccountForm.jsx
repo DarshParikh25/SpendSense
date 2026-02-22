@@ -44,6 +44,7 @@ const AddAccountForm = ({ closeDrawer, setIsSubmitting }) => {
     >
       {/* Account Name */}
       <InputField
+        control={control}
         name={"name"}
         label={"Account Name"}
         errors={errors}
@@ -71,6 +72,7 @@ const AddAccountForm = ({ closeDrawer, setIsSubmitting }) => {
 
       {/* Initial Balance */}
       <InputField
+        control={control}
         name={"balance"}
         label={"Initial Balance"}
         register={register}

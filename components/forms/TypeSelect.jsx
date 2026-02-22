@@ -50,10 +50,10 @@ const TypeSelect = ({
                 {types.map((type, index) => (
                   <SelectItem
                     key={index}
-                    value={type}
+                    value={typeof type === "object" ? type.value : type}
                     className={cn("cursor-pointer", itemClassName)}
                   >
-                    {type}
+                    {typeof type === "object" ? type.label : type}
                   </SelectItem>
                 ))}
               </SelectGroup>
