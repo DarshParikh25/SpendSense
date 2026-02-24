@@ -27,7 +27,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { categoryColors, categoryIcons } from "@/data/categories";
 import { currencyFormatter } from "@/lib/formatter";
 import { cn } from "@/lib/utils";
 import CategoryIcon from "@/app/(main)/accounts/[accountId]/_components/transactions/CategoryIcon";
@@ -40,6 +39,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import DialogBox from "@/app/(main)/_components/DialogBox";
+import { categoryColors, categoryIcons } from "@/config/categoryConfig";
 
 const TransactionTable = ({
   children,

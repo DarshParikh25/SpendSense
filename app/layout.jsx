@@ -4,7 +4,6 @@ import "./globals.css";
 import StoreProvider from "./StoreProvider";
 
 import { ClerkProvider } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
 
 export const metadata = {
   // metadataBase: "",
@@ -26,8 +25,6 @@ export const metadata = {
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
-  auth();
-
   return (
     <ClerkProvider>
       <html lang="en">

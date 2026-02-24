@@ -3,14 +3,16 @@ import { cn } from "@/lib/utils";
 
 const EPSILON = 1e-9;
 
-const Stats = ({ transactionData }) => {
-  const expense = transactionData
-    .filter(({ expense }) => Number(expense) > 0)
-    .reduce((sum, { expense }) => sum + (Number(expense) || 0), 0);
+const Stats = ({ transactions }) => {
+  const expense = transactions
+    .filter(
+      (tx) => tx.type.toLowerCase() === "expense" && Number(tx.amount) > 0,
+    )
+    .reduce((sum, tx) => sum + (Number(tx.amount) || 0), 0);
 
-  const income = transactionData
-    .filter(({ income }) => Number(income) > 0)
-    .reduce((sum, { income }) => sum + (Number(income) || 0), 0);
+  const income = transactions
+    .filter((tx) => tx.type.toLowerCase() === "income" && Number(tx.amount) > 0)
+    .reduce((sum, tx) => sum + (Number(tx.amount) || 0), 0);
 
   const net = income - expense;
   const safeNet = Math.abs(net) < EPSILON ? 0 : net;

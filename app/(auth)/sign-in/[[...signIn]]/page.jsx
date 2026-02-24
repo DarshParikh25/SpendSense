@@ -22,7 +22,7 @@ const Login = async () => {
         <h1 className="mx-4 text-3xl flex flex-wrap justify-center items-center font-bold text-white mb-2">
           <span>Welcome back to&nbsp;</span>
           <Image
-            src={"/logos/logo.png"}
+            src={"/logo/logo.png"}
             width={200}
             height={100}
             className="h-10 w-auto object-cover pointer-events-none sha"

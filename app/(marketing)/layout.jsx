@@ -2,8 +2,8 @@ import { Inter } from "next/font/google";
 
 import "../globals.css";
 import Footer from "@/components/footer/Footer";
-import MarketingNav from "@/app/(marketing)/_components/marketing/header/MarketingNav";
-import MarketingMobNav from "@/app/(marketing)/_components/marketing/header/mobile/MarketingMobNav";
+import MarketingNav from "@/app/(marketing)/_components/header/MarketingNav";
+import MarketingMobNav from "@/app/(marketing)/_components/header/mobile/MarketingMobNav";
 
 export const metadata = {
   title: "Money at Your Fingertips",

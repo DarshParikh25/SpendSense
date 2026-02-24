@@ -32,7 +32,7 @@ const Footer = () => {
       <div className="order-2 lg:order-1 flex flex-col gap-4 place-items-center lg:items-start">
         <Link href={"/"} aria-label="home">
           <Image
-            src={"/logos/logo.png"}
+            src={"/logo/logo.png"}
             width={200}
             height={100}
             loading="eager"

@@ -1,9 +1,9 @@
-import Features from "@/app/(marketing)/_components/marketing/features/Features";
-import FinalCTA from "@/app/(marketing)/_components/marketing/finalcta/FinalCTA";
-import Guide from "@/app/(marketing)/_components/marketing/guide/Guide";
-import Hero from "@/app/(marketing)/_components/marketing/hero/Hero";
-import Stats from "@/app/(marketing)/_components/marketing/stats/Stats";
-import Testimonials from "@/app/(marketing)/_components/marketing/testimonials/Testimonials";
+import Features from "@/app/(marketing)/_components/features/Features";
+import FinalCTA from "@/app/(marketing)/_components/finalcta/FinalCTA";
+import Guide from "@/app/(marketing)/_components/guide/Guide";
+import Hero from "@/app/(marketing)/_components/hero/Hero";
+import Stats from "@/app/(marketing)/_components/stats/Stats";
+import Testimonials from "@/app/(marketing)/_components/testimonials/Testimonials";
 
 export default function Home() {
   return (

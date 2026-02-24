@@ -35,7 +35,7 @@ const AccountPage = async ({ params }) => {
 
       {/* Overview */}
       <Suspense fallback={<CardSkeleton className={"h-180"} />}>
-        <TransactionOverview />
+        <TransactionOverview accountDetails={accountDetails} />
       </Suspense>
 
       {/* Transactions Table */}

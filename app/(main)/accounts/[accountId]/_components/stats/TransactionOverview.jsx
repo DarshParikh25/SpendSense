@@ -6,6 +6,7 @@ import { setBarChartDuration } from "@/lib/store/features/ui/uiSlice";
 import Stats from "./Stats";
 import { lazy, Suspense } from "react";
 import CardSkeleton from "@/app/(main)/_components/CardSkeleton";
+import { db } from "@/data/db";
 
 const TransactionBarChart = lazy(() => import("./TransactionBarChart"));
 
@@ -52,7 +53,7 @@ const durationOpts = [
   "All Time",
 ];
 
-const TransactionOverview = () => {
+const TransactionOverview = ({ accountDetails }) => {
   const dispatch = useAppDispatch();
 
   const duration = useAppSelector((state) => state.ui.barChartDuration);
@@ -60,6 +61,8 @@ const TransactionOverview = () => {
   const handleDurationChange = (value) => {
     dispatch(setBarChartDuration(value));
   };
+
+  console.log(accountDetails.transactions);
 
   return (
     <div className="flex flex-col justify-center items-center gap-12 border-2 border-[#bebec0] p-10 rounded-xl">
@@ -75,7 +78,7 @@ const TransactionOverview = () => {
       </div>
 
       {/* Stats */}
-      <Stats transactionData={transactionData} />
+      <Stats transactions={accountDetails.transactions} />
 
       {/* Bar Chart */}
       <Suspense

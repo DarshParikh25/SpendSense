@@ -5,7 +5,7 @@ const Logo = () => {
   return (
     <Link href={"/"} aria-label="home" className="justify-self-start">
       <Image
-        src="/logos/logo.png"
+        src="/logo/logo.png"
         width={200}
         height={100}
         alt="logo"

@@ -3,7 +3,7 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Login from "../../../../../components/Login";
+import Login from "../../../../components/Login";
 import { cn } from "@/lib/utils";
 import DashboardBtn from "@/components/DashboardBtn";
 import ProfileBtn from "@/components/ProfileBtn";

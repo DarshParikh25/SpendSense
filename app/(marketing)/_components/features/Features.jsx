@@ -1,3 +1,4 @@
+import CardShell from "@/components/CardShell";
 import {
   Brain,
   ChartColumn,
@@ -6,14 +7,6 @@ import {
   Globe,
   Receipt,
 } from "lucide-react";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 const Features = () => {
   const featuresInfo = [
@@ -50,30 +43,22 @@ const Features = () => {
   ];
 
   return (
-    <div className='px-6 py-20 md:px-20 md:py-40 flex flex-col justify-center items-center gap-18 md:gap-24'>
-      <h2 className='text-2xl md:text-4xl font-bold text-center'>
+    <div className="px-6 py-20 md:px-20 md:py-40 flex flex-col justify-center items-center gap-18 md:gap-24">
+      <h2 className="text-2xl md:text-4xl font-bold text-center">
         Everything You Need for Complete Financial Control
       </h2>
-      <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-14 px-2 w-full '>
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-14 px-2 w-full ">
         {featuresInfo.map(({ icon: Icon, title, desc }, index) => (
-          <Card
+          <CardShell
             key={index}
-            className={
-              "md:px-4 md:py-10 flex flex-col justify-center items-start gap-4 border-2"
-            }
-          >
-            <CardHeader className={"w-full"}>
-              <Icon className='text-[#FB5756] w-auto h-10 md:h-12' />
-              <CardTitle className={"font-bold text-xl md:text-2xl"}>
-                {title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CardDescription className={"text-sm md:text-[16px]"}>
-                {desc}
-              </CardDescription>
-            </CardContent>
-          </Card>
+            isIcon
+            Icon={Icon}
+            title={title}
+            desc={desc}
+            className={"md:px-4 md:py-10 gap-4"}
+            titleClassName={"font-bold text-xl md:text-2xl"}
+            descClassName={"text-sm md:text-[16px]"}
+          />
         ))}
       </div>
     </div>

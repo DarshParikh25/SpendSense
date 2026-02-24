@@ -7,7 +7,7 @@ import requiresAuth from "@/lib/auth/requiresAuth";
 import Budget from "@/app/(main)/dashboard/_components/budget/Budget";
 import RecentTransactions from "./_components/overview/recent-transactions/RecentTransactions";
 import ExpenseBreakdown from "./_components/overview/expense-breakdown/ExpenseBreakdown";
-import AddAccount from "./_components/add-account/AddAccount";
+import AddAccount from "../_components/AddAccount";
 import ChoiceCard from "./_components/accounts/ChoiceCard";
 import ChoiceCardSkeleton from "./_components/accounts/ChoiceCardSkeleton";
 import OverviewSkeleton from "./_components/overview/OverviewSkeleton";
@@ -16,6 +16,7 @@ import Heading from "@/app/(main)/_components/Heading";
 import TextSkeleton from "../_components/TextSkeleton";
 import { cn } from "@/lib/utils";
 import { db } from "@/data/db";
+import AddAccountCard from "./_components/add-account/AddAccountCard";
 
 const getGridCols = (count) => {
   if (count === 1) return "grid-cols-1";
@@ -63,14 +64,16 @@ export default async function DashboardPage() {
           </Suspense>
 
           {/* Add Account Card and Drawer */}
-          <AddAccount />
+          <AddAccount>
+            <AddAccountCard />
+          </AddAccount>
         </div>
         <Link
           href={"/accounts"}
-          className="flex gap-1 justify-end items-center hover:text-white hover:underline hover:underline-offset-10 transition-all"
+          className="group flex gap-1 justify-end items-center hover:text-white hover:underline hover:underline-offset-2 transition-all"
         >
           <span className="text-sm font-medium">View All Accounts</span>
-          <ArrowRight className="w-4 h-4" />
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform ease-out duration-300" />
         </Link>
       </div>
     </div>
