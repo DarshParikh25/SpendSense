@@ -17,6 +17,11 @@ import TextSkeleton from "../_components/TextSkeleton";
 import { cn } from "@/lib/utils";
 import { db } from "@/data/db";
 import AddAccountCard from "./_components/add-account/AddAccountCard";
+import getDashboardGreeting from "@/lib/helper/getDashboardGreeting";
+import getHealth from "@/lib/helper/getHealth";
+import getStats from "@/lib/helper/getStats";
+import { currentUser } from "@clerk/nextjs/server";
+import HealthCard from "./_components/HealthCard";
 
 const getGridCols = (count) => {
   if (count === 1) return "grid-cols-1";
@@ -25,26 +30,49 @@ const getGridCols = (count) => {
 };
 
 export default async function DashboardPage() {
-  const user = await requiresAuth();
+  const auth = await requiresAuth();
 
   // This will be taken care by the middleware, but it is a good practice to include it.
   // Redirect to '/sign-in' if not authenticated
-  if (!user) {
+  if (!auth) {
     redirect("/sign-in");
   }
 
+  const user = await currentUser();
+
+  const name = user?.firstName || user?.fullName || user?.username || "User";
+
   const gridClass = getGridCols(db.length + 1);
+
+  const { income, expense } = getStats(
+    db.flatMap((item) => item.account.transactions),
+  );
+
+  const balance = db.reduce(
+    (sum, item) => sum + (item?.account.balance || 0),
+    0,
+  );
+
+  const health = getHealth(income, expense, balance);
 
   return (
     <div className="py-8 md:py-12 flex flex-col gap-10">
       {/* Title */}
       <Suspense fallback={<TextSkeleton className={"h-14 w-60"} />}>
-        <Heading title={"Dashboard"} />
+        <div>
+          <Heading title={"Dashboard"} />
+          <p className="text-white text-sm sm:text-base">
+            {getDashboardGreeting({ name, health })}
+          </p>
+        </div>
       </Suspense>
 
       {/* Budget */}
       <Suspense fallback={<CardSkeleton className={"h-40"} />}>
-        <Budget />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          <HealthCard health={health} />
+          <Budget />
+        </div>
       </Suspense>
 
       {/* Overview */}

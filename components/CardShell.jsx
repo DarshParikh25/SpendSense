@@ -2,6 +2,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -15,6 +16,8 @@ const CardShell = ({
   className,
   titleClassName,
   descClassName,
+  footer = false,
+  children,
 }) => {
   return (
     <Card
@@ -27,9 +30,10 @@ const CardShell = ({
         {isIcon && <Icon className="text-[#FB5756] w-auto h-10 md:h-12" />}
         <CardTitle className={titleClassName}>{title}</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className={"w-full"}>
         <CardDescription className={descClassName}>{desc}</CardDescription>
       </CardContent>
+      {footer && <CardFooter>{children}</CardFooter>}
     </Card>
   );
 };

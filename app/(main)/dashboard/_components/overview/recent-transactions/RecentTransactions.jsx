@@ -16,7 +16,6 @@ const RecentTransactions = () => {
 
   useEffect(() => {
     const defaultAccount = db.find((acc) => acc.account.isDefault);
-    console.log(defaultAccount);
 
     if (defaultAccount) {
       dispatch(setRecentTransactionAcc(defaultAccount.account.name));

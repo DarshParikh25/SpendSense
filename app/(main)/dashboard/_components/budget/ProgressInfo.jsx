@@ -14,7 +14,7 @@ const ProgressInfo = ({
     <div className="flex justify-center items-center gap-2">
       {/* For alerts, if budget exceeds 80% */}
       {!isBudgetEditing && progress >= 80 && (
-        <TriangleAlert className="w-5 h-5 text-[#fb5756] animate-caret-blink" />
+        <TriangleAlert className="w-5 h-5 text-[#fb5756] animate-pulse" />
       )}
 
       {/* Input for editing the budget */}

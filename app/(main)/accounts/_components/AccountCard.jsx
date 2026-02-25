@@ -56,18 +56,6 @@ const AccountCard = ({ account }) => {
 
   const health = getHealth(income, expense, balance);
 
-  const currentHealth = {
-    ...health,
-    color:
-      health.status === "excellent"
-        ? "*:bg-green-500"
-        : health.status === "healthy"
-          ? "*:bg-emerald-500"
-          : health.status === "warning"
-            ? "*:bg-orange-500"
-            : "*:bg-[#fb5756]",
-  };
-
   return (
     <Card className="sm:px-2 sm:py-8 border-2 border-[#bebec0] hover:shadow-md transition">
       {/* Header */}
@@ -110,7 +98,7 @@ const AccountCard = ({ account }) => {
 
         <div className="w-full flex flex-col justify-center items-center gap-6">
           {/* Health */}
-          <HealthStatus health={currentHealth} />
+          <HealthStatus health={health} />
 
           {/* Income / Expense */}
           <IncomeExpenseProgress data={progressBarData} />
