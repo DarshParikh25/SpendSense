@@ -1,6 +1,7 @@
 import CardShell from "@/components/CardShell";
 import { Progress } from "@/components/ui/progress";
 import { healthConfig } from "@/config/healthConfig";
+import getHealthTip from "@/lib/helper/getHealthTip";
 
 const HealthCard = ({ health }) => {
   const config = healthConfig[health.status];
@@ -35,8 +36,12 @@ const HealthCard = ({ health }) => {
           )}
         </div>
       }
-      className={"gap-0"}
-    />
+      className={"gap-0 pb-2"}
+      footer
+      footerClassName="w-full flex justify-center item-center mt-6 text-[#bebec0]/75 text-center"
+    >
+      <p className="text-xs">Tip: {getHealthTip(health.status)}</p>
+    </CardShell>
   );
 };
 

@@ -30,7 +30,7 @@ const AddAccountForm = ({ closeDrawer, setIsSubmitting }) => {
 
   const onSubmit = (data) => {
     setIsSubmitting(true);
-    console.log(data);
+    console.log(data); // replace it with actual on submit logic
     // logic here
     reset();
     closeDrawer();

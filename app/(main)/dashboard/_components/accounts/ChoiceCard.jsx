@@ -40,7 +40,7 @@ const ChoiceCard = () => {
         })),
       );
     } catch (error) {
-      console.log("Failed to set default account", error);
+      console.log("Failed to set default account", error); // replace with actual toast notification
     } finally {
       setLoadingId(null);
     }

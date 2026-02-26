@@ -78,7 +78,7 @@ const Budget = () => {
           <p className="w-fit text-xs sm:text-sm self-end">{progress}% used</p>
         </div>
       }
-      className={"gap-0"}
+      className={"gap-4"}
       titleClassName={"text-white text-md sm:text-lg font-semibold"}
     />
   );

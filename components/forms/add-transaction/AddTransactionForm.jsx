@@ -91,18 +91,9 @@ const AddTransactionForm = () => {
     name: "category",
   });
 
-  const amount = useWatch({
-    control,
-    name: "amount",
-  });
-
-  useEffect(() => {
-    console.log("Amount value:", amount, typeof amount);
-  }, [amount]);
-
   useEffect(() => {
     if (selectedCategory === "__add_new__") {
-      console.log(selectedCategory);
+      console.log(selectedCategory); // replace with add new category logic
     }
   }, [selectedCategory]);
 
@@ -122,7 +113,7 @@ const AddTransactionForm = () => {
   }, [type]);
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log(data); // replace it with actual on submit logic
     reset();
     router.back();
   };

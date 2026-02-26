@@ -10,13 +10,14 @@ import { cn } from "@/lib/utils";
 
 const CardShell = ({
   isIcon = false,
+  footer = false,
   Icon,
   title,
   desc,
   className,
   titleClassName,
   descClassName,
-  footer = false,
+  footerClassName,
   children,
 }) => {
   return (
@@ -33,7 +34,9 @@ const CardShell = ({
       <CardContent className={"w-full"}>
         <CardDescription className={descClassName}>{desc}</CardDescription>
       </CardContent>
-      {footer && <CardFooter>{children}</CardFooter>}
+      {footer && (
+        <CardFooter className={footerClassName}>{children}</CardFooter>
+      )}
     </Card>
   );
 };

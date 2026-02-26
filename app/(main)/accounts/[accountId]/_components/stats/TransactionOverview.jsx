@@ -62,8 +62,6 @@ const TransactionOverview = ({ accountDetails }) => {
     dispatch(setBarChartDuration(value));
   };
 
-  console.log(accountDetails.transactions);
-
   return (
     <div className="flex flex-col justify-center items-center gap-12 border-2 border-[#bebec0] p-10 rounded-xl">
       {/* Title and duration selection */}

@@ -58,14 +58,12 @@ export default async function DashboardPage() {
   return (
     <div className="py-8 md:py-12 flex flex-col gap-10">
       {/* Title */}
-      <Suspense fallback={<TextSkeleton className={"h-14 w-60"} />}>
-        <div>
-          <Heading title={"Dashboard"} />
-          <p className="text-white text-sm sm:text-base">
-            {getDashboardGreeting({ name, health })}
-          </p>
-        </div>
-      </Suspense>
+      <div>
+        <Heading title={"Dashboard"} />
+        <p className="text-white text-sm sm:text-base lg:text-lg font-medium">
+          {getDashboardGreeting({ name, health })}
+        </p>
+      </div>
 
       {/* Budget */}
       <Suspense fallback={<CardSkeleton className={"h-40"} />}>

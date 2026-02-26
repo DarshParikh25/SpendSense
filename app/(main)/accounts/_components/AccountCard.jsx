@@ -32,8 +32,6 @@ const AccountCard = ({ account }) => {
 
   const { income, expense, topCategories } = getStats(transactions);
 
-  console.log(topCategories);
-
   const max = Math.max(income, expense, 1);
 
   const incomePercent = (income / max) * 100;
