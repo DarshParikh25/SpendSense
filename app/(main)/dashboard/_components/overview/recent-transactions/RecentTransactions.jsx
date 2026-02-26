@@ -1,66 +1,29 @@
-"use client";
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardTitle } from "@/components/ui/card";
 import LastFiveTransactions from "./LastFiveTransactions";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
-import { setRecentTransactionAcc } from "@/lib/store/features/ui/uiSlice";
-import SelectDropdown from "@/app/(main)/_components/SelectDropdown";
-import { db } from "@/data/db";
 
-import { useEffect } from "react";
+import CardShell from "@/components/CardShell";
 
-const RecentTransactions = () => {
-  const dispatch = useAppDispatch();
-
-  const accOpts = db.map((acc) => acc.account.name);
-
-  useEffect(() => {
-    const defaultAccount = db.find((acc) => acc.account.isDefault);
-
-    if (defaultAccount) {
-      dispatch(setRecentTransactionAcc(defaultAccount.account.name));
-    }
-  }, [dispatch]);
-
-  const account = useAppSelector((state) => state.ui.recentTransactionsAcc);
-
-  const handleAccountChange = (value) => {
-    dispatch(setRecentTransactionAcc(value));
-  };
-
-  const selectedAccount = useAppSelector(
-    (state) => state.ui.recentTransactionsAcc,
-  );
-
-  const accountTransactions = db.find(
-    (acc) => acc.account.name === selectedAccount,
-  )?.account?.transactions;
-
+const RecentTransactions = ({ transactions }) => {
+  const topTransactions = transactions
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 5);
   return (
-    <Card className="border-2 border-[#bebec0] rounded-xl px-4 py-8 col-span-1 gap-8">
-      <CardHeader className="flex justify-between items-center">
+    <CardShell
+      header={
         <CardTitle className="text-xl font-semibold text-white">
           Recent Transactions
         </CardTitle>
-
-        {/* Dropdown to select the account for the recent transactions */}
-        <SelectDropdown
-          options={accOpts}
-          label={"Accounts"}
-          value={account}
-          onChange={handleAccountChange}
-        />
-      </CardHeader>
-
-      <CardContent className={"h-full flex justify-center items-center"}>
-        {/* Show the recent 5 transactions for the selected account */}
-        {accountTransactions?.length > 0 ? (
-          <LastFiveTransactions transactions={accountTransactions} />
+      }
+      content={
+        // Show the recent 5 transactions for the selected account
+        topTransactions?.length > 0 ? (
+          <LastFiveTransactions transactions={topTransactions} />
         ) : (
           <p className="font-medium">No recent transactions</p>
-        )}
-      </CardContent>
-    </Card>
+        )
+      }
+      className={"rounded-xl px-4 py-8 gap-8"}
+    />
   );
 };
 

@@ -2,28 +2,24 @@
 
 import { lazy, Suspense } from "react";
 
-import { useAppSelector } from "@/lib/store/hooks/hooks";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { db } from "@/data/db";
 import CardSkeleton from "@/app/(main)/_components/CardSkeleton";
+import { getMonthRange } from "@/lib/helper/date/getMonthRanges";
+import CardShell from "@/components/CardShell";
 
 const ExpenseChart = lazy(() => import("./ExpenseChart"));
 
 const TOP_N = 5;
 
-const ExpenseBreakdown = () => {
-  const selectedAccount = useAppSelector(
-    (state) => state.ui.recentTransactionsAcc,
-  );
-
-  // all transactions
-  const transactions =
-    db.find((acc) => acc.account.name === selectedAccount)?.account
-      ?.transactions ?? [];
+const ExpenseBreakdown = ({ transactions }) => {
+  const { start, end } = getMonthRange();
 
   // only expenses
   const expenses = transactions.filter(
-    (transaction) => transaction.type === "Expense",
+    (transaction) =>
+      new Date(transaction.date) >= new Date(start) &&
+      new Date(transaction.date) <= new Date(end) &&
+      transaction.type === "Expense",
   );
 
   // total expense
@@ -53,7 +49,7 @@ const ExpenseBreakdown = () => {
     const top = costPerCat.slice(0, TOP_N);
     const rest = costPerCat.slice(TOP_N);
 
-    const othersTotal = res.reduce(
+    const othersTotal = rest.reduce(
       (sum, item) => sum + (Number(item.total) || 0),
       0,
     );
@@ -75,14 +71,14 @@ const ExpenseBreakdown = () => {
   }));
 
   return (
-    <Card className="border-2 border-[#bebec0] rounded-xl col-span-1 px-4 py-8">
-      <CardHeader>
+    <CardShell
+      header={
         <CardTitle className={"text-xl font-semibold text-white"}>
           Monthly Expense Breakdown
         </CardTitle>
-      </CardHeader>
-      <CardContent className={"h-full flex justify-center items-center"}>
-        {costPerCat?.length > 0 ? (
+      }
+      content={
+        costPerCat?.length > 0 ? (
           <Suspense
             fallback={<CardSkeleton className={"w-full h-80 border-none"} />}
           >
@@ -90,9 +86,11 @@ const ExpenseBreakdown = () => {
           </Suspense>
         ) : (
           <p className="font-medium">No expenses these months</p>
-        )}
-      </CardContent>
-    </Card>
+        )
+      }
+      className={"px-4 py-8"}
+      contentClassName={"h-full flex justify-center items-center"}
+    />
   );
 };
 

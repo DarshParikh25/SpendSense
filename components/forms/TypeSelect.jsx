@@ -7,7 +7,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
 
 import { Controller } from "react-hook-form";
 
@@ -31,10 +30,7 @@ const TypeSelect = ({
         <div className="w-full">
           <Select value={field.value} onValueChange={field.onChange}>
             <SelectTrigger
-              className={cn(
-                "w-full input cursor-pointer border-[1.5px]",
-                triggerClassName,
-              )}
+              className={`w-full input cursor-pointer border-[1.5px] ${triggerClassName}`}
             >
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>
@@ -43,7 +39,7 @@ const TypeSelect = ({
               side="bottom"
               align="center"
               avoidCollisions={false}
-              className={cn("shadow-xl w-full", contentClassName)}
+              className={`shadow-xl w-full ${contentClassName}`}
             >
               <SelectGroup>
                 <SelectLabel>{label}</SelectLabel>
@@ -51,7 +47,7 @@ const TypeSelect = ({
                   <SelectItem
                     key={index}
                     value={typeof type === "object" ? type.value : type}
-                    className={cn("cursor-pointer", itemClassName)}
+                    className={`cursor-pointer ${itemClassName}`}
                   >
                     {typeof type === "object" ? type.label : type}
                   </SelectItem>

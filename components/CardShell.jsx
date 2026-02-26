@@ -4,7 +4,6 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 
 const CardShell = ({
   header,
@@ -17,23 +16,21 @@ const CardShell = ({
 }) => {
   return (
     <Card
-      className={cn(
-        "flex flex-col justify-center items-start border-2",
-        className,
-      )}
+      className={`flex flex-col justify-center items-start border-2
+        ${className}`}
     >
       {header && (
-        <CardHeader className={cn("w-full", headerClassName)}>
+        <CardHeader className={`w-full ${headerClassName}`}>
           {header}
         </CardHeader>
       )}
       {content && (
-        <CardContent className={cn("w-full", contentClassName)}>
+        <CardContent className={`w-full ${contentClassName}`}>
           {content}
         </CardContent>
       )}
       {footer && (
-        <CardFooter className={cn("w-full", footerClassName)}>
+        <CardFooter className={`w-full ${footerClassName}`}>
           {footer}
         </CardFooter>
       )}

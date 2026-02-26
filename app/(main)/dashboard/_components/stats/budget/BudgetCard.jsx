@@ -18,7 +18,7 @@ import CardShell from "@/components/CardShell";
 import { TriangleAlert } from "lucide-react";
 import { CardDescription, CardTitle } from "@/components/ui/card";
 
-const Budget = () => {
+const BudgetCard = () => {
   const dispatch = useAppDispatch();
 
   const isBudgetEditing = useAppSelector((state) => state.ui.isBudgetEditing);
@@ -92,4 +92,4 @@ const Budget = () => {
   );
 };
 
-export default Budget;
+export default BudgetCard;

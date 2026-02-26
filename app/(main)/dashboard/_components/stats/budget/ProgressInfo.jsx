@@ -1,7 +1,5 @@
 import { Input } from "@/components/ui/input";
 
-import { TriangleAlert } from "lucide-react";
-
 const ProgressInfo = ({
   isBudgetEditing,
   spent,

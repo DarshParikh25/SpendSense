@@ -3,7 +3,6 @@
 import DialogBox from "@/app/(main)/_components/DialogBox";
 import { Button } from "@/components/ui/button";
 import { SheetClose } from "@/components/ui/sheet";
-import { cn } from "@/lib/utils";
 
 const FormCTAs = ({
   isSubmitting,
@@ -23,10 +22,8 @@ const FormCTAs = ({
     <Button
       type="button"
       disabled={isSubmitting}
-      className={cn(
-        "border-[1.5px] cursor-pointer bg-transparent font-semibold",
-        cancelBtnClassName,
-      )}
+      className={`border-[1.5px] cursor-pointer bg-transparent font-semibold
+        ${cancelBtnClassName}`}
     >
       Cancel
     </Button>
@@ -52,10 +49,8 @@ const FormCTAs = ({
         type="submit"
         variant="default"
         disabled={isSubmitting}
-        className={cn(
-          "border-none font-semibold cursor-pointer",
-          submitBtnClassName,
-        )}
+        className={`border-none font-semibold cursor-pointer
+          ${submitBtnClassName}`}
       >
         {isSubmitting ? loadingText : submitText}
       </Button>

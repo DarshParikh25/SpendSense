@@ -1,7 +1,6 @@
 import DashboardBtn from "@/components/DashboardBtn";
 import ProfileBtn from "@/components/ProfileBtn";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
 import AddTransactionBtn from "./AddTransactionBtn";
 
 import { SignedIn, SignedOut } from "@clerk/nextjs";
@@ -12,10 +11,8 @@ const DashboardNavCTAs = ({ divClassName }) => {
     <TooltipProvider delayDuration={200}>
       <SignedIn>
         <div
-          className={cn(
-            "w-fit justify-self-end justify-center items-center gap-4",
-            divClassName,
-          )}
+          className={`w-fit justify-self-end justify-center items-center gap-4
+            ${divClassName}`}
         >
           {/* Dashboard btn */}
           <DashboardBtn />

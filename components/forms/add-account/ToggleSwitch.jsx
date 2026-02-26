@@ -1,5 +1,4 @@
 import { Switch } from "@/components/ui/switch";
-import { cn } from "@/lib/utils";
 
 import { Controller } from "react-hook-form";
 
@@ -17,18 +16,12 @@ const ToggleSwitch = ({
       control={control}
       render={({ field }) => (
         <div
-          className={cn(
-            "flex items-center justify-between border-[1.5px] w-full px-2 md:px-4 py-2 md:py-3 gap-2 rounded-lg",
-            cardClassName,
-          )}
+          className={`flex items-center justify-between border-[1.5px] w-full px-2 md:px-4 py-2 md:py-3 gap-2 rounded-lg ${cardClassName}`}
         >
           <div className="flex flex-col justify-center item-baseline gap-1">
             <h4 className="text-base md:text-lg font-semibold">{heading}</h4>
             <p
-              className={cn(
-                "text-sm leading-4 tracking-tight md:tracking-normal",
-                contentClassName,
-              )}
+              className={`text-sm leading-4 tracking-tight md:tracking-normal ${contentClassName}`}
             >
               {content}
             </p>
