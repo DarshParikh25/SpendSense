@@ -37,7 +37,9 @@ const SelectDropdown = ({ options = [], value, label, onChange }) => {
             <SelectItem
               key={id ? id : index}
               value={name}
-              className={"font-semibold hover:bg-[#25252c] cursor-pointer"}
+              className={
+                "capitalize font-semibold hover:bg-[#25252c] cursor-pointer"
+              }
             >
               {name}
             </SelectItem>

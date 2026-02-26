@@ -2,7 +2,7 @@
 
 import { lazy, Suspense } from "react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardTitle } from "@/components/ui/card";
 import CardSkeleton from "@/app/(main)/_components/CardSkeleton";
 import { getMonthRange } from "@/lib/helper/date/getMonthRanges";
 import CardShell from "@/components/CardShell";

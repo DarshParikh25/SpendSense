@@ -16,8 +16,8 @@ const SavingsCard = ({ savingsData }) => {
           Savings
           {trend !== 0 && (
             <div
-              className={`flex items-center text-sm sm:text-base ${
-                trend >= 0 ? "text-green-600" : "text-[#fb5756]"
+              className={`flex items-center text-sm sm:text-base font-semibold ${
+                trend >= 0 ? "text-[#72FF52]" : "text-[#fb5756]"
               }`}
             >
               {trend >= 0 ? (
@@ -25,7 +25,7 @@ const SavingsCard = ({ savingsData }) => {
               ) : (
                 <ArrowDownRight className="w-4 sm:w-5 h-4 sm:h-5" />
               )}
-              {Math.abs(trend).toFixed(1)}%
+              {Math.abs(trend).toFixed(2)}%
             </div>
           )}
         </CardTitle>
@@ -34,7 +34,7 @@ const SavingsCard = ({ savingsData }) => {
         <CardDescription>
           <p
             className={`text-xl md:text-2xl font-bold ${
-              isPositive ? "text-green-600" : "text-red-500"
+              isPositive ? "text-[#72FF52]" : "text-red-500"
             }`}
           >
             {currencyFormatter.format(savings)}
@@ -42,7 +42,8 @@ const SavingsCard = ({ savingsData }) => {
 
           {/* Rate */}
           <p className="text-xs sm:text-sm">
-            {savingsRate.toFixed(1)}% of income saved
+            <span className="font-bold">{savingsRate.toFixed(2)}%</span> of
+            income saved
           </p>
         </CardDescription>
       }

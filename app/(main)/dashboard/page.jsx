@@ -16,6 +16,7 @@ import getGridCols from "@/lib/helper/ui/getGridCols";
 import DashboardStats from "./_components/stats/DashboardStats";
 import Greetings from "./_components/Greetings";
 import Overview from "./_components/overview/Overview";
+import CashFlowCard from "./_components/cash-flow/CashFlowCard";
 
 export default async function DashboardPage() {
   await requiresAuth();
@@ -45,8 +46,10 @@ export default async function DashboardPage() {
       </div>
 
       {/* Stats */}
-
       <DashboardStats accounts={accounts} health={health} />
+
+      {/* Cash Flow Trend */}
+      <CashFlowCard accounts={accounts} />
 
       {/* Overview */}
       <Overview />
