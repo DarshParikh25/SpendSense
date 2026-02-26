@@ -1,3 +1,4 @@
+import TooltipWrapper from "@/components/ui/TooltipWrapper";
 import { Check, Pencil, X } from "lucide-react";
 
 const EditBudget = ({
@@ -20,10 +21,15 @@ const EditBudget = ({
           />
         </>
       ) : (
-        <Pencil
-          onClick={handleEditBudget}
-          className="hover:cursor-pointer w-4 h-4"
-        />
+        <TooltipWrapper
+          content={"Edit"}
+          contentClassName={"bg-[#bebec0] text-[#1e1e24] font-medium mt-2"}
+        >
+          <Pencil
+            onClick={handleEditBudget}
+            className="hover:cursor-pointer w-3 h-3"
+          />
+        </TooltipWrapper>
       )}
     </>
   );

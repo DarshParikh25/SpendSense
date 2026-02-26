@@ -1,4 +1,5 @@
 import CardShell from "@/components/CardShell";
+import { CardDescription, CardTitle } from "@/components/ui/card";
 import {
   Brain,
   ChartColumn,
@@ -51,13 +52,20 @@ const Features = () => {
         {featuresInfo.map(({ icon: Icon, title, desc }, index) => (
           <CardShell
             key={index}
-            isIcon
-            Icon={Icon}
-            title={title}
-            desc={desc}
+            header={
+              <CardTitle
+                className={"flex flex-col items-baseline justify-center gap-2"}
+              >
+                <Icon className="text-[#fb5756] w-auto h-10 md:h-12" />
+                <span className="font-bold text-xl md:text-2xl">{title}</span>
+              </CardTitle>
+            }
+            content={
+              <CardDescription className={"text-sm md:text-[16px]"}>
+                {desc}
+              </CardDescription>
+            }
             className={"md:px-4 md:py-10 gap-4"}
-            titleClassName={"font-bold text-xl md:text-2xl"}
-            descClassName={"text-sm md:text-[16px]"}
           />
         ))}
       </div>

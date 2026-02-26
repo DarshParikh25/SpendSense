@@ -24,7 +24,7 @@ export const healthConfig = {
   },
 
   critical: {
-    color: "text-red-500",
+    color: "text-[#fb5756]",
     icon: AlertOctagon,
     animate: "animate-pulse",
   },

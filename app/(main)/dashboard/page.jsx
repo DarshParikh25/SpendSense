@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { currentUser } from "@clerk/nextjs/server";
 
 import requiresAuth from "@/lib/auth/requiresAuth";
 import Budget from "@/app/(main)/dashboard/_components/budget/Budget";
@@ -13,21 +14,17 @@ import ChoiceCardSkeleton from "./_components/accounts/ChoiceCardSkeleton";
 import OverviewSkeleton from "./_components/overview/OverviewSkeleton";
 import CardSkeleton from "../_components/CardSkeleton";
 import Heading from "@/app/(main)/_components/Heading";
-import TextSkeleton from "../_components/TextSkeleton";
 import { cn } from "@/lib/utils";
 import { db } from "@/data/db";
 import AddAccountCard from "./_components/add-account/AddAccountCard";
-import getDashboardGreeting from "@/lib/helper/getDashboardGreeting";
-import getHealth from "@/lib/helper/getHealth";
+import getDashboardGreeting from "@/lib/helper/ui/getDashboardGreeting";
+import getHealth from "@/lib/helper/finance/getHealth";
 import getStats from "@/lib/helper/getStats";
-import { currentUser } from "@clerk/nextjs/server";
 import HealthCard from "./_components/HealthCard";
-
-const getGridCols = (count) => {
-  if (count === 1) return "grid-cols-1";
-  if (count === 2) return "grid-cols-1 md:grid-cols-2";
-  return "grid-cols-1 md:grid-cols-2 xl:grid-cols-3";
-};
+import SavingsCard from "./_components/SavingsCard";
+import getGridCols from "@/lib/helper/ui/getGridCols";
+import getSavingsData from "@/lib/helper/finance/savings/getSavingsData";
+import getMonthlyComparison from "@/lib/helper/finance/getMonthlyComparison";
 
 export default async function DashboardPage() {
   const auth = await requiresAuth();
@@ -42,18 +39,25 @@ export default async function DashboardPage() {
 
   const name = user?.firstName || user?.fullName || user?.username || "User";
 
-  const gridClass = getGridCols(db.length + 1);
+  const accounts = db.map((item) => item.account);
+
+  const gridClass = getGridCols(accounts.length + 1);
 
   const { income, expense } = getStats(
     db.flatMap((item) => item.account.transactions),
   );
 
-  const balance = db.reduce(
-    (sum, item) => sum + (item?.account.balance || 0),
-    0,
-  );
+  const balance = accounts.reduce((sum, item) => sum + (item.balance || 0), 0);
 
   const health = getHealth(income, expense, balance);
+
+  const comparison = getMonthlyComparison(accounts);
+
+  const savingsData = getSavingsData(
+    comparison.currentSavings,
+    comparison.currentIncome,
+    comparison.savingsTrend,
+  );
 
   return (
     <div className="py-8 md:py-12 flex flex-col gap-10">
@@ -65,11 +69,12 @@ export default async function DashboardPage() {
         </p>
       </div>
 
-      {/* Budget */}
+      {/* Stats */}
       <Suspense fallback={<CardSkeleton className={"h-40"} />}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <HealthCard health={health} />
           <Budget />
+          <SavingsCard savingsData={savingsData} />
         </div>
       </Suspense>
 

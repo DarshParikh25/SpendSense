@@ -1,6 +1,6 @@
 import { db } from "@/data/db";
 
-import getGridCols from "@/lib/helper/getGridCols";
+import getGridCols from "@/lib/helper/ui/getGridCols";
 
 import SummaryRow from "./_components/SummaryRow";
 import AccountCard from "./_components/AccountCard";

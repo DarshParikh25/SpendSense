@@ -1,4 +1,5 @@
 import CardShell from "@/components/CardShell";
+import { CardDescription, CardTitle } from "@/components/ui/card";
 import { currencyFormatter } from "@/lib/formatter";
 
 const SummaryRow = ({ accounts }) => {
@@ -28,11 +29,15 @@ const SummaryRow = ({ accounts }) => {
       {stats.map(({ label, value }, index) => (
         <CardShell
           key={index}
-          title={label}
-          desc={value}
+          header={
+            <CardTitle className="font-medium text-base">{label}</CardTitle>
+          }
+          content={
+            <CardDescription className={"font-bold text-2xl text-white"}>
+              {value}
+            </CardDescription>
+          }
           className={"gap-2 border-[#bebec0]"}
-          titleClassName={"font-medium text-base"}
-          descClassName={"font-bold text-2xl text-white"}
         />
       ))}
     </div>

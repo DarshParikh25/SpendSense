@@ -17,7 +17,7 @@ import getStats from "@/lib/helper/getStats";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import IncomeExpenseProgress from "./IncomeExpenseProgress";
-import getHealth from "@/lib/helper/getHealth";
+import getHealth from "@/lib/helper/finance/getHealth";
 import TopCategories from "./TopCategories";
 import ActivityMeta from "./ActivityMeta";
 

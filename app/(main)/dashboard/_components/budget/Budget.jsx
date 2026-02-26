@@ -12,10 +12,11 @@ import EditBudget from "./EditBudget";
 import ProgressInfo from "./ProgressInfo";
 import { Progress } from "@/components/ui/progress";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { selectBudgetProgress } from "@/lib/store/features/budget/budgetSelector";
 import { currencyFormatter } from "@/lib/formatter";
 import CardShell from "@/components/CardShell";
+import { TriangleAlert } from "lucide-react";
+import { CardDescription, CardTitle } from "@/components/ui/card";
 
 const Budget = () => {
   const dispatch = useAppDispatch();
@@ -47,28 +48,36 @@ const Budget = () => {
 
   return (
     <CardShell
-      title={`Monthly Budget (Default Account)`}
-      desc={
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2">
-            {/* Budget and spent information */}
-            <ProgressInfo
-              isBudgetEditing={isBudgetEditing}
-              spent={currencyFormatter.format(spent)}
-              total={currencyFormatter.format(total)}
-              draftBudget={draftBudget}
-              progress={progress}
-              handleBudgetChange={handleBudgetChange}
-            />
+      header={
+        <CardTitle className="inline-flex items-center gap-2 text-white text-md sm:text-lg font-semibold">
+          <span>Monthly Budget (Default Account)</span>
+          {/* For alerts, if budget exceeds 80% */}
+          {!isBudgetEditing && progress >= 80 && (
+            <TriangleAlert className="w-5 h-5 text-[#fb5756] animate-pulse" />
+          )}
+        </CardTitle>
+      }
+      content={
+        <CardDescription className="flex flex-col gap-1">
+          {/* <div className="flex items-center gap-2"> */}
+          {/* Budget and spent information */}
+          <ProgressInfo
+            isBudgetEditing={isBudgetEditing}
+            spent={currencyFormatter.format(spent)}
+            total={currencyFormatter.format(total)}
+            draftBudget={draftBudget}
+            progress={progress}
+            handleBudgetChange={handleBudgetChange}
+          />
 
-            {/* Edit, Save, or Cancel buttons */}
-            <EditBudget
+          {/* Edit, Save, or Cancel buttons */}
+          {/* <EditBudget
               isBudgetEditing={isBudgetEditing}
               handleSaveBudget={handleSaveBudget}
               handleCancelBudget={handleCancelBudget}
               handleEditBudget={handleEditBudget}
-            />
-          </div>
+            /> */}
+          {/* </div> */}
 
           {/* Progress bar */}
           <Progress
@@ -76,10 +85,9 @@ const Budget = () => {
             className={"bg-[#bebec0] mt-2 *:bg-[#fb5756] *:rounded-full"}
           />
           <p className="w-fit text-xs sm:text-sm self-end">{progress}% used</p>
-        </div>
+        </CardDescription>
       }
       className={"gap-4"}
-      titleClassName={"text-white text-md sm:text-lg font-semibold"}
     />
   );
 };
