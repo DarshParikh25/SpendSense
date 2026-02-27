@@ -15,9 +15,20 @@ const CashFlowChart = ({ data }) => {
   return (
     <ResponsiveContainer width={"100%"} height={450}>
       <LineChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="label" axisLine={false} tickLine={false} />
-        <YAxis width="auto" tickLine={false} />
+        <CartesianGrid vertical={false} strokeDasharray="3 3" />
+        <XAxis
+          dataKey="label"
+          tickLine={false}
+          axisLine={false}
+          tick={{ fontSize: 12 }}
+        />
+
+        <YAxis
+          tickLine={false}
+          axisLine={false}
+          tick={{ fontSize: 12 }}
+          width={40}
+        />
         <Tooltip
           formatter={(value, name) => [
             currencyFormatter.format(value),
@@ -34,6 +45,7 @@ const CashFlowChart = ({ data }) => {
         <Line
           type="monotone"
           dataKey="expense"
+          name="Expense"
           stroke="#fd5756"
           strokeWidth={2}
           dot={{ r: 4 }}
@@ -42,6 +54,7 @@ const CashFlowChart = ({ data }) => {
         <Line
           type="monotone"
           dataKey="income"
+          name="Income"
           stroke="#72FF52"
           strokeWidth={2}
           dot={{ r: 4 }}

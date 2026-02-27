@@ -30,7 +30,7 @@ const TypeSelect = ({
         <div className="w-full">
           <Select value={field.value} onValueChange={field.onChange}>
             <SelectTrigger
-              className={`w-full input cursor-pointer border-[1.5px] ${triggerClassName}`}
+              className={`w-full input cursor-pointer border-[1.5px] data-placeholder:text-[#1e1e24]/50 ${triggerClassName}`}
             >
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>

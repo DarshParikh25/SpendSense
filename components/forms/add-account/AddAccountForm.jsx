@@ -1,6 +1,7 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useMemo } from "react";
+import { useForm, useWatch } from "react-hook-form";
 
 import TypeSelect from "../TypeSelect";
 import FormCTAs from "../FormCTAs";
@@ -8,8 +9,10 @@ import InputField from "../InputField";
 import ToggleSwitch from "./ToggleSwitch";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { accountSchema } from "@/lib/validators/accountSchema";
+import { accountCategories } from "@/data/categories";
+import { accountTypes } from "@/config/categoryConfig";
 
-const ACCOUNT_TYPES = ["Savings", "Current"];
+const ACCOUNT_TYPES = accountCategories.map((cat) => cat.name);
 
 const AddAccountForm = ({ closeDrawer, setIsSubmitting }) => {
   const {
@@ -22,11 +25,19 @@ const AddAccountForm = ({ closeDrawer, setIsSubmitting }) => {
     resolver: zodResolver(accountSchema),
     defaultValues: {
       name: "",
-      type: "Savings",
-      balance: 0,
+      type: "",
+      category: "",
+      balance: "",
       isDefault: false,
     },
   });
+
+  const type = useWatch({
+    control,
+    name: "type",
+  });
+
+  const ACCOUNT_CATEGORIES = useMemo(() => accountTypes[type], [type]);
 
   const onSubmit = (data) => {
     setIsSubmitting(true);
@@ -56,12 +67,16 @@ const AddAccountForm = ({ closeDrawer, setIsSubmitting }) => {
 
       {/* Account Type */}
       <div className="w-full flex flex-col gap-2">
-        <label className="font-semibold">Account Type</label>
+        <label className="font-semibold">
+          Account Type <span className="text-[#fb5756]">*</span>
+        </label>
         <TypeSelect
           name={"type"}
           control={control}
           types={ACCOUNT_TYPES}
+          placeholder={"Select account type"}
           label="Account Types"
+          required
           triggerClassName={"border-[#1e1e24]/30"}
           contentClassName={
             "border-[1.5px] border-[#1e1e24] bg-[#bebec0] text-[#1e1e24]"
@@ -69,6 +84,28 @@ const AddAccountForm = ({ closeDrawer, setIsSubmitting }) => {
           itemClassName={"bg-transparent hover:bg-[#c3c3c3]"}
         />
       </div>
+
+      {/* Account Sub Category */}
+      {ACCOUNT_TYPES.includes(type) && (
+        <div className="w-full flex flex-col gap-2">
+          <label className="font-semibold">
+            Account Category <span className="text-[#fb5756]">*</span>
+          </label>
+          <TypeSelect
+            name={"category"}
+            control={control}
+            types={ACCOUNT_CATEGORIES}
+            placeholder={`Select ${type.toLowerCase()} category`}
+            label="Account Categories"
+            required
+            triggerClassName={"border-[#1e1e24]/30"}
+            contentClassName={
+              "border-[1.5px] border-[#1e1e24] bg-[#bebec0] text-[#1e1e24]"
+            }
+            itemClassName={"bg-transparent hover:bg-[#c3c3c3]"}
+          />
+        </div>
+      )}
 
       {/* Initial Balance */}
       <InputField
@@ -78,9 +115,6 @@ const AddAccountForm = ({ closeDrawer, setIsSubmitting }) => {
         register={register}
         errors={errors}
         placeholder="0.0"
-        validation={{
-          valueAsNumber: true,
-        }}
         required
         className={"border-[#1e1e24]/30 focus-visible:border-[#1e1e24]"}
       />

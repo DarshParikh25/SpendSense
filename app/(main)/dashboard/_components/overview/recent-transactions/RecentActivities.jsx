@@ -1,9 +1,9 @@
 import { CardTitle } from "@/components/ui/card";
-import LastFiveTransactions from "./LastFiveTransactions";
+import LastFiveActivities from "./LastFiveTransactions";
 
 import CardShell from "@/components/CardShell";
 
-const RecentTransactions = ({ transactions }) => {
+const RecentActivities = ({ transactions }) => {
   const topTransactions = transactions
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 5);
@@ -11,13 +11,13 @@ const RecentTransactions = ({ transactions }) => {
     <CardShell
       header={
         <CardTitle className="text-xl font-semibold text-white">
-          Recent Transactions
+          Recent Activity
         </CardTitle>
       }
       content={
         // Show the recent 5 transactions for the selected account
         topTransactions?.length > 0 ? (
-          <LastFiveTransactions transactions={topTransactions} />
+          <LastFiveActivities transactions={topTransactions} />
         ) : (
           <p className="font-medium">No recent transactions</p>
         )
@@ -27,4 +27,4 @@ const RecentTransactions = ({ transactions }) => {
   );
 };
 
-export default RecentTransactions;
+export default RecentActivities;

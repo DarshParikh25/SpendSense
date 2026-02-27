@@ -1,6 +1,6 @@
 import CardSkeleton from "@/app/(main)/_components/CardSkeleton";
 import { Suspense } from "react";
-import RecentTransactions from "./recent-transactions/RecentTransactions";
+import RecentActivities from "./recent-transactions/RecentActivities";
 import ExpenseBreakdown from "./expense-breakdown/ExpenseBreakdown";
 import { db } from "@/data/db";
 
@@ -15,7 +15,7 @@ const Overview = () => {
   return (
     <div className="grid lg:grid-cols-2 grid-cols-1 gap-10">
       <Suspense fallback={<CardSkeleton />}>
-        <RecentTransactions transactions={transactions} />
+        <RecentActivities transactions={transactions} />
       </Suspense>
       <Suspense fallback={<CardSkeleton />}>
         <ExpenseBreakdown transactions={transactions} />

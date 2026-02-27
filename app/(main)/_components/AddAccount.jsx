@@ -9,7 +9,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import AddAccountCard from "../dashboard/_components/add-account/AddAccountCard";
 import AddAccountForm from "@/components/forms/add-account/AddAccountForm";
 
 const AddAccount = ({ children }) => {

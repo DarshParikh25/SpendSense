@@ -178,3 +178,62 @@ export const transactionCategories = [
     icon: "Wifi",
   },
 ];
+
+export const accountCategories = [
+  // Assets
+  {
+    id: "bank",
+    name: "Cash & Bank",
+    type: "asset",
+    liquid: true,
+    color: "#4F8EF7", // Calm financial blue
+    subCategories: ["Savings Account", "Current Account", "Wallet", "Cash"],
+  },
+  {
+    id: "investment",
+    name: "Investments",
+    type: "asset",
+    liquid: false,
+    color: "#34C38F", // Growth green
+    subCategories: [
+      "Stocks",
+      "Mutual Funds",
+      "ETFs",
+      "Crypto",
+      "Broker Account",
+    ],
+  },
+  {
+    id: "asset",
+    name: "Assets",
+    type: "asset",
+    liquid: false,
+    color: "#F4B740", // Wealth amber
+    subCategories: ["Commodity", "Real Estate", "Vehicle", "Other Asset"],
+  },
+
+  // Liabilities
+  {
+    id: "credit",
+    name: "Credit Card",
+    type: "liability",
+    liquid: false,
+    color: "#7B6CF6", // Modern muted purple
+    subCategories: ["Credit Card"],
+  },
+  {
+    id: "loan",
+    name: "Loan",
+    type: "liability",
+    liquid: false,
+    color: "#FB5756", // Soft debt red (not harsh)
+    subCategories: [
+      "Home Loan",
+      "Personal Loan",
+      "Vehicle Loan",
+      "Gold Loan",
+      "EMI",
+      "Mortgage",
+    ],
+  },
+];
