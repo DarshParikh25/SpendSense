@@ -1,7 +1,7 @@
 import { RechartsDevtools } from "@recharts/devtools";
 import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
 
-const CustomActiveShape = (props) => {
+const CustomShape = (props) => {
   const {
     cx,
     cy,
@@ -78,7 +78,7 @@ const CustomActiveShape = (props) => {
 const BalanceByTypeChart = ({ data }) => {
   return (
     <div className="relative w-full flex flex-col justify-center items-center gap-10">
-      <ResponsiveContainer width="100%" aspect={1.2}>
+      <ResponsiveContainer width="90%" aspect={1.3}>
         <PieChart margin={{ bottom: 10 }}>
           <Pie
             data={data}
@@ -87,7 +87,7 @@ const BalanceByTypeChart = ({ data }) => {
             paddingAngle={5}
             cornerRadius={20}
             dataKey="value"
-            shape={(props) => <CustomActiveShape {...props} />}
+            shape={(props) => <CustomShape {...props} />}
           />
           <RechartsDevtools />
         </PieChart>

@@ -34,7 +34,7 @@ const SavingsCard = ({ savingsData }) => {
         <CardDescription>
           <p
             className={`text-xl md:text-2xl font-bold ${
-              isPositive ? "text-[#72FF52]" : "text-red-500"
+              isPositive ? "text-[#72FF52]" : "text-[#fb5756]"
             }`}
           >
             {currencyFormatter.format(savings)}

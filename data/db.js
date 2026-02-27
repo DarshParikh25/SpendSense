@@ -87,7 +87,6 @@ export const db = [
       budget: 5000.0,
       type: "Loan",
       category: "Vehicle Loan",
-      category: "Savings Account",
       transactions: [
         {
           id: 1,

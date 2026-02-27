@@ -186,7 +186,7 @@ export const accountCategories = [
     name: "Cash & Bank",
     type: "asset",
     liquid: true,
-    color: "#4F8EF7", // Calm financial blue
+    color: "#4F8EF7",
     subCategories: ["Savings Account", "Current Account", "Wallet", "Cash"],
   },
   {
@@ -194,7 +194,7 @@ export const accountCategories = [
     name: "Investments",
     type: "asset",
     liquid: false,
-    color: "#34C38F", // Growth green
+    color: "#34C38F",
     subCategories: [
       "Stocks",
       "Mutual Funds",
@@ -208,7 +208,7 @@ export const accountCategories = [
     name: "Assets",
     type: "asset",
     liquid: false,
-    color: "#F4B740", // Wealth amber
+    color: "#F4B740",
     subCategories: ["Commodity", "Real Estate", "Vehicle", "Other Asset"],
   },
 
@@ -218,7 +218,7 @@ export const accountCategories = [
     name: "Credit Card",
     type: "liability",
     liquid: false,
-    color: "#7B6CF6", // Modern muted purple
+    color: "#7B6CF6",
     subCategories: ["Credit Card"],
   },
   {
@@ -226,7 +226,7 @@ export const accountCategories = [
     name: "Loan",
     type: "liability",
     liquid: false,
-    color: "#FB5756", // Soft debt red (not harsh)
+    color: "#FB5756",
     subCategories: [
       "Home Loan",
       "Personal Loan",

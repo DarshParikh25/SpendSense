@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { currentUser } from "@clerk/nextjs/server";
 
 import requiresAuth from "@/lib/auth/requiresAuth";
@@ -12,6 +10,7 @@ import Greetings from "./_components/Greetings";
 import Overview from "./_components/overview/Overview";
 import CashFlowCard from "./_components/cash-flow/CashFlowCard";
 import BalanceByTypeCard from "./_components/wealth-structure/BalanceByTypeCard";
+import Summary from "./_components/wealth-structure/summary/Summary";
 
 export default async function DashboardPage() {
   await requiresAuth();
@@ -20,7 +19,7 @@ export default async function DashboardPage() {
 
   const name = user?.firstName || user?.fullName || user?.username || "User";
 
-  const accounts = db.map((item) => item.account);
+  const accounts = db.map((item) => item?.account);
 
   const { income, expense } = getStats(
     db.flatMap((item) => item.account.transactions),
@@ -50,15 +49,7 @@ export default async function DashboardPage() {
       {/* Wealth Structure */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <BalanceByTypeCard accounts={accounts} />
-      </div>
-      <div className="w-full flex justify-end items-center gap-2">
-        <Link
-          href={"/accounts"}
-          className="group w-fit flex gap-1 justify-end items-center hover:text-white hover:underline hover:underline-offset-2 transition-all"
-        >
-          <span className="text-sm font-medium">View All Accounts</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform ease-out duration-300" />
-        </Link>
+        <Summary accounts={accounts} />
       </div>
     </div>
   );

@@ -2,11 +2,13 @@
 
 import { lazy, Suspense, useMemo } from "react";
 
-import { CardTitle } from "@/components/ui/card";
+import { CardDescription, CardTitle } from "@/components/ui/card";
 import CardSkeleton from "@/app/(main)/_components/CardSkeleton";
 import CardShell from "@/components/CardShell";
 import { currencyFormatter } from "@/lib/formatter";
 import { accountTypesColors } from "@/config/categoryConfig";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 const BalanceByTypeChart = lazy(() => import("./BalanceByTypeChart"));
 
@@ -45,9 +47,21 @@ const BalanceByTypeCard = ({ accounts }) => {
             <BalanceByTypeChart data={chartData} />
           </Suspense>
         ) : (
-          <p className="font-medium">No expenses these months</p>
+          <CardDescription className="font-medium">
+            No accounts found!
+          </CardDescription>
         )
       }
+      footer={
+        <Link
+          href={"/accounts"}
+          className="group w-fit flex gap-1 justify-center items-center hover:text-white hover:underline hover:underline-offset-2 transition-all"
+        >
+          <span className="text-sm font-medium">View All Accounts</span>
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform ease-out duration-300" />
+        </Link>
+      }
+      footerClassName={"flex justify-end items-center"}
       contentClassName={"h-full flex justify-center items-center"}
     />
   );

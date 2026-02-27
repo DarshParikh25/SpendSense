@@ -15,3 +15,15 @@ export const accountTypes = Object.fromEntries(
 export const accountTypesColors = Object.fromEntries(
   accountCategories.map((cat) => [cat.name, cat.color]),
 );
+
+export const accountCategoriesByType = () => {
+  return accountCategories.reduce((acc, cat) => {
+    const type = cat.type;
+
+    !acc[type] && (acc[type] = []);
+
+    acc[type].push(cat.name);
+
+    return acc;
+  }, {});
+};
