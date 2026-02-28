@@ -26,7 +26,7 @@ const ExpenseChart = ({ costPerCat }) => {
       <BarChart
         data={data}
         layout="vertical"
-        margin={{ top: 0, right: 100, left: 25, bottom: 0 }}
+        margin={{ top: 0, right: 100, left: 30, bottom: 0 }}
       >
         <XAxis type="number" domain={[0, 100]} hide />
 
@@ -39,7 +39,7 @@ const ExpenseChart = ({ costPerCat }) => {
             <text
               x={x}
               y={y}
-              dx={-75}
+              dx={-80}
               dy={4}
               textAnchor="start"
               fill="#bebec0"

@@ -23,6 +23,7 @@ const RECURRING_INTERVALS = [
   "Weekly",
   "Monthly",
   "Quarterly",
+  "Half Yearly",
   "Yearly",
 ];
 

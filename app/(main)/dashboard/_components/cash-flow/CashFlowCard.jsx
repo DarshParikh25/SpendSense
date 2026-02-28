@@ -10,7 +10,7 @@ import {
   getHalfYearlyBuckets,
   getMonthlyBuckets,
   getQuarterlyBuckets,
-  getWeeklyBuckets,
+  getDailyBuckets,
   getYearlyBuckets,
 } from "@/lib/helper/date/generateBuckets";
 import { fillMatchingBucket } from "@/lib/helper/date/fillMatchingBucket";
@@ -18,7 +18,7 @@ import { fillMatchingBucket } from "@/lib/helper/date/fillMatchingBucket";
 const CashFlowChart = lazy(() => import("./CashFlowChart"));
 
 const RANGES = {
-  Weekly: "this week",
+  Daily: "this week",
   Monthly: "this month",
   Quarterly: "in last 3 months",
   "Half Yearly": "in last 6 months",
@@ -34,8 +34,8 @@ const CashFlowCard = ({ accounts }) => {
     let buckets;
 
     switch (period) {
-      case "weekly":
-        buckets = getWeeklyBuckets();
+      case "daily":
+        buckets = getDailyBuckets();
         break;
 
       case "monthly":

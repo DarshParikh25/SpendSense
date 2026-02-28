@@ -5,12 +5,16 @@ const TopCategories = ({ categories }) => {
     <div className="flex flex-col justify-between gap-1">
       <p className="text-sm font-medium">Top Spending:</p>
 
-      {categories.map(([category, total], index) => (
-        <p key={index} className="text-sm text-white flex justify-between">
-          <span>{category}</span>
-          <span>{currencyFormatter.format(total)}</span>
-        </p>
-      ))}
+      {categories.length > 0 ? (
+        categories.map(([category, total], index) => (
+          <p key={index} className="text-sm flex justify-between">
+            <span>{category}</span>
+            <span>{currencyFormatter.format(total)}</span>
+          </p>
+        ))
+      ) : (
+        <p className="text-sm italic">No expense activity yet</p>
+      )}
     </div>
   );
 };

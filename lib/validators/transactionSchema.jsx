@@ -14,7 +14,14 @@ export const transactionSchema = z
       .min(10, "Description must be at least 10 characters long"),
     isRecurring: z.boolean(),
     recurringInterval: z
-      .enum(["Daily", "Weekly", "Monthly", "Quarterly", "Yearly"])
+      .enum([
+        "Daily",
+        "Weekly",
+        "Monthly",
+        "Quarterly",
+        "Half Yearly",
+        "Yearly",
+      ])
       .optional(),
   })
   .superRefine((data, ctx) => {

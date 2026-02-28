@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { RechartsDevtools } from "@recharts/devtools";
 import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
 
@@ -94,7 +95,12 @@ const BalanceByTypeChart = ({ data }) => {
       </ResponsiveContainer>
 
       {/* Legends */}
-      <div className="absolute flex flex-col xl:flex-row justify-center items-center gap-0 xl:gap-4">
+      <div
+        className={cn(
+          data.length <= 5 && "absolute max-w-50",
+          "flex flex-col xl:flex-row xl:flex-wrap justify-center items-center gap-0 xl:gap-4",
+        )}
+      >
         {data.map(({ name, fill }, index) => (
           <div key={index} className="flex justify-center items-center gap-1">
             <span

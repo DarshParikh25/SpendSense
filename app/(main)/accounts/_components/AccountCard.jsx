@@ -5,6 +5,7 @@ import HealthStatus from "./HealthStatus";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -15,14 +16,19 @@ import { Badge } from "@/components/ui/badge";
 import { currencyFormatter } from "@/lib/formatter";
 import getStats from "@/lib/helper/getStats";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Dot } from "lucide-react";
 import IncomeExpenseProgress from "./IncomeExpenseProgress";
 import getHealth from "@/lib/helper/finance/getHealth";
 import TopCategories from "./TopCategories";
 import ActivityMeta from "./ActivityMeta";
+import CardShell from "@/components/CardShell";
+import { RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 
-const AccountCard = ({ account }) => {
-  const { id, name, type, balance, isDefault, transactions = [] } = account;
+const AccountCard = ({ account, defaultAccountId }) => {
+  const { id, name, type, category, balance, transactions = [] } = account;
+
+  const isDefault = defaultAccountId === account.id.toString();
 
   const txCount = transactions.length;
 
@@ -39,82 +45,95 @@ const AccountCard = ({ account }) => {
 
   const progressBarData = [
     {
+      id: "income",
       label: "Income",
       value: income,
-      percent: incomePercent,
-      color: "*:bg-green-500",
+      color: "text-green-500",
     },
     {
+      id: "expense",
       label: "Expense",
       value: expense,
-      percent: expensePercent,
-      color: "*:bg-[#fb5756]",
+      color: "text-[#fb5756]",
     },
   ];
 
   const health = getHealth(income, expense, balance);
 
   return (
-    <Card className="sm:px-2 sm:py-8 border-2 border-[#bebec0] hover:shadow-md transition">
-      {/* Header */}
-      <CardHeader className={"flex justify-between items-center"}>
-        <CardTitle>
-          <h3 className="text-2xl font-semibold flex items-center justify-baseline gap-2">
-            <span className="text-white">{name}</span>
-            {isDefault && (
-              <Badge
-                variant={"default"}
-                className={"bg-[#fb5756]/20 text-[#fb5756] rounded"}
+    <CardShell
+      header={
+        <CardTitle className="flex items-start justify-between">
+          {/* Left Section */}
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
+              <h3 className="text-xl font-semibold text-white tracking-tight">
+                {name}
+              </h3>
+              {isDefault && (
+                <Badge
+                  variant="outline"
+                  className="bg-[#bebec0]/10 text-[#fff] border-[#bebec0]/50 rounded text-xs"
+                >
+                  Default
+                </Badge>
+              )}
+            </div>
+
+            <p className="flex items-center gap-2 text-sm text-[#bebec0]">
+              <span>{type}</span>
+              <span className="w-1 h-1 rounded-full bg-[#bebec0]/60" />
+              <span>{category}</span>
+            </p>
+          </div>
+
+          {/* Right Section */}
+          <div className="flex items-center gap-2">
+            {!isDefault && (
+              <Label
+                htmlFor={`acc-${id}`}
+                className="text-sm text-muted-foreground"
               >
-                Default
-              </Badge>
+                Set Default
+              </Label>
             )}
-          </h3>
-          <p className="text-sm font-normal">{type}</p>
+            <RadioGroupItem
+              id={`acc-${id}`}
+              value={id.toString()}
+              className={"cursor-pointer"}
+            />
+          </div>
         </CardTitle>
-        <Switch
-          checked={isDefault}
-          // disabled={loadingId === id}
-          // onCheckedChange={() => handleMakeDefault(id)}
-          // onClick={(e) => e.stopPropagation()}
-          className={
-            "h-6 w-12 data-[state=checked]:[&>span]:translate-x-7 data-[state=unchecked]:[&>span]:translate-x-1 data-[state=checked]:bg-[#fb5756] data-[state=unchecked]:bg-[#bebec0] [&>span]:bg-white cursor-pointer"
-          }
-        />
-      </CardHeader>
+      }
+      content={
+        <CardDescription className="w-full pt-4 flex flex-col justify-center items-baseline gap-10">
+          {/* Balance */}
+          <div>
+            <p className="text-3xl font-bold text-white">
+              {currencyFormatter.format(balance)}
+            </p>
 
-      {/* Content */}
-      <CardContent className="w-full pt-4 flex flex-col justify-center items-baseline gap-10">
-        {/* Balance */}
-        <div>
-          <p className="text-3xl font-bold text-white">
-            {currencyFormatter.format(balance)}
-          </p>
+            <p className="text-sm">Available Balance</p>
+          </div>
 
-          <p className="text-sm">Available Balance</p>
-        </div>
+          <div className="w-full flex flex-col justify-center items-center gap-6">
+            {/* Health */}
+            <HealthStatus health={health} />
 
-        <div className="w-full flex flex-col justify-center items-center gap-6">
-          {/* Health */}
-          <HealthStatus health={health} />
+            {/* Income / Expense */}
+            <IncomeExpenseProgress data={progressBarData} />
+          </div>
 
-          {/* Income / Expense */}
-          <IncomeExpenseProgress data={progressBarData} />
-        </div>
+          <div className="w-full flex flex-col gap-4">
+            {/* Account Activity Meta */}
+            <ActivityMeta data={{ txCount, lastActivity }} />
 
-        <div className="w-full flex flex-col gap-4">
-          {/* Account Activity Meta */}
-          <ActivityMeta data={{ txCount, lastActivity }} />
-
-          {/* Categories */}
-          {topCategories.length > 0 && (
+            {/* Categories */}
             <TopCategories categories={topCategories} />
-          )}
-        </div>
-      </CardContent>
-
-      {/* Footer */}
-      <CardFooter className="w-full flex justify-end pt-2">
+          </div>
+        </CardDescription>
+      }
+      footer={
         <Link
           href={`/accounts/${id}`}
           className="group flex items-center justify-baseline gap-1 hover:text-white transition-color duration-300 ease-in-out"
@@ -122,8 +141,11 @@ const AccountCard = ({ account }) => {
           <span>View</span>
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300 ease-in-out" />
         </Link>
-      </CardFooter>
-    </Card>
+      }
+      className={"h-full"}
+      contentClassName={"flex-1"}
+      footerClassName={"w-full flex justify-end pt-2"}
+    />
   );
 };
 
