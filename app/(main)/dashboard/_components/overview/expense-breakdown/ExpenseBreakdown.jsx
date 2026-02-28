@@ -9,7 +9,7 @@ import CardShell from "@/components/CardShell";
 
 const ExpenseChart = lazy(() => import("./ExpenseChart"));
 
-const TOP_N = 5;
+const TOP_N = 4;
 
 const ExpenseBreakdown = ({ transactions }) => {
   const { start, end } = getMonthRange();
@@ -17,8 +17,8 @@ const ExpenseBreakdown = ({ transactions }) => {
   // only expenses
   const expenses = transactions.filter(
     (transaction) =>
-      new Date(transaction.date) >= new Date(start) &&
-      new Date(transaction.date) <= new Date(end) &&
+      new Date(transaction.date) >= start &&
+      new Date(transaction.date) <= end &&
       transaction.type === "Expense",
   );
 
@@ -32,6 +32,7 @@ const ExpenseBreakdown = ({ transactions }) => {
   const categoryTotals = Object.entries(
     expenses.reduce((acc, { category, amount }) => {
       acc[category] = (acc[category] || 0) + (Number(amount) || 0);
+
       return acc;
     }, {}),
   );

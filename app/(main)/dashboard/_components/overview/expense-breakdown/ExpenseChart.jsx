@@ -1,46 +1,16 @@
-"use client";
-
-import { PieChart, Pie, ResponsiveContainer, Sector, Legend } from "recharts";
-
 import { currencyFormatter } from "@/lib/formatter";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  LabelList,
+} from "recharts";
 
-const RADIAN = Math.PI / 180;
+const ExpenseChart = ({ costPerCat }) => {
+  const COLORS = ["#FB5756", "#4F8EF7", "#34C38F", "#F4B740", "#7B6CF6"];
 
-/* Percentage labels */
-const renderLabel = ({
-  cx,
-  cy,
-  midAngle,
-  outerRadius,
-  fill,
-  value,
-  payload,
-}) => {
-  const radius = outerRadius + 20;
-
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-  return (
-    <text
-      x={x}
-      y={y}
-      fill={fill}
-      textAnchor={x > cx ? "start" : "end"}
-      dominantBaseline="center"
-      fontSize={12}
-      fontWeight={500}
-    >
-      {payload.proportion}%: {currencyFormatter.format(value)}
-    </text>
-  );
-};
-
-const ExpensePieChart = ({ costPerCat }) => {
-  /* Slice colors */
-  const COLORS = ["#FB5756", "#4ADE80", "#60A5FA", "#FACC15"];
-
-  /* Convert value to number */
   const data = costPerCat.map((item, index) => ({
     ...item,
     name: item.category,
@@ -48,32 +18,78 @@ const ExpensePieChart = ({ costPerCat }) => {
     fill: COLORS[index % COLORS.length],
   }));
 
-  /* Custom slice */
-  const PieSlice = (props) => {
-    const { index } = props;
-
-    return <Sector {...props} fill={COLORS[index % COLORS.length]} />;
-  };
+  const ROW_HEIGHT = 42;
+  const chartHeight = Math.max(data.length * ROW_HEIGHT, 150);
 
   return (
-    <div className="w-full flex h-80">
-      <ResponsiveContainer width="120%" height="100%">
-        <PieChart>
-          <Pie
-            data={data}
-            dataKey="value"
-            nameKey="name"
-            outerRadius={90}
-            shape={PieSlice}
-            labelLine
-            label={renderLabel}
-            isAnimationActive={false}
+    <ResponsiveContainer width="100%" height={chartHeight}>
+      <BarChart
+        data={data}
+        layout="vertical"
+        margin={{ top: 0, right: 100, left: 25, bottom: 0 }}
+      >
+        <XAxis type="number" domain={[0, 100]} hide />
+
+        <YAxis
+          type="category"
+          dataKey="category"
+          axisLine={false}
+          tickLine={false}
+          tick={({ x, y, payload }) => (
+            <text
+              x={x}
+              y={y}
+              dx={-75}
+              dy={4}
+              textAnchor="start"
+              fill="#bebec0"
+              fontSize={16}
+              fontWeight={500}
+            >
+              {payload.value}
+            </text>
+          )}
+        />
+
+        <Bar
+          dataKey="proportion"
+          barSize={40}
+          radius={[0, 6, 6, 0]}
+          fill="#4F8EF7"
+        >
+          <LabelList
+            content={({ y, height, index }) => {
+              const item = data[index];
+
+              return (
+                <g>
+                  <text
+                    x="100%"
+                    y={y + height / 2 - 4}
+                    textAnchor="end"
+                    fill="#bebec0"
+                    fontSize={13}
+                  >
+                    {currencyFormatter.format(item.value)}
+                  </text>
+
+                  <text
+                    x="100%"
+                    y={y + height / 2 + 12}
+                    textAnchor="end"
+                    fill={item.fill}
+                    fontSize={11}
+                  >
+                    ({item.proportion}%)
+                  </text>
+                </g>
+              );
+            }}
           />
-          <Legend iconType="circle" />
-        </PieChart>
-      </ResponsiveContainer>
-    </div>
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
   );
 };
 
-export default ExpensePieChart;
+export default ExpenseChart;

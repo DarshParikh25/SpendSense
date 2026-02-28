@@ -30,7 +30,7 @@ export default async function DashboardPage() {
   const health = getHealth(income, expense, balance);
 
   return (
-    <div className="py-8 md:py-12 flex flex-col gap-10">
+    <div className="py-8 md:py-12 flex flex-col gap-10 overflow-x-hidden">
       {/* Title */}
       <div>
         <Heading title={"Dashboard"} />

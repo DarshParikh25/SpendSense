@@ -13,7 +13,7 @@ export const db = [
           id: 1,
           date: "2026-02-06T10:00:00.000Z",
           description: "Dummy Description",
-          category: "Travel",
+          category: "Shopping",
           isRecurring: false,
           recurringDuration: null,
           recurringDate: null,
@@ -148,7 +148,7 @@ export const db = [
   },
   {
     account: {
-      id: 2,
+      id: 3,
       name: "Personal",
       isDefault: true,
       balance: 152124.0,
