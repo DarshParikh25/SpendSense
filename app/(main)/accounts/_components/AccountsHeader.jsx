@@ -1,12 +1,14 @@
-import { Plus } from "lucide-react";
-
 import Heading from "@/app/(main)/_components/Heading";
-import AddAccount from "@/app/(main)/_components/AddAccount";
-import { Button } from "@/components/ui/button";
+import { currencyFormatter } from "@/lib/formatter";
 
-const AccountsHeader = () => {
+const AccountsHeader = ({ accounts }) => {
+  const totalBalance = accounts.reduce(
+    (sum, acc) => sum + (acc.balance || 0),
+    0,
+  );
+
   return (
-    <div className="flex flex-wrap justify-between items-center gap-4">
+    <div className="w-full flex flex-col md:flex-row md:justify-between md:items-center gap-8 md:gap-0">
       <div className="flex flex-col justify-center items-baseline gap-2">
         <Heading title={"Accounts"} />
 
@@ -15,15 +17,12 @@ const AccountsHeader = () => {
         </p>
       </div>
 
-      <AddAccount>
-        <Button
-          variant="outline"
-          className={"cursor-pointer bg-transparent hover:bg-[#25252d]"}
-        >
-          <Plus className="w-4 h-4" />
-          <span className="font-semibold">Add Account</span>
-        </Button>
-      </AddAccount>
+      <div className="flex flex-col gap-1 justify-center md:items-end">
+        <p className="text-white text-4xl font-bold">
+          {currencyFormatter.format(totalBalance)}
+        </p>
+        <p className="text-[#bebec0]/75">Total Balance</p>
+      </div>
     </div>
   );
 };

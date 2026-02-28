@@ -1,34 +1,30 @@
 import CardShell from "@/components/CardShell";
 import { CardDescription, CardTitle } from "@/components/ui/card";
-import { currencyFormatter } from "@/lib/formatter";
 
 const SummaryRow = ({ accounts }) => {
-  const totalBalance = accounts.reduce((sum, acc) => sum + acc.balance, 0);
-
   const stats = [
     {
-      label: "Total Balance",
-      value: currencyFormatter.format(totalBalance),
-    },
-    {
+      id: "accounts",
       label: "Accounts",
       value: accounts.length,
     },
     {
+      id: "active",
       label: "Active",
       value: accounts.filter((a) => a.balance > 0).length,
     },
     {
+      id: "inactive",
       label: "Inactive",
       value: accounts.filter((a) => a.balance === 0).length,
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {stats.map(({ label, value }, index) => (
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {stats.map(({ id, label, value }) => (
         <CardShell
-          key={index}
+          key={id}
           header={
             <CardTitle className="font-medium text-base">{label}</CardTitle>
           }
