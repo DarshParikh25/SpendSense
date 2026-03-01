@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { RotateCcw, Trash2, Trash2Icon } from "lucide-react";
 
 import SearchInput from "@/app/(main)/_components/SearchInput";
@@ -15,7 +16,7 @@ import {
   setSelectedAccount,
 } from "@/lib/store/features/transaction/transactionSlice";
 import { useDebounce } from "@/lib/store/hooks/useDebounce";
-import TooltipWrapper from "@/components/ui/TooltipWrapper";
+import TooltipWrapper from "@/components/TooltipWrapper";
 import { Button } from "@/components/ui/button";
 import DialogBox from "@/app/(main)/_components/DialogBox";
 import { db } from "@/data/db";
@@ -30,7 +31,9 @@ const RECURRING_TYPES = [
 
 const ACCOUNTS = db.map((item) => item?.account.name);
 
-const FilterTransactions = ({ showAccountsSelectDropdown }) => {
+const FilterTransactions = ({ showAccountsSelectDropdown = false }) => {
+  const pathname = usePathname();
+
   const dispatch = useAppDispatch();
 
   const [localSearch, setLocalSearch] = useState("");
@@ -96,7 +99,10 @@ const FilterTransactions = ({ showAccountsSelectDropdown }) => {
   };
 
   return (
-    <div className="w-full flex flex-wrap sm:flex-nowrap justify-center items-center gap-4">
+    <div
+      key={pathname}
+      className="w-full flex flex-wrap sm:flex-nowrap justify-center items-center gap-4"
+    >
       <SearchInput
         value={localSearch}
         handleSearch={handleSearch}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import TooltipWrapper from "@/components/ui/TooltipWrapper";
+import TooltipWrapper from "@/components/TooltipWrapper";
 import { closeMobileNav } from "@/lib/store/features/ui/uiSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
 import { cn } from "@/lib/utils";

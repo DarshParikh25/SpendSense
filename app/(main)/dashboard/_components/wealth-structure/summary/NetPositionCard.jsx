@@ -2,9 +2,10 @@ import { Info } from "lucide-react";
 
 import CardShell from "@/components/CardShell";
 import { CardDescription, CardTitle } from "@/components/ui/card";
-import TooltipWrapper from "@/components/ui/TooltipWrapper";
-import { currencyFormatter } from "@/lib/formatter";
+import TooltipWrapper from "@/components/TooltipWrapper";
+
 import { cn } from "@/lib/utils";
+import { currencyFormatter } from "@/lib/formatter";
 
 const NetPositionCard = ({ assets, liabilities }) => {
   const netWorth = assets - liabilities;

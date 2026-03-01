@@ -10,7 +10,7 @@ import {
 
 const SelectDropdown = ({ options = [], value, label, onChange }) => {
   const normalizedOptions = options.map((opt, index) => {
-    if (typeof opt === "string") {
+    if (typeof opt !== "object") {
       return {
         id: index + 1,
         name: opt,

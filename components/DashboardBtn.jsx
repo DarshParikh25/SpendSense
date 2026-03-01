@@ -1,13 +1,14 @@
 "use client";
 
+import Link from "next/link";
+import { LayoutDashboard } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
-import TooltipWrapper from "@/components/ui/TooltipWrapper";
-import { closeMobileNav } from "@/lib/store/features/ui/uiSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
+import TooltipWrapper from "@/components/TooltipWrapper";
 
 import { cn } from "@/lib/utils";
-import { LayoutDashboard } from "lucide-react";
-import Link from "next/link";
+import { closeMobileNav } from "@/lib/store/features/ui/uiSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
 
 const DashboardBtn = () => {
   const dispatch = useAppDispatch();

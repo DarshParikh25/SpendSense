@@ -1,15 +1,18 @@
 import { Suspense } from "react";
 
 import { db } from "@/data/db";
+
 import Title from "./_components/Title";
-import TransactionOverview from "./_components/stats/TransactionOverview";
+import Stats from "./_components/stats/Stats";
 import TitleSkeleton from "./_components/TitleSkeleton";
+import TransactionOverview from "./_components/stats/TransactionOverview";
+
 import CardSkeleton from "@/app/(main)/_components/CardSkeleton";
+import PaginationShell from "@/app/(main)/_components/PaginationShell";
 import TransactionTable from "@/app/(main)/_components/transactions/TransactionTable";
+import FilterTransactions from "@/app/(main)/_components/transactions/FilterTransactions";
 import TransactionTableSkeleton from "@/app/(main)/_components/transactions/TransactionTableSkeleton";
 import FilterTransactionsSkeleton from "@/app/(main)/_components/transactions/FilterTransactionsSkeleton";
-import FilterWrapper from "@/app/(main)/_components/transactions/FilterWrapper";
-import Stats from "./_components/stats/Stats";
 
 const AccountPage = async ({ params }) => {
   const { accountId } = await params;
@@ -45,12 +48,14 @@ const AccountPage = async ({ params }) => {
       {/* Transactions Table */}
       <div className="flex flex-col gap-4">
         <Suspense fallback={<FilterTransactionsSkeleton count={2} />}>
-          <FilterWrapper />
+          <FilterTransactions />
         </Suspense>
 
         <Suspense fallback={<TransactionTableSkeleton />}>
           <TransactionTable transactions={accountDetails.transactions} />
         </Suspense>
+
+        <PaginationShell />
       </div>
     </div>
   );

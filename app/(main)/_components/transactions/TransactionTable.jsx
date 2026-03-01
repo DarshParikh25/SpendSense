@@ -30,7 +30,7 @@ import {
 import { currencyFormatter } from "@/lib/formatter";
 import { cn } from "@/lib/utils";
 import CategoryIcon from "@/app/(main)/accounts/[accountId]/_components/transactions/CategoryIcon";
-import TooltipWrapper from "@/components/ui/TooltipWrapper";
+import TooltipWrapper from "@/components/TooltipWrapper";
 import {
   DropdownMenu,
   DropdownMenuContent,

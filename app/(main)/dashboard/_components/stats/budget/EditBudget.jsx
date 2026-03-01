@@ -1,4 +1,4 @@
-import TooltipWrapper from "@/components/ui/TooltipWrapper";
+import TooltipWrapper from "@/components/TooltipWrapper";
 import { Check, Pencil, X } from "lucide-react";
 
 const EditBudget = ({
