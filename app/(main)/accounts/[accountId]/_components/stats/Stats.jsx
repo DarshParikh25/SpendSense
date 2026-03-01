@@ -1,5 +1,9 @@
-import { currencyFormatter } from "@/lib/formatter";
 import { cn } from "@/lib/utils";
+import { currencyFormatter } from "@/lib/formatter";
+import formatWithSign from "@/lib/helper/ui/formatWithSign";
+
+import CardShell from "@/components/CardShell";
+import { CardDescription, CardTitle } from "@/components/ui/card";
 
 const EPSILON = 1e-9;
 
@@ -16,35 +20,53 @@ const Stats = ({ transactions }) => {
 
   const net = income - expense;
   const safeNet = Math.abs(net) < EPSILON ? 0 : net;
+  const formattedNet = formatWithSign(safeNet);
 
-  const isPositive = net > EPSILON;
-  const isNegative = net < -EPSILON;
+  const data = [
+    {
+      id: "income",
+      label: "Total Income",
+      value: `+ ${currencyFormatter.format(income)}`,
+      style: "text-emerald-500",
+    },
+    {
+      id: "expense",
+      label: "Total Expense",
+      value: `- ${currencyFormatter.format(expense)}`,
+      style: "text-[#fb5756]",
+    },
+    {
+      id: "net",
+      label: "Net",
+      value: formattedNet.value,
+      style:
+        formattedNet.category === "positive"
+          ? "text-emerald-500"
+          : formattedNet.category === "negative"
+            ? "text-[#FB5756]"
+            : "text-[#bebec0]",
+    },
+  ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 w-full text-center">
-      <div className="">
-        <h4 className="text-sm">Total Income</h4>
-        <p className="font-bold text-lg text-[#72FF52]">
-          + {currencyFormatter.format(income)}
-        </p>
-      </div>
-      <div className="">
-        <h4 className="text-sm">Total Expense</h4>
-        <p className="font-bold text-lg text-[#FB5756]">
-          - {currencyFormatter.format(expense)}
-        </p>
-      </div>
-      <div>
-        <h4 className="text-sm">Net</h4>
-        <p
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full text-center gap-10">
+      {data.map(({ id, label, value, style }) => (
+        <CardShell
+          key={id}
+          header={
+            <CardTitle className={`font-bold text-2xl ${style}`}>
+              {value}
+            </CardTitle>
+          }
+          content={
+            <CardDescription className="text-sm">{label}</CardDescription>
+          }
           className={cn(
-            isPositive ? "text-[#72FF52]" : isNegative && "text-[#FB5756]",
-            "font-bold text-lg",
+            "flex justify-center items-center gap-0 py-8",
+            id === "net" && "col-span-1 sm:col-span-2 md:col-span-1",
           )}
-        >
-          {isPositive && "+"} {currencyFormatter.format(safeNet)}
-        </p>
-      </div>
+        />
+      ))}
     </div>
   );
 };

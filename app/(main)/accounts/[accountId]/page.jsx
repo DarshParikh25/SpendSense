@@ -9,6 +9,7 @@ import TransactionTable from "@/app/(main)/_components/transactions/TransactionT
 import TransactionTableSkeleton from "@/app/(main)/_components/transactions/TransactionTableSkeleton";
 import FilterTransactionsSkeleton from "@/app/(main)/_components/transactions/FilterTransactionsSkeleton";
 import FilterWrapper from "@/app/(main)/_components/transactions/FilterWrapper";
+import Stats from "./_components/stats/Stats";
 
 const AccountPage = async ({ params }) => {
   const { accountId } = await params;
@@ -32,6 +33,9 @@ const AccountPage = async ({ params }) => {
       >
         <Title accountDetails={accountDetails} />
       </Suspense>
+
+      {/* Stats */}
+      <Stats transactions={accountDetails.transactions} />
 
       {/* Overview */}
       <Suspense fallback={<CardSkeleton className={"h-180"} />}>

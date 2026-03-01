@@ -16,7 +16,7 @@ const CardShell = ({
 }) => {
   return (
     <Card
-      className={`flex flex-col justify-baseline items-between border-2
+      className={`flex flex-col justify-baseline items-between border-2 border-[#bebec0]/50
         ${className}`}
     >
       {header && (

@@ -33,7 +33,7 @@ const SummaryRow = ({ accounts }) => {
               {value}
             </CardDescription>
           }
-          className={"gap-2 border-[#bebec0]"}
+          className={"gap-2"}
         />
       ))}
     </div>

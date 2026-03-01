@@ -1,29 +1,21 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
 import HealthStatus from "./HealthStatus";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-
-import { currencyFormatter } from "@/lib/formatter";
-import getStats from "@/lib/helper/getStats";
-import Link from "next/link";
-import { ArrowRight, Dot } from "lucide-react";
-import IncomeExpenseProgress from "./IncomeExpenseProgress";
-import getHealth from "@/lib/helper/finance/getHealth";
-import TopCategories from "./TopCategories";
 import ActivityMeta from "./ActivityMeta";
+import TopCategories from "./TopCategories";
+import IncomeExpenseProgress from "./IncomeExpenseProgress";
+
+import { Badge } from "@/components/ui/badge";
+import { Label } from "@/components/ui/label";
 import CardShell from "@/components/CardShell";
 import { RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
+import { CardDescription, CardTitle } from "@/components/ui/card";
+
+import getStats from "@/lib/helper/getStats";
+import { currencyFormatter } from "@/lib/formatter";
+import getHealth from "@/lib/helper/finance/getHealth";
 
 const AccountCard = ({ account, defaultAccountId }) => {
   const { id, name, type, category, balance, transactions = [] } = account;
@@ -37,11 +29,6 @@ const AccountCard = ({ account, defaultAccountId }) => {
     : "No activity";
 
   const { income, expense, topCategories } = getStats(transactions);
-
-  const max = Math.max(income, expense, 1);
-
-  const incomePercent = (income / max) * 100;
-  const expensePercent = (expense / max) * 100;
 
   const progressBarData = [
     {

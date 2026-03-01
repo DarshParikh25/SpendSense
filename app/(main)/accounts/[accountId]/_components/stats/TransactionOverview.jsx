@@ -1,12 +1,12 @@
 "use client";
 
+import { lazy, Suspense } from "react";
+
+import Stats from "./Stats";
 import SelectDropdown from "@/app/(main)/_components/SelectDropdown";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
 import { setBarChartDuration } from "@/lib/store/features/ui/uiSlice";
-import Stats from "./Stats";
-import { lazy, Suspense } from "react";
 import CardSkeleton from "@/app/(main)/_components/CardSkeleton";
-import { db } from "@/data/db";
 
 const TransactionBarChart = lazy(() => import("./TransactionBarChart"));
 
@@ -74,9 +74,6 @@ const TransactionOverview = ({ accountDetails }) => {
           onChange={handleDurationChange}
         />
       </div>
-
-      {/* Stats */}
-      <Stats transactions={accountDetails.transactions} />
 
       {/* Bar Chart */}
       <Suspense
