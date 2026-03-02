@@ -56,7 +56,7 @@ const NetPositionCard = ({ assets, liabilities }) => {
                 <Info className="w-4 h-4 text-[#bebec0]/75" />
               </TooltipWrapper>
             </p>
-            <span className="text-2xl font-bold text-green-600">
+            <span className="text-2xl font-bold text-emerald-500">
               {currencyFormatter.format(netWorth)}
             </span>
           </div>

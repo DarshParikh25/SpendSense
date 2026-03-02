@@ -119,7 +119,7 @@ const LiquidityCard = ({ accounts, assets, liabilities }) => {
                 <span
                   className={cn(
                     "font-medium",
-                    id === "debt ratio" && "text-green-600",
+                    id === "debt ratio" && "text-emerald-500",
                   )}
                 >
                   {value}

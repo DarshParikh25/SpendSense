@@ -55,7 +55,7 @@ const CashFlowChart = ({ data }) => {
           type="monotone"
           dataKey="income"
           name="Income"
-          stroke="#72FF52"
+          stroke="#10b981"
           strokeWidth={2}
           dot={{ r: 4 }}
           activeDot={{ r: 5 }}

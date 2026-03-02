@@ -17,7 +17,7 @@ const SavingsCard = ({ savingsData }) => {
           {trend !== 0 && (
             <div
               className={`flex items-center text-sm sm:text-base font-semibold ${
-                trend >= 0 ? "text-[#72FF52]" : "text-[#fb5756]"
+                trend >= 0 ? "text-emerald-500" : "text-[#fb5756]"
               }`}
             >
               {trend >= 0 ? (
@@ -34,7 +34,7 @@ const SavingsCard = ({ savingsData }) => {
         <CardDescription>
           <p
             className={`text-xl md:text-2xl font-bold ${
-              isPositive ? "text-[#72FF52]" : "text-[#fb5756]"
+              isPositive ? "text-emerald-500" : "text-[#fb5756]"
             }`}
           >
             {currencyFormatter.format(savings)}

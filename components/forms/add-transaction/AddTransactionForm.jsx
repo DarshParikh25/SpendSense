@@ -169,7 +169,7 @@ const AddTransactionForm = () => {
             types={ACCOUNTS}
             label="Accounts"
             required
-            triggerClassName={"focus-visible:ring-0"}
+            triggerClassName={"border-[#bebec0] focus-visible:ring-0"}
             contentClassName={"bg-[#1e1e24]"}
             itemClassName={"bg-transparent hover:bg-[#27272e]"}
           />
@@ -188,7 +188,7 @@ const AddTransactionForm = () => {
           label={`${type} Categories`}
           placeholder={"Select Category"}
           required
-          triggerClassName={"focus-visible:ring-0"}
+          triggerClassName={"border-[#bebec0] focus-visible:ring-0"}
           contentClassName={"bg-[#1e1e24]"}
           itemClassName={"bg-transparent hover:bg-[#27272e]"}
         />

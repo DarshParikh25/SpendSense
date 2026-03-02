@@ -13,6 +13,9 @@ import TransactionTable from "@/app/(main)/_components/transactions/TransactionT
 import FilterTransactions from "@/app/(main)/_components/transactions/FilterTransactions";
 import TransactionTableSkeleton from "@/app/(main)/_components/transactions/TransactionTableSkeleton";
 import FilterTransactionsSkeleton from "@/app/(main)/_components/transactions/FilterTransactionsSkeleton";
+import getHealth from "@/lib/helper/finance/getHealth";
+import getStats from "@/lib/helper/getStats";
+import HealthStatus from "../_components/HealthStatus";
 
 const AccountPage = async ({ params }) => {
   const { accountId } = await params;
@@ -20,6 +23,10 @@ const AccountPage = async ({ params }) => {
   const accountDetails = db.find(
     (acc) => acc.account.id === Number(accountId),
   )?.account;
+
+  const { income, expense } = getStats(accountDetails.transactions ?? []);
+
+  const health = getHealth(income, expense, accountDetails.balance);
 
   return (
     <div className="overflow-x-hidden py-8 md:py-12 flex flex-col gap-10">
@@ -34,15 +41,15 @@ const AccountPage = async ({ params }) => {
           />
         }
       >
-        <Title accountDetails={accountDetails} />
+        <Title accountDetails={accountDetails} health={health} />
       </Suspense>
 
       {/* Stats */}
-      <Stats transactions={accountDetails.transactions} />
+      <Stats income={income} expense={expense} />
 
       {/* Overview */}
       <Suspense fallback={<CardSkeleton className={"h-180"} />}>
-        <TransactionOverview accountDetails={accountDetails} />
+        <TransactionOverview />
       </Suspense>
 
       {/* Transactions Table */}

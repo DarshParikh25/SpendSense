@@ -77,7 +77,10 @@ const ChoiceCard = () => {
       </CardContent>
       <CardFooter className={"flex items-center justify-between"}>
         <div className="w-fit flex justify-center items-center gap-0.5">
-          <ArrowUpRight strokeWidth={2.5} className="w-5 h-5 text-[#72FF52]" />
+          <ArrowUpRight
+            strokeWidth={2.5}
+            className="w-5 h-5 text-emerald-500"
+          />
           <span className="font-medium">Expense</span>
         </div>
         <div className="w-fit flex justify-center items-center gap-0.5">

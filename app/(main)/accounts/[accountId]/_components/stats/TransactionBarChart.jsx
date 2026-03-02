@@ -34,8 +34,12 @@ const TransactionBarChart = ({ transactionData }) => {
         <Bar
           dataKey={"income"}
           name={"Income"}
-          fill="#72FF52"
-          activeBar={{ fill: "#72ff52", stroke: "#1e1e24", strokeWidth: 2 }}
+          fill="#10b981"
+          activeBar={{
+            fill: "#10b981",
+            stroke: "#1e1e24",
+            strokeWidth: 2,
+          }}
           radius={[10, 10, 0, 0]}
         />
         <Bar

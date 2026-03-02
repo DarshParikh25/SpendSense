@@ -7,17 +7,7 @@ import { CardDescription, CardTitle } from "@/components/ui/card";
 
 const EPSILON = 1e-9;
 
-const Stats = ({ transactions }) => {
-  const expense = transactions
-    .filter(
-      (tx) => tx.type.toLowerCase() === "expense" && Number(tx.amount) > 0,
-    )
-    .reduce((sum, tx) => sum + (Number(tx.amount) || 0), 0);
-
-  const income = transactions
-    .filter((tx) => tx.type.toLowerCase() === "income" && Number(tx.amount) > 0)
-    .reduce((sum, tx) => sum + (Number(tx.amount) || 0), 0);
-
+const Stats = ({ expense, income }) => {
   const net = income - expense;
   const safeNet = Math.abs(net) < EPSILON ? 0 : net;
   const formattedNet = formatWithSign(safeNet);
@@ -59,11 +49,13 @@ const Stats = ({ transactions }) => {
             </CardTitle>
           }
           content={
-            <CardDescription className="text-sm">{label}</CardDescription>
+            <CardDescription className="text-sm flex flex-col">
+              {label}
+            </CardDescription>
           }
           className={cn(
-            "flex justify-center items-center gap-0 py-8",
-            id === "net" && "col-span-1 sm:col-span-2 md:col-span-1",
+            "flex-1 justify-center items-center gap-0 py-8",
+            id === "net" ? "col-span-1 sm:col-span-2 md:col-span-1" : "",
           )}
         />
       ))}

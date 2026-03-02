@@ -12,7 +12,7 @@ const AllTransactionsTable = ({ transactions }) => {
   return (
     <TransactionTable transactions={transactions} showAccountColumn>
       <TableRow
-        onClick={() => router.push("/transaction/create")}
+        onClick={() => router.push("/transactions/create")}
         className={"hover:bg-[#25252b]"}
       >
         <TableCell colSpan={8} className={"text-center"}>

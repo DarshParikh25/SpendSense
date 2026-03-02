@@ -13,7 +13,7 @@ const EditBudget = ({
         <>
           <Check
             onClick={handleSaveBudget}
-            className="hover:cursor-pointer w-5 h-5 text-green-500"
+            className="hover:cursor-pointer w-5 h-5 text-emerald-500"
           />
           <X
             onClick={handleCancelBudget}

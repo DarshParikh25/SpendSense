@@ -13,14 +13,15 @@ import CardShell from "@/components/CardShell";
 import { RadioGroupItem } from "@/components/ui/radio-group";
 import { CardDescription, CardTitle } from "@/components/ui/card";
 
+import { cn } from "@/lib/utils";
 import getStats from "@/lib/helper/getStats";
 import { currencyFormatter } from "@/lib/formatter";
 import getHealth from "@/lib/helper/finance/getHealth";
 
-const AccountCard = ({ account, defaultAccountId }) => {
+const AccountCard = ({ account, defaultAccountId, onIntentSelect }) => {
   const { id, name, type, category, balance, transactions = [] } = account;
 
-  const isDefault = defaultAccountId === account.id.toString();
+  const isDefault = defaultAccountId === id.toString();
 
   const txCount = transactions.length;
 
@@ -35,7 +36,7 @@ const AccountCard = ({ account, defaultAccountId }) => {
       id: "income",
       label: "Income",
       value: income,
-      color: "text-green-500",
+      color: "text-emerald-500",
     },
     {
       id: "expense",
@@ -75,11 +76,11 @@ const AccountCard = ({ account, defaultAccountId }) => {
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 cursor-pointer mt-1">
             {!isDefault && (
               <Label
-                htmlFor={`acc-${id}`}
-                className="text-sm text-muted-foreground"
+                onClick={() => onIntentSelect(id.toString())}
+                className="text-sm text-muted-foreground cursor-pointer"
               >
                 Set Default
               </Label>
@@ -87,7 +88,7 @@ const AccountCard = ({ account, defaultAccountId }) => {
             <RadioGroupItem
               id={`acc-${id}`}
               value={id.toString()}
-              className={"cursor-pointer"}
+              className={cn(isDefault ? "cursor-default" : "cursor-pointer")}
             />
           </div>
         </CardTitle>

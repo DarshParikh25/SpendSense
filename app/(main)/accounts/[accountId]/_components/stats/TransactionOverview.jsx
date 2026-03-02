@@ -2,11 +2,13 @@
 
 import { lazy, Suspense } from "react";
 
-import Stats from "./Stats";
-import SelectDropdown from "@/app/(main)/_components/SelectDropdown";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
 import { setBarChartDuration } from "@/lib/store/features/ui/uiSlice";
+
+import CardShell from "@/components/CardShell";
+import { CardTitle } from "@/components/ui/card";
 import CardSkeleton from "@/app/(main)/_components/CardSkeleton";
+import SelectDropdown from "@/app/(main)/_components/SelectDropdown";
 
 const TransactionBarChart = lazy(() => import("./TransactionBarChart"));
 
@@ -53,7 +55,7 @@ const durationOpts = [
   "All Time",
 ];
 
-const TransactionOverview = ({ accountDetails }) => {
+const TransactionOverview = () => {
   const dispatch = useAppDispatch();
 
   const duration = useAppSelector((state) => state.ui.barChartDuration);
@@ -63,25 +65,31 @@ const TransactionOverview = ({ accountDetails }) => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-12 border-2 border-[#bebec0] p-10 rounded-xl">
-      {/* Title and duration selection */}
-      <div className="flex justify-between items-center w-full">
-        <h3 className="text-lg font-semibold">Transaction Overview</h3>
-        <SelectDropdown
-          options={durationOpts}
-          label={"Duration"}
-          value={duration}
-          onChange={handleDurationChange}
-        />
-      </div>
-
-      {/* Bar Chart */}
-      <Suspense
-        fallback={<CardSkeleton className={"w-full h-110 border-none"} />}
-      >
-        <TransactionBarChart transactionData={transactionData} />
-      </Suspense>
-    </div>
+    <CardShell
+      header={
+        // Title and duration selection
+        <div className="flex justify-between items-center w-full gap-2 sm:gap-0">
+          <CardTitle className="text-lg font-semibold">
+            Transaction Overview
+          </CardTitle>
+          <SelectDropdown
+            options={durationOpts}
+            label={"Duration"}
+            value={duration}
+            onChange={handleDurationChange}
+          />
+        </div>
+      }
+      content={
+        // Bar Chart
+        <Suspense
+          fallback={<CardSkeleton className={"w-full h-110 border-none"} />}
+        >
+          <TransactionBarChart transactionData={transactionData} />
+        </Suspense>
+      }
+      className={"py-8 sm:py-10 px-2 sm:px-4 gap-12"}
+    />
   );
 };
 

@@ -286,7 +286,7 @@ const TransactionTable = ({
                   {/* Amount */}
                   <TableCell
                     className={cn(
-                      type === "Income" ? "text-[#72FF52]" : "text-[#FB5756]",
+                      type === "Income" ? "text-emerald-500" : "text-[#FB5756]",
                       "text-right",
                     )}
                   >

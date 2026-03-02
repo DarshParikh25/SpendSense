@@ -5,7 +5,6 @@ import FilterTransactionsSkeleton from "../_components/transactions/FilterTransa
 import TransactionTableSkeleton from "../_components/transactions/TransactionTableSkeleton";
 import AllTransactionsTable from "./_components/AllTransactionsTable";
 import Heading from "../_components/Heading";
-import FilterWrapper from "../_components/transactions/FilterWrapper";
 
 const TransactionPage = () => {
   const transactions = db
@@ -31,7 +30,7 @@ const TransactionPage = () => {
 
       <div className="flex flex-col gap-4">
         <Suspense fallback={<FilterTransactionsSkeleton count={3} />}>
-          <FilterWrapper showAccountsSelectDropdown />
+          {/* <FilterWrapper showAccountsSelectDropdown /> */}
         </Suspense>
 
         <Suspense fallback={<TransactionTableSkeleton />}>

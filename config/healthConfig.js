@@ -13,12 +13,12 @@ export const healthConfig = {
   },
 
   healthy: {
-    color: "text-[#72FF52]",
+    color: "text-emerald-500",
     icon: TrendingUp,
   },
 
   warning: {
-    color: "text-orange-500",
+    color: "text-amber-500",
     icon: AlertTriangle,
     animate: "animate-pulse",
   },

@@ -19,7 +19,7 @@ const LastFiveTransactions = ({ transactions }) => {
             </div>
             <div
               className={cn(
-                type === "Expense" ? "text-[#FB5756]" : "text-[#72FF52]",
+                type === "Expense" ? "text-[#FB5756]" : "text-emerald-500",
                 "flex justify-center items-center gap-0.5 w-fit",
               )}
             >

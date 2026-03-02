@@ -24,17 +24,21 @@ const DialogBox = ({
   const count = selectedIds.length;
 
   return (
-    <AlertDialog>
+    <AlertDialog open={!!count}>
       <AlertDialogTrigger asChild disabled={!count}>
         {children}
       </AlertDialogTrigger>
       <AlertDialogContent size="sm" className={"bg-[#1e1e24]"}>
         <AlertDialogHeader>
-          <AlertDialogMedia className="bg-[#FB5756]">
-            <Icon className="text-white" />
-          </AlertDialogMedia>
-          <AlertDialogTitle className={"text-white"}>{title}</AlertDialogTitle>
-          <AlertDialogDescription>{desc}</AlertDialogDescription>
+          {Icon && (
+            <AlertDialogMedia className="bg-[#FB5756]">
+              <Icon className="text-white" />
+            </AlertDialogMedia>
+          )}
+          <AlertDialogTitle className={"text-white"}>
+            {title ? title : ""}
+          </AlertDialogTitle>
+          <AlertDialogDescription>{desc ? desc : ""}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel

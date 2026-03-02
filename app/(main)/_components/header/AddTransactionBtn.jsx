@@ -25,7 +25,7 @@ const AddTransactionBtn = () => {
         className={"font-bold bg-[#FB5756] hover:bg-[#ff6f6f] text-[#ffffff]"}
         asChild
       >
-        <Link href={"/transaction/create"} onClick={handleAddTransaction}>
+        <Link href={"/transactions/create"} onClick={handleAddTransaction}>
           <SquarePen className="h-4 w-4" />
           <span
             className={cn(
