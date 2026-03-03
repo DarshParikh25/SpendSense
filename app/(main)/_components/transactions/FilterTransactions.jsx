@@ -106,9 +106,9 @@ const FilterTransactions = ({ showAccountsSelectDropdown = false }) => {
       <SearchInput
         value={localSearch}
         handleSearch={handleSearch}
-        placeholder="Search Transaction"
+        placeholder="Search Transaction by description, or category"
       />
-      <div className="flex justify-center items-center gap-4">
+      <div className="flex flex-wrap sm:flex-nowrap justify-center items-center gap-4">
         <SelectDropdown
           options={TYPES}
           label={"Transaction Type"}

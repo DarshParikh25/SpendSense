@@ -1,6 +1,6 @@
 import { Search } from "lucide-react";
 
-import { Input } from "../../../components/ui/input";
+import { Input } from "@/components/ui/input";
 
 const SearchInput = ({ value, handleSearch, placeholder }) => {
   return (
@@ -9,7 +9,7 @@ const SearchInput = ({ value, handleSearch, placeholder }) => {
       <Input
         value={value}
         onChange={handleSearch}
-        className={"focus-visible:ring-0 border-0"}
+        className={"focus-visible:ring-0 border-0 placeholder:text-sm"}
         placeholder={placeholder}
         type={"text"}
       />

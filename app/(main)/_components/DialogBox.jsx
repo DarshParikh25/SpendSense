@@ -24,7 +24,7 @@ const DialogBox = ({
   const count = selectedIds.length;
 
   return (
-    <AlertDialog open={!!count}>
+    <AlertDialog>
       <AlertDialogTrigger asChild disabled={!count}>
         {children}
       </AlertDialogTrigger>

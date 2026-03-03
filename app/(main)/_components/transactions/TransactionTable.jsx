@@ -40,6 +40,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import DialogBox from "@/app/(main)/_components/DialogBox";
 import { categoryColors, categoryIcons } from "@/config/categoryConfig";
+import getFilteredAndSortedTransactions from "@/lib/helper/finance/getFilteredAndSortedTransactions";
 
 const TransactionTable = ({
   children,
@@ -71,73 +72,27 @@ const TransactionTable = ({
 
   // Filter + Sort
   // These will be handled by the backend later on
-  const filterAndSortedTransaction = useMemo(() => {
-    return transactions
-      .filter((transaction) => {
-        if (
-          transactionType !== "All Types" &&
-          transaction.type !== transactionType
-        )
-          return false;
+  const filterAndSortedTransaction = useMemo(
+    () =>
+      getFilteredAndSortedTransactions(
+        transactions,
+        transactionType,
+        recurringType,
+        selectedAccount,
+        searchLower,
+        sortConfig,
+      ),
+    [
+      transactions,
+      transactionType,
+      recurringType,
+      selectedAccount,
+      searchLower,
+      sortConfig,
+    ],
+  );
 
-        if (recurringType === "Recurring Only" && !transaction.isRecurring)
-          return false;
-
-        if (recurringType === "Non-recurring Only" && transaction.isRecurring)
-          return false;
-
-        if (
-          selectedAccount !== "All Accounts" &&
-          transaction.accountName !== selectedAccount
-        )
-          return false;
-
-        if (searchLower) {
-          const match =
-            transaction.description?.toLowerCase().includes(searchLower) ||
-            transaction.category?.toLowerCase().includes(searchLower);
-
-          if (!match) return false;
-        }
-
-        return true;
-      })
-      .map((transaction) => ({
-        ...transaction,
-        timestamp: new Date(transaction.date).getTime(),
-      }))
-      .sort((a, b) => {
-        const { key, direction } = sortConfig;
-        const factor = direction === "asc" ? 1 : -1;
-
-        if (key === "date") {
-          if (a.timestamp !== b.timestamp) {
-            return (a.timestamp - b.timestamp) * factor;
-          }
-
-          return (a.amount - b.amount) * factor;
-        }
-
-        if (key === "amount") {
-          if (a.amount !== b.amount) {
-            return (a.amount - b.amount) * factor;
-          }
-
-          return (a.timestamp - b.timestamp) * factor;
-        }
-
-        return 0;
-      });
-  }, [
-    transactions,
-    transactionType,
-    recurringType,
-    selectedAccount,
-    searchLower,
-    sortConfig,
-  ]);
-
-  const allIds = filterAndSortedTransaction.map((t) => t.id);
+  const allIds = (filterAndSortedTransaction ?? []).map((t) => t.id) ?? [];
 
   const isAllSelected =
     allIds.length > 0 && allIds.every((id) => selectedIds.includes(id));
@@ -172,9 +127,10 @@ const TransactionTable = ({
     <div
       className={"border border-[#bebec0]/40 rounded-md overflow-hidden px-1"}
     >
-      <Table>
+      <Table className={"relative"}>
         <TableHeader className={"sticky top-0 z-10"}>
-          <TableRow className={"text-white border-b border-[#bebec0]/30"}>
+          <TableRow className={"text-white border-b border-[#bebec0]"}>
+            {/* Checkbox */}
             <TableHead className={"w-12"}>
               <Checkbox
                 checked={isAllSelected}
@@ -184,40 +140,85 @@ const TransactionTable = ({
                 }
               />
             </TableHead>
-            <TableHead
-              onClick={() => handleSort("date")}
-              className={
-                "w-fit cursor-pointer font-semibold flex justify-baseline items-center gap-4"
-              }
-            >
-              Date
-              <span>
-                {sortConfig.key === "date" && sortConfig.direction === "asc" ? (
-                  <ChevronUp className="w-4 h-4" />
-                ) : (
-                  <ChevronDown className="w-4 h-4" />
-                )}
-              </span>
+
+            {/* Date */}
+            <TableHead className={"font-semibold"}>
+              <div
+                onClick={() => handleSort("date")}
+                className="w-fit cursor-pointer flex justify-baseline items-center gap-4"
+              >
+                Date
+                <span>
+                  {sortConfig.key === "date" &&
+                  sortConfig.direction === "asc" ? (
+                    <ChevronUp className="w-4 h-4" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4" />
+                  )}
+                </span>
+              </div>
             </TableHead>
+
+            {/* Description */}
             <TableHead className={"font-semibold"}>Description</TableHead>
-            <TableHead className={"font-semibold"}>Category</TableHead>
-            <TableHead
-              onClick={() => handleSort("amount")}
-              className="w-fit text-right font-semibold flex justify-end items-center gap-4 justify-self-end cursor-pointer"
-            >
-              Amount
-              <span>
-                {sortConfig.key === "amount" &&
-                sortConfig.direction === "asc" ? (
-                  <ChevronUp className="w-4 h-4" />
-                ) : (
-                  <ChevronDown className="w-4 h-4" />
-                )}
-              </span>
+
+            {/* Category */}
+            <TableHead className={"font-semibold"}>
+              <div
+                onClick={() => handleSort("category")}
+                className="w-fit cursor-pointer flex justify-center items-center gap-4"
+              >
+                Category
+                <span>
+                  {sortConfig.key === "category" &&
+                  sortConfig.direction === "asc" ? (
+                    <ChevronUp className="w-4 h-4" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4" />
+                  )}
+                </span>
+              </div>
             </TableHead>
+
+            {/* Amount */}
+            <TableHead className={"font-semibold text-right"}>
+              <div
+                onClick={() => handleSort("amount")}
+                className="w-fit cursor-pointer flex justify-self-end justify-end items-center gap-4"
+              >
+                Amount
+                <span>
+                  {sortConfig.key === "amount" &&
+                  sortConfig.direction === "asc" ? (
+                    <ChevronUp className="w-4 h-4" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4" />
+                  )}
+                </span>
+              </div>
+            </TableHead>
+
+            {/* Recurring */}
             <TableHead className={"font-semibold"}>Recurring</TableHead>
+
+            {/* Account */}
             {showAccountColumn && (
-              <TableHead className={"font-semibold"}>Account</TableHead>
+              <TableHead className={"font-semibold"}>
+                <div
+                  onClick={() => handleSort("account")}
+                  className="w-fit cursor-pointer flex justify-baseline items-center gap-4"
+                >
+                  Account
+                  <span>
+                    {sortConfig.key === "account" &&
+                    sortConfig.direction === "asc" ? (
+                      <ChevronUp className="w-4 h-4" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4" />
+                    )}
+                  </span>
+                </div>
+              </TableHead>
             )}
             <TableHead />
           </TableRow>
@@ -348,6 +349,7 @@ const TransactionTable = ({
                       </DropdownMenuTrigger>
                       <DropdownMenuContent className={"bg-[#bebec0]"}>
                         <DropdownMenuGroup>
+                          {/* Edit */}
                           <DropdownMenuItem
                             className={
                               "text-[#1e1e24] cursor-pointer hover:bg-[#c3c3c6]"
@@ -355,6 +357,8 @@ const TransactionTable = ({
                           >
                             Edit
                           </DropdownMenuItem>
+
+                          {/* Delete */}
                           <DropdownMenuItem
                             onSelect={(e) => e.preventDefault()}
                             className={
@@ -382,9 +386,9 @@ const TransactionTable = ({
               ),
             )
           )}
-          {children}
         </TableBody>
       </Table>
+      {children}
     </div>
   );
 };

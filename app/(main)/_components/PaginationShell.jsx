@@ -21,7 +21,7 @@ const PaginationShell = () => {
   const [selectedRowCount, setSelectedRowCount] = useState(20);
 
   return (
-    <div className="flex items-center justify-between gap-4">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
       <Field orientation="horizontal" className="w-fit">
         <FieldLabel htmlFor="select-rows-per-page">Rows per page</FieldLabel>
         <SelectDropdown

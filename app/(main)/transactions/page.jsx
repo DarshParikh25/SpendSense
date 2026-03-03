@@ -5,6 +5,8 @@ import FilterTransactionsSkeleton from "../_components/transactions/FilterTransa
 import TransactionTableSkeleton from "../_components/transactions/TransactionTableSkeleton";
 import AllTransactionsTable from "./_components/AllTransactionsTable";
 import Heading from "../_components/Heading";
+import PaginationShell from "../_components/PaginationShell";
+import FilterTransactions from "../_components/transactions/FilterTransactions";
 
 const TransactionPage = () => {
   const transactions = db
@@ -26,16 +28,18 @@ const TransactionPage = () => {
 
   return (
     <div className="py-10 flex flex-col gap-10">
-      <Heading title={"Recent Transactions"} className={"mb-10"} />
+      <Heading title={"Transactions"} />
 
       <div className="flex flex-col gap-4">
         <Suspense fallback={<FilterTransactionsSkeleton count={3} />}>
-          {/* <FilterWrapper showAccountsSelectDropdown /> */}
+          <FilterTransactions showAccountsSelectDropdown />
         </Suspense>
 
         <Suspense fallback={<TransactionTableSkeleton />}>
           <AllTransactionsTable transactions={transactions} />
         </Suspense>
+
+        <PaginationShell />
       </div>
     </div>
   );

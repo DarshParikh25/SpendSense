@@ -6,7 +6,7 @@ import AccountCard from "./AccountCard";
 
 import { RadioGroup } from "@/components/ui/radio-group";
 import getGridCols from "@/lib/helper/ui/getGridCols";
-import DialogBox from "../../_components/DialogBox";
+import DialogBox from "@/app/(main)/_components/DialogBox";
 
 const AccountsChoiceCard = ({ accounts }) => {
   const defaultAccount = useMemo(

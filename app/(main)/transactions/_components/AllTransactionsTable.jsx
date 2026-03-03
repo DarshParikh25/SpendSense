@@ -4,27 +4,24 @@ import { useRouter } from "next/navigation";
 
 import TransactionTable from "@/app/(main)/_components/transactions/TransactionTable";
 import { Button } from "@/components/ui/button";
-import { TableCell, TableRow } from "@/components/ui/table";
 
 const AllTransactionsTable = ({ transactions }) => {
   const router = useRouter();
 
   return (
     <TransactionTable transactions={transactions} showAccountColumn>
-      <TableRow
+      <div
         onClick={() => router.push("/transactions/create")}
-        className={"hover:bg-[#25252b]"}
+        className={"py-1 hover:bg-[#25252b] border-t"}
       >
-        <TableCell colSpan={8} className={"text-center"}>
-          <Button
-            type="button"
-            variant="ghost"
-            className={"w-full cursor-pointer font-semibold"}
-          >
-            + Add New Transaction
-          </Button>
-        </TableCell>
-      </TableRow>
+        <Button
+          type="button"
+          variant="ghost"
+          className={"w-full cursor-pointer font-semibold"}
+        >
+          + Add New Transaction
+        </Button>
+      </div>
     </TransactionTable>
   );
 };
