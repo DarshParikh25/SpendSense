@@ -4,9 +4,9 @@ import { db } from "@/data/db";
 import FilterTransactionsSkeleton from "../_components/transactions/FilterTransactionsSkeleton";
 import TransactionTableSkeleton from "../_components/transactions/TransactionTableSkeleton";
 import AllTransactionsTable from "./_components/AllTransactionsTable";
-import Heading from "../_components/Heading";
 import PaginationShell from "../_components/PaginationShell";
 import FilterTransactions from "../_components/transactions/FilterTransactions";
+import TransactionsHeader from "./_components/TransactionsHeader";
 
 const TransactionPage = () => {
   const transactions = db
@@ -28,7 +28,7 @@ const TransactionPage = () => {
 
   return (
     <div className="py-10 flex flex-col gap-10">
-      <Heading title={"Transactions"} />
+      <TransactionsHeader transactions={[]} />
 
       <div className="flex flex-col gap-4">
         <Suspense fallback={<FilterTransactionsSkeleton count={3} />}>

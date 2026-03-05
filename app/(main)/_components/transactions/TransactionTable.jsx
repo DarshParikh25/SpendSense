@@ -38,7 +38,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import DialogBox from "@/app/(main)/_components/DialogBox";
+import AlertDialogBox from "@/app/(main)/_components/AlertDialogBox";
 import { categoryColors, categoryIcons } from "@/config/categoryConfig";
 import getFilteredAndSortedTransactions from "@/lib/helper/finance/getFilteredAndSortedTransactions";
 
@@ -365,7 +365,7 @@ const TransactionTable = ({
                               "text-red-600 cursor-pointer hover:bg-[#c3c3c6]"
                             }
                           >
-                            <DialogBox
+                            <AlertDialogBox
                               selectedIds={[id]}
                               onConfirm={handleDelete}
                               Icon={Trash2Icon}
@@ -376,7 +376,7 @@ const TransactionTable = ({
                               actionText={"Delete"}
                             >
                               <span>Delete</span>
-                            </DialogBox>
+                            </AlertDialogBox>
                           </DropdownMenuItem>
                         </DropdownMenuGroup>
                       </DropdownMenuContent>

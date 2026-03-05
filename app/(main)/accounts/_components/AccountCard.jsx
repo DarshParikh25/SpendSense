@@ -10,7 +10,7 @@ import IncomeExpenseProgress from "./IncomeExpenseProgress";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import CardShell from "@/components/CardShell";
-import { RadioGroupItem } from "@/components/ui/radio-group";
+import { RadioGroupItem } from "@/components/ui/customized-radio";
 import { CardDescription, CardTitle } from "@/components/ui/card";
 
 import { cn } from "@/lib/utils";

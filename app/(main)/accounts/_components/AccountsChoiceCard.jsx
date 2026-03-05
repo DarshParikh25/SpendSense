@@ -4,9 +4,9 @@ import { useMemo, useState } from "react";
 
 import AccountCard from "./AccountCard";
 
-import { RadioGroup } from "@/components/ui/radio-group";
+import { RadioGroup } from "@/components/ui/customized-radio";
 import getGridCols from "@/lib/helper/ui/getGridCols";
-import DialogBox from "@/app/(main)/_components/DialogBox";
+import AlertDialogBox from "@/app/(main)/_components/AlertDialogBox";
 
 const AccountsChoiceCard = ({ accounts }) => {
   const defaultAccount = useMemo(
@@ -62,7 +62,7 @@ const AccountsChoiceCard = ({ accounts }) => {
       </RadioGroup>
 
       {/* Dialog Box */}
-      <DialogBox
+      <AlertDialogBox
         selectedIds={pendingAccountId ? [pendingAccountId] : []}
         title={"Change Default Account?"}
         desc={"Are you sure you want to change your default account?"}

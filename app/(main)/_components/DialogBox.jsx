@@ -1,67 +1,50 @@
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogMedia,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 const DialogBox = ({
-  children,
-  selectedIds = [],
-  onConfirm,
-  onCancel,
-  Icon,
+  open,
+  setOpen,
+  contentClassName,
   title,
-  desc,
-  actionText,
+  titleClassName,
+  descClassName,
+  children,
+  footer,
+  footerClassName,
 }) => {
-  const count = selectedIds.length;
-
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild disabled={!count}>
-        {children}
-      </AlertDialogTrigger>
-      <AlertDialogContent size="sm" className={"bg-[#1e1e24]"}>
-        <AlertDialogHeader>
-          {Icon && (
-            <AlertDialogMedia className="bg-[#FB5756]">
-              <Icon className="text-white" />
-            </AlertDialogMedia>
-          )}
-          <AlertDialogTitle className={"text-white"}>
-            {title ? title : ""}
-          </AlertDialogTitle>
-          <AlertDialogDescription>{desc ? desc : ""}</AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel
-            variant="outline"
-            onClick={onCancel}
-            className={
-              "cursor-pointer bg-transparent hover:bg-[#24252c] transition"
-            }
-          >
-            Cancel
-          </AlertDialogCancel>
-          <AlertDialogAction
-            variant="destructive"
-            onClick={() => onConfirm(selectedIds)}
-            className={
-              "bg-[#FB5756] hover:bg-[#ff6f6f] text-white cursor-pointer transition"
-            }
-          >
-            {actionText}
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent
+        className={cn(
+          "bg-[#1e1e24] flex flex-col gap-6 [&>button]:focus-within:ring-0 [&>button]:focus-visible:ring-0",
+          contentClassName,
+        )}
+      >
+        {/* Header */}
+        {title && (
+          <DialogHeader>
+            <DialogTitle
+              className={cn("text-[#fb5756] text-2xl", titleClassName)}
+            >
+              {title}
+            </DialogTitle>
+          </DialogHeader>
+        )}
+
+        {/* Body */}
+        <div className={cn("flex flex-col gap-6", descClassName)}>
+          {children}
+        </div>
+
+        {/* Footer */}
+        {footer && <div className={footerClassName}>{footer}</div>}
+      </DialogContent>
+    </Dialog>
   );
 };
 

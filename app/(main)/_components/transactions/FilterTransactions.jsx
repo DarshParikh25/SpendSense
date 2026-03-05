@@ -18,7 +18,7 @@ import {
 import { useDebounce } from "@/lib/store/hooks/useDebounce";
 import TooltipWrapper from "@/components/TooltipWrapper";
 import { Button } from "@/components/ui/button";
-import DialogBox from "@/app/(main)/_components/DialogBox";
+import AlertDialogBox from "@/app/(main)/_components/AlertDialogBox";
 import { db } from "@/data/db";
 
 const TYPES = ["Income", "Expense", "All Types"];
@@ -150,7 +150,7 @@ const FilterTransactions = ({ showAccountsSelectDropdown = false }) => {
           content={`Delete ${selectedIds.length} Transactions`}
           contentClassName={"bg-[#bebec0] text-[#1e1e24]"}
         >
-          <DialogBox
+          <AlertDialogBox
             selectedIds={selectedIds}
             onConfirm={handleDelete}
             Icon={Trash2Icon}
@@ -168,7 +168,7 @@ const FilterTransactions = ({ showAccountsSelectDropdown = false }) => {
                 <span>({selectedIds.length})</span>
               </Button>
             )}
-          </DialogBox>
+          </AlertDialogBox>
         </TooltipWrapper>
       </div>
     </div>

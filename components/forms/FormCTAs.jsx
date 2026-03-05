@@ -1,6 +1,6 @@
 "use client";
 
-import DialogBox from "@/app/(main)/_components/DialogBox";
+import AlertDialogBox from "@/app/(main)/_components/AlertDialogBox";
 import { Button } from "@/components/ui/button";
 import { SheetClose } from "@/components/ui/sheet";
 
@@ -34,7 +34,7 @@ const FormCTAs = ({
       {inSheet ? (
         <SheetClose asChild>{CancelButton}</SheetClose>
       ) : (
-        <DialogBox
+        <AlertDialogBox
           onCancel={handleCancel}
           onConfirm={handleConfirm}
           Icon={Icon}
@@ -43,7 +43,7 @@ const FormCTAs = ({
           actionText={actionText}
         >
           {CancelButton}
-        </DialogBox>
+        </AlertDialogBox>
       )}
       <Button
         type="submit"

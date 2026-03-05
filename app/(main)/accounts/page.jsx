@@ -19,7 +19,7 @@ export default function AccountsPage() {
         <AddAccount>
           <Button
             variant="outline"
-            className={"w-fit cursor-pointer bg-transparent hover:bg-[#25252d]"}
+            className={"w-fit cursor-pointer bg-transparent hover:bg-[#25252c]"}
           >
             <Plus className="w-4 h-4" />
             <span className="font-semibold">Add Account</span>
