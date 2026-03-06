@@ -28,7 +28,7 @@ const TransactionPage = () => {
 
   return (
     <div className="py-10 flex flex-col gap-10">
-      <TransactionsHeader transactions={[]} />
+      <TransactionsHeader transactions={transactions} />
 
       <div className="flex flex-col gap-4">
         <Suspense fallback={<FilterTransactionsSkeleton count={3} />}>

@@ -1,5 +1,5 @@
 import Footer from "@/components/footer/Footer";
-import DashboardMobNav from "@/app/(main)/_components/header/mobile/DashboardMobNav";
+import DashboardMobNav from "@/app/(main)/_components/header/DashboardMobNav";
 import DashboardNav from "@/app/(main)/_components/header/DashboardNav";
 
 export const metadata = {

@@ -12,14 +12,16 @@ export default function AccountsPage() {
 
   return (
     <div className="py-10 flex flex-col justify-center gap-10">
-      <div className="flex flex-col justify-center md:items-end gap-4 md:gap-1">
+      <div className="flex flex-row sm:flex-nowrap flex-wrap md:flex-col justify-center md:items-end gap-4 md:gap-1">
         {/* Header */}
         <AccountsHeader accounts={accounts} />
 
         <AddAccount>
           <Button
             variant="outline"
-            className={"w-fit cursor-pointer bg-transparent hover:bg-[#25252c]"}
+            className={
+              "w-full sm:w-fit cursor-pointer bg-transparent hover:bg-[#25252c]"
+            }
           >
             <Plus className="w-4 h-4" />
             <span className="font-semibold">Add Account</span>

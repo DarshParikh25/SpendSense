@@ -43,7 +43,7 @@ const Login = async () => {
             headerSubtitle: "hidden",
             cardBox: "shadow-2xl! border-2!",
             formButtonPrimary:
-              "bg-[#bebec0]! text-[#1d1e24]! hover:bg-[#b2b2b2]!",
+              "bg-[#bebec0]! text-[#1e1e24]! hover:bg-[#b2b2b2]!",
             footerActionLink: "text-[#fb5756]! hover:text-[#ff3434]!",
             footerActionText: "text-[#bebec0]!",
           },

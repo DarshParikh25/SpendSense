@@ -26,7 +26,7 @@ const DashboardBtn = () => {
       <Button
         className={cn(
           isMenuOpen
-            ? "border-[#1D1E24] hover:bg-[#b9b9b9]"
+            ? "border-[#1e1e24] hover:bg-[#b9b9b9]"
             : "border-[#BEBEC0] hover:bg-[#16161b]",
           "font-bold border bg-transparent",
         )}

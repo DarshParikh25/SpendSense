@@ -13,7 +13,7 @@ const MobileNavShell = ({ children, drawerProps = {} }) => {
 
   const isMenuOpen = useAppSelector((state) => state.ui.isMenuOpen);
 
-  /* Lock body scroll when menu is open */
+  // Lock body scroll when menu is open
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
     return () => {

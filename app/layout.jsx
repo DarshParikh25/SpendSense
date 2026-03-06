@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${inter.className} bg-[#1D1E24] text-[#BEBEC0]`}>
+        <body className={`${inter.className} bg-[#1e1e24] text-[#BEBEC0]`}>
           <StoreProvider>{children}</StoreProvider>
         </body>
       </html>
