@@ -237,3 +237,39 @@ export const accountCategories = [
     ],
   },
 ];
+
+// for frontend use
+export const ACCOUNT_CATEGORIES = {
+  bank: [
+    { label: "Current Account", value: "current_account" },
+    { label: "Savings Account", value: "savings_account" },
+    { label: "Fixed Deposit", value: "fixed_deposit" },
+    { label: "Recurring Deposit", value: "recurring_deposit" },
+  ],
+  cash: [
+    { label: "Wallet", value: "wallet" },
+    { label: "Safe / Locker", value: "safe_locker" },
+    { label: "Petty Cash", value: "petty_cash" },
+  ],
+  credit_card: [
+    { label: "Visa", value: "visa" },
+    { label: "Mastercard", value: "mastercard" },
+    { label: "Amex", value: "amex" },
+    { label: "RuPay", value: "rupay" },
+  ],
+  crypto: [
+    { label: "Bitcoin", value: "bitcoin" },
+    { label: "Ethereum", value: "ethereum" },
+    { label: "Altcoins", value: "altcoins" },
+    { label: "Stablecoins", value: "stablecoins" },
+    { label: "Multi Coins", value: "multi_coins" },
+  ],
+  investment: [
+    { label: "Stocks", value: "stocks" },
+    { label: "Mutual Funds", value: "mutual_funds" },
+    { label: "ETF", value: "etf" },
+    { label: "Bonds", value: "bonds" },
+    { label: "PPF", value: "ppf" },
+  ],
+  savings: [{ label: "General Savings", value: "general_savings" }],
+};
