@@ -8,21 +8,21 @@ const Testimonials = () => {
       name: "Michael Dee",
       profession: "Marketing Consultant",
       message:
-        "Honestly, I was skeptical about another finance app, but SpendSensence just... gets it. I take photos of my receipt while waiting for my coffee, and by the time I'm home, everything's already sorted. Last April during tax prep, my accountant actually complimented how organized I was. First time that's every happened!",
+        "Honestly, I was skeptical about another finance app, but SpendSense just... gets it. I take photos of my receipt while waiting for my coffee, and by the time I'm home, everything's already sorted. Last April during tax prep, my accountant actually complimented how organized I was. First time that's ever happened!",
     },
     {
       profile: "/profile/david-park.png",
       name: "David Park",
       profession: "Product Manager",
       message:
-        "So the budget alerts caught me spending $180/month on subscriptions I didn't even use. Turns out I was stil paying for a gym I hadn't been to in like 8 months and two streaming services I forgot existed. Cancelled them in 10 minutes. My wife thinks I'm a financial genius now.",
+        "So the budget alerts caught me spending $180/month on subscriptions I didn't even use. Turns out I was still paying for a gym I hadn't been to in like 8 months and two streaming services I forgot existed. Cancelled them in 10 minutes. My wife thinks I'm a financial genius now.",
     },
     {
       profile: "/profile/priya-sharma.png",
       name: "Priya Sharma",
       profession: "Freelance Graphic Designer",
       message:
-        "Working with clients in foreign used to give me a headache with currency conversions. The multi-currency tracking shows me what I actually make after all the fees-no more guessing. Plus, the AI insights told me I should charge 15% more for weekend work based on my patterns. Took that advice, nobody complained, and I'm making more. Wild.",
+        "Working with clients in foreign used to give me a headache with currency conversions. The multi-currency tracking shows me what I actually make after all the fees - no more guessing. Plus, the AI insights told me I should charge 15% more for weekend work based on my patterns. Took that advice, nobody complained, and I'm making more. Wild.",
     },
   ];
 

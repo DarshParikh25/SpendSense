@@ -73,11 +73,11 @@ export const accounts = pgTable("accounts", {
   creditCardCategory: creditCardCategoryEnum("credit_card_category"),
   cryptoCategory: cryptoCategoryEnum("crypto_category"),
   investmentCategory: investmentCategoryEnum("investment_category"),
-  savingsCategory: savingsCategoryEnum("savingsCategory"),
+  savingsCategory: savingsCategoryEnum("savings_category"),
 
   balance: numeric("balance", { precision: 20, scale: 2 })
     .notNull()
-    .default(""),
+    .default("0"),
   isDefault: boolean("is_default").default(false).notNull(),
   isActive: boolean("is_active").default(true).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),

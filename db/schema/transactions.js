@@ -59,7 +59,7 @@ export const recurringIntervalEnum = pgEnum("recurring_interval", [
   "yearly",
 ]);
 
-export const transactions = pgTable("transaction", {
+export const transactions = pgTable("transactions", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
@@ -77,16 +77,16 @@ export const transactions = pgTable("transaction", {
   expenseCategory: expenseCategoryEnum("expense_category"),
 
   // Custom user-defined category — filled only if user creates a custom category, otherwise null
-  userCategoryId: text("user_category_id")
-    .notNull()
-    .references(() => userCategories.id, { onDelete: "set null" }),
+  userCategoryId: text("user_category_id").references(() => userCategories.id, {
+    onDelete: "set null",
+  }),
 
   description: text("description").notNull(),
   date: date("date").notNull(),
   isRecurring: boolean("is_recurring").default(false).notNull(),
   recurringInterval: recurringIntervalEnum("recurring_interval"),
   nextRecurringDate: date("next_recurring_date"),
-  lastProcessed: date("last+processed"),
+  lastProcessed: date("last_processed"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
