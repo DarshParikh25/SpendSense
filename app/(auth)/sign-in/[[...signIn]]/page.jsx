@@ -1,23 +1,27 @@
 import { SignIn } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { dark } from "@clerk/themes";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import AuthToast from "./_components/AuthToast";
 
 export const metadata = {
   title: "Sign In",
 };
 
-const Login = async () => {
-  const user = await currentUser();
+const Login = async ({ searchParams }) => {
+  const { userId } = await auth();
 
   // If user is already signed in
-  if (user) {
+  if (userId) {
     redirect("/dashboard");
   }
 
+  const params = await searchParams;
+
   return (
     <div className="py-20 w-full min-h-screen flex flex-col justify-center items-center">
+      <AuthToast message={params?.message} />
       <div className="text-center mb-8">
         <h1 className="mx-4 text-3xl flex flex-wrap justify-center items-center font-bold text-white mb-2">
           <span>Welcome back to&nbsp;</span>

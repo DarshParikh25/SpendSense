@@ -4,6 +4,7 @@ import "./globals.css";
 import StoreProvider from "./StoreProvider";
 
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
 
 export const metadata = {
   // metadataBase: "",
@@ -30,6 +31,12 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body className={`${inter.className} bg-[#1e1e24] text-[#BEBEC0]`}>
           <StoreProvider>{children}</StoreProvider>
+          <Toaster
+            richColors
+            closeButton
+            position="top-center"
+            expand={false}
+          />
         </body>
       </html>
     </ClerkProvider>

@@ -15,7 +15,6 @@ import TransactionTableSkeleton from "@/app/(main)/_components/transactions/Tran
 import FilterTransactionsSkeleton from "@/app/(main)/_components/transactions/FilterTransactionsSkeleton";
 import getHealth from "@/lib/helper/finance/getHealth";
 import getStats from "@/lib/helper/getStats";
-import HealthStatus from "../_components/HealthStatus";
 
 const AccountPage = async ({ params }) => {
   const { accountId } = await params;
@@ -24,9 +23,9 @@ const AccountPage = async ({ params }) => {
     (acc) => acc.account.id === Number(accountId),
   )?.account;
 
-  const { income, expense } = getStats(accountDetails.transactions ?? []);
+  const { income, expense } = getStats(accountDetails?.transactions ?? []);
 
-  const health = getHealth(income, expense, accountDetails.balance);
+  const health = getHealth(income, expense, accountDetails?.balance);
 
   return (
     <div className="overflow-x-hidden py-8 md:py-12 flex flex-col gap-10">
@@ -59,7 +58,7 @@ const AccountPage = async ({ params }) => {
         </Suspense>
 
         <Suspense fallback={<TransactionTableSkeleton />}>
-          <TransactionTable transactions={accountDetails.transactions} />
+          <TransactionTable transactions={accountDetails?.transactions} />
         </Suspense>
 
         <PaginationShell />

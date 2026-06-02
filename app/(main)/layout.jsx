@@ -1,6 +1,11 @@
 import Footer from "@/components/footer/Footer";
 import DashboardMobNav from "@/app/(main)/_components/header/DashboardMobNav";
 import DashboardNav from "@/app/(main)/_components/header/DashboardNav";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { db } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { accounts } from "@/db/schema";
 
 export const metadata = {
   title: "Dashboard",
@@ -8,7 +13,16 @@ export const metadata = {
   description: "Manage your finances with ease.",
 };
 
-const DashboardLayout = ({ children }) => {
+const DashboardLayout = async ({ children }) => {
+  const { userId } = await auth();
+
+  const userAccounts = await db.query.accounts.findMany({
+    where: eq(accounts.userId, userId),
+    limit: 1,
+  });
+
+  if (userAccounts.length === 0) redirect("/accounts/create");
+
   return (
     <div>
       <header>
