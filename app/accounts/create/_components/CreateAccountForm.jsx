@@ -1,21 +1,31 @@
 "use client";
 
+import { createAccount } from "@/app/actions/accountActions";
 import ToggleSwitch from "@/components/forms/add-account/ToggleSwitch";
 import FormCTAs from "@/components/forms/FormCTAs";
 import InputField from "@/components/forms/InputField";
 import TypeSelect from "@/components/forms/TypeSelect";
 
 import { accountTypes } from "@/config/categoryConfig";
-import { accountCategories } from "@/data/categories";
+import { ACCOUNT_CATEGORIES, accountCategories } from "@/data/categories";
 import { accountSchema } from "@/lib/validators/accountSchema";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { useForm, useWatch } from "react-hook-form";
+import { toast } from "sonner";
 
-const ACCOUNT_TYPES = accountCategories.map((cat) => cat.name);
+const ACCOUNT_TYPES = accountCategories.map((cat) => ({
+  label: cat.name,
+  value: cat.name.toLowerCase(),
+}));
 
-const CreateAccountForm = () => {
+console.log(ACCOUNT_TYPES);
+
+const CreateAccountForm = ({ hasAccounts }) => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -29,7 +39,7 @@ const CreateAccountForm = () => {
       type: "",
       category: "",
       balance: "",
-      isDefault: false,
+      isDefault: true,
     },
   });
 
@@ -38,12 +48,26 @@ const CreateAccountForm = () => {
     name: "type",
   });
 
-  const ACCOUNT_CATEGORIES = useMemo(() => accountTypes[type], [type]);
+  const CATEGORIES = useMemo(() => ACCOUNT_CATEGORIES[type], [type]);
 
-  const onSubmit = (data) => {
-    console.log(data); // replace it with actual on submit logic
-    // logic here
+  const onSubmit = async (data) => {
+    const result = await createAccount(data);
+
+    if (!result.success) {
+      toast.error(result.error);
+      return;
+    }
+
+    toast.success(result.message);
+
     reset();
+
+    router.push("/dashboard");
+  };
+
+  const onLeaveConfirm = () => {
+    reset();
+    router.push("/");
   };
 
   return (
@@ -84,7 +108,7 @@ const CreateAccountForm = () => {
       </div>
 
       {/* Account Sub Category */}
-      {ACCOUNT_TYPES.includes(type) && (
+      {ACCOUNT_TYPES.some((accountType) => accountType.value === type) && (
         <div className="w-full flex flex-col gap-2">
           <label className="font-semibold">
             Account Category <span className="text-[#fb5756]">*</span>
@@ -92,7 +116,7 @@ const CreateAccountForm = () => {
           <TypeSelect
             name={"category"}
             control={control}
-            types={ACCOUNT_CATEGORIES}
+            types={CATEGORIES}
             placeholder={`Select ${type.toLowerCase()} category`}
             label="Account Categories"
             required
@@ -117,10 +141,12 @@ const CreateAccountForm = () => {
         className={"border-[#bebec0]/30 focus-visible:border-[#bebec0]"}
       />
 
-      {/* Set Account as default */}
+      {/* Account default by default since this is only for the first account creation */}
       <ToggleSwitch
         name={"isDefault"}
         control={control}
+        isDisabled={true}
+        isFirstAccount={!hasAccounts}
         heading="Set as Default"
         content="This account will be selected by default for transactions"
         cardClassName={"border-[#bebec0]/30"}
@@ -129,10 +155,17 @@ const CreateAccountForm = () => {
 
       {/* Form CTAs */}
       <FormCTAs
+        handleLeaveConfirm={onLeaveConfirm}
         isSubmitting={isSubmitting}
         submitText={"Create Account"}
         loadingText={"Creating..."}
         inSheet={false}
+        title={"Cancel setup?"}
+        desc={
+          "You need at least one account to start tracking your finances. If you leave now, you'll be taken back and can complete the setup later."
+        }
+        cancelText={"Continue Setup"}
+        actionText={"Leave Setup"}
         cancelBtnClassName={"border-[#bebec0] hover:bg-[#27272e]"}
         submitBtnClassName={"bg-[#bebec0] text-[#1e1e24] hover:bg-[#c3c3c3]"}
       />

@@ -51,6 +51,7 @@ export async function POST(req) {
       primary_email_address_id,
       first_name,
       last_name,
+      username,
       image_url,
     } = event.data;
 
@@ -71,6 +72,7 @@ export async function POST(req) {
       email,
       firstName: first_name,
       lastName: last_name,
+      userName: username,
       imageUrl: image_url,
     });
 
@@ -85,6 +87,7 @@ export async function POST(req) {
       primary_email_address_id,
       first_name,
       last_name,
+      username,
       image_url,
     } = event.data;
 
@@ -95,6 +98,7 @@ export async function POST(req) {
     const updateData = {
       firstName: first_name,
       lastName: last_name,
+      userName: username,
       imageUrl: image_url,
     };
 

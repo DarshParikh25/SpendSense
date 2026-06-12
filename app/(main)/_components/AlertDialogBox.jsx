@@ -15,10 +15,10 @@ const AlertDialogBox = ({
   children,
   selectedIds = [],
   onConfirm,
-  onCancel,
   Icon,
   title,
   desc,
+  cancelText,
   actionText,
 }) => {
   const count = selectedIds.length;
@@ -43,12 +43,11 @@ const AlertDialogBox = ({
         <AlertDialogFooter>
           <AlertDialogCancel
             variant="outline"
-            onClick={onCancel}
             className={
               "cursor-pointer bg-transparent hover:bg-[#24252c] transition"
             }
           >
-            Cancel
+            {cancelText || "Cancel"}
           </AlertDialogCancel>
           <AlertDialogAction
             variant="destructive"

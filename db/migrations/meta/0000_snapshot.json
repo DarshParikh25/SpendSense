@@ -1,5 +1,5 @@
 {
-  "id": "f8892ef6-f388-4d5b-8ddd-992b1d8fd5d6",
+  "id": "e7bde3be-ff9e-4b63-aedb-b50797523a96",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -115,27 +115,6 @@
         "credit_card_category": {
           "name": "credit_card_category",
           "type": "credit_card_category",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "crypto_category": {
-          "name": "crypto_category",
-          "type": "crypto_category",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "investment_category": {
-          "name": "investment_category",
-          "type": "investment_category",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "savings_category": {
-          "name": "savings_category",
-          "type": "savings_category",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": false
@@ -534,10 +513,7 @@
       "values": [
         "bank",
         "cash",
-        "credit_card",
-        "crypto",
-        "investments",
-        "savings"
+        "credit_card"
       ]
     },
     "public.bank_category": {
@@ -545,9 +521,7 @@
       "schema": "public",
       "values": [
         "current_account",
-        "savings_account",
-        "fixed_deposit",
-        "recurring_deposit"
+        "savings_account"
       ]
     },
     "public.cash_category": {
@@ -555,8 +529,7 @@
       "schema": "public",
       "values": [
         "petty_cash",
-        "wallet",
-        "safe_locker"
+        "wallet"
       ]
     },
     "public.credit_card_category": {
@@ -567,35 +540,6 @@
         "amex",
         "mastercard",
         "rupay"
-      ]
-    },
-    "public.crypto_category": {
-      "name": "crypto_category",
-      "schema": "public",
-      "values": [
-        "bitcoin",
-        "ethereum",
-        "altcoins",
-        "stablecoins",
-        "multi_coins"
-      ]
-    },
-    "public.investment_category": {
-      "name": "investment_category",
-      "schema": "public",
-      "values": [
-        "stocks",
-        "ppf",
-        "mutual_funds",
-        "etf",
-        "bonds"
-      ]
-    },
-    "public.savings_category": {
-      "name": "savings_category",
-      "schema": "public",
-      "values": [
-        "general_savings"
       ]
     },
     "public.expense_category": {

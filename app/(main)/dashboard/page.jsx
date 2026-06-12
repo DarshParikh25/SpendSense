@@ -1,6 +1,5 @@
 import { currentUser } from "@clerk/nextjs/server";
 
-import requiresAuth from "@/lib/auth/requiresAuth";
 import Heading from "@/app/(main)/_components/Heading";
 import { db } from "@/data/db";
 import getHealth from "@/lib/helper/finance/getHealth";
@@ -13,8 +12,6 @@ import BalanceByTypeCard from "./_components/wealth-structure/BalanceByTypeCard"
 import Summary from "./_components/wealth-structure/summary/Summary";
 
 export default async function DashboardPage() {
-  await requiresAuth();
-
   const user = await currentUser();
 
   const name = user?.firstName || user?.fullName || user?.username || "User";

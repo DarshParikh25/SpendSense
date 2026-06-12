@@ -11,23 +11,23 @@ import { users } from "./users";
 export const accountTypeEnum = pgEnum("account_type", [
   "bank",
   "cash",
-  "credit_card",
-  "crypto",
-  "investments",
-  "savings",
+  "credit card", // later on change to credit_card
 ]);
+// Later types:
+// "crypto",
+// "investments",
 
 export const bankCategoryEnum = pgEnum("bank_category", [
   "current_account",
   "savings_account",
-  "fixed_deposit",
-  "recurring_deposit",
 ]);
+// Can be added later on as bank account type categories:
+// "fixed_deposit",
+// "recurring_deposit",
 
 export const cashCategoryEnum = pgEnum("cash_category", [
   "petty_cash",
   "wallet",
-  "safe_locker",
 ]);
 
 export const creditCardCategoryEnum = pgEnum("credit_card_category", [
@@ -37,25 +37,21 @@ export const creditCardCategoryEnum = pgEnum("credit_card_category", [
   "rupay",
 ]);
 
-export const cryptoCategoryEnum = pgEnum("crypto_category", [
-  "bitcoin",
-  "ethereum",
-  "altcoins",
-  "stablecoins",
-  "multi_coins",
-]);
+// export const cryptoCategoryEnum = pgEnum("crypto_category", [
+//   "bitcoin",
+//   "ethereum",
+//   "altcoins",
+//   "stablecoins",
+//   "multi_coins",
+// ]);
 
-export const investmentCategoryEnum = pgEnum("investment_category", [
-  "stocks",
-  "ppf",
-  "mutual_funds",
-  "etf",
-  "bonds",
-]);
-
-export const savingsCategoryEnum = pgEnum("savings_category", [
-  "general_savings",
-]);
+// export const investmentCategoryEnum = pgEnum("investment_category", [
+//   "stocks",
+//   "ppf",
+//   "mutual_funds",
+//   "etf",
+//   "bonds",
+// ]);
 
 export const accounts = pgTable("accounts", {
   id: text("id")
@@ -71,9 +67,10 @@ export const accounts = pgTable("accounts", {
   bankCategory: bankCategoryEnum("bank_category"),
   cashCategory: cashCategoryEnum("cash_category"),
   creditCardCategory: creditCardCategoryEnum("credit_card_category"),
-  cryptoCategory: cryptoCategoryEnum("crypto_category"),
-  investmentCategory: investmentCategoryEnum("investment_category"),
-  savingsCategory: savingsCategoryEnum("savings_category"),
+
+  // Later when new accounts types are added:
+  // cryptoCategory: cryptoCategoryEnum("crypto_category"),
+  // investmentCategory: investmentCategoryEnum("investment_category"),
 
   balance: numeric("balance", { precision: 20, scale: 2 })
     .notNull()

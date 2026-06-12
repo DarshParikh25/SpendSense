@@ -3,9 +3,7 @@ import DashboardMobNav from "@/app/(main)/_components/header/DashboardMobNav";
 import DashboardNav from "@/app/(main)/_components/header/DashboardNav";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { db } from "@/lib/db";
-import { eq } from "drizzle-orm";
-import { accounts } from "@/db/schema";
+import { hasAccounts } from "@/lib/helper/account/accountChecker";
 
 export const metadata = {
   title: "Dashboard",
@@ -14,14 +12,20 @@ export const metadata = {
 };
 
 const DashboardLayout = async ({ children }) => {
+  console.log("Dashboard");
   const { userId } = await auth();
+  console.log("user id: ", userId);
 
-  const userAccounts = await db.query.accounts.findMany({
-    where: eq(accounts.userId, userId),
-    limit: 1,
-  });
+  const hasUserAccounts = await hasAccounts(userId);
 
-  if (userAccounts.length === 0) redirect("/accounts/create");
+  console.log("Has accounts:", hasUserAccounts);
+
+  if (!hasUserAccounts) {
+    console.log("REDIRECTING TO CREATE ACCOUNT");
+    redirect("/accounts/create");
+  }
+
+  console.log("LAYOUT CONTINUES");
 
   return (
     <div>

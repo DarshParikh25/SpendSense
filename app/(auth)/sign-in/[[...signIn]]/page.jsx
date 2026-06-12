@@ -4,6 +4,9 @@ import { dark } from "@clerk/themes";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import AuthToast from "./_components/AuthToast";
+import { db } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { users } from "@/db/schema";
 
 export const metadata = {
   title: "Sign In",
@@ -11,6 +14,13 @@ export const metadata = {
 
 const Login = async ({ searchParams }) => {
   const { userId } = await auth();
+
+  // Just for testing...
+  // const user = await db.query.users.findFirst({
+  //   where: eq(users.id, userId),
+  // });
+
+  // console.log(user?.firstName || "User");
 
   // If user is already signed in
   if (userId) {

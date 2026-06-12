@@ -9,14 +9,15 @@ const FormCTAs = ({
   loadingText,
   submitText,
   inSheet,
-  handleCancel,
-  handleConfirm,
   Icon,
   title,
   desc,
+  cancelText,
   actionText,
   cancelBtnClassName,
   submitBtnClassName,
+  handleLeaveConfirm,
+  handleConfirm,
 }) => {
   const CancelButton = (
     <Button
@@ -35,11 +36,11 @@ const FormCTAs = ({
         <SheetClose asChild>{CancelButton}</SheetClose>
       ) : (
         <AlertDialogBox
-          onCancel={handleCancel}
-          onConfirm={handleConfirm}
+          onConfirm={handleLeaveConfirm}
           Icon={Icon}
           title={title}
           desc={desc}
+          cancelText={cancelText}
           actionText={actionText}
         >
           {CancelButton}
@@ -48,6 +49,7 @@ const FormCTAs = ({
       <Button
         type="submit"
         variant="default"
+        onClick={handleConfirm}
         disabled={isSubmitting}
         className={`border-none font-semibold cursor-pointer
           ${submitBtnClassName}`}
